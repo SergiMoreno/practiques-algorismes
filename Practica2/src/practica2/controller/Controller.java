@@ -1,4 +1,4 @@
-package practica2.control;
+package practica2.controller;
 
 import java.util.ArrayList;
 import practica2.EventType;
@@ -10,14 +10,14 @@ import practica2.EventListener;
 import static practica2.EventType.*;
 import practica2.Main;
 import practica2.model.Model;
-import practica2.vista.VistaEvent;
+import practica2.view.ViewEvent;
 
 /**
  *
  * @author usuario
  */
 
-public class Control extends Thread implements EventListener {
+public class Controller extends Thread implements EventListener {
     private Main main;
     private int moda;
     private int repModa;
@@ -30,7 +30,7 @@ public class Control extends Thread implements EventListener {
     
     final static private EventType[] eventTypes = EventType.values(); 
     
-    public Control(Main main) {
+    public Controller(Main main) {
         this.main = main;
         this.running = new boolean[eventTypes.length];
         for (int i = 0; i < eventTypes.length; i++) running[i] = false;
@@ -47,7 +47,7 @@ public class Control extends Thread implements EventListener {
      */
     @Override
     public void notify(Event e) {
-        ControlEvent event = (ControlEvent) e;
+        ControllerEvent event = (ControllerEvent) e;
         
         if (!event.isCorrupt()) {
                 if (event.operationType) {
@@ -149,7 +149,7 @@ public class Control extends Thread implements EventListener {
                 // afegim temps mig i notificam la seva visualitzacio
                 mitja /= 5;
                 model.addTime(threadType, mitja);
-                main.notify(new VistaEvent(mitja, EventType.valueOf(threadName)));
+                main.notify(new ViewEvent(mitja, EventType.valueOf(threadName)));
                 mitja = 0;
             }
             

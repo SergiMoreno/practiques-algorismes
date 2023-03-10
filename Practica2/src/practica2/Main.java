@@ -1,9 +1,9 @@
 package practica2;
 
 import mesurament.Mesurament;
-import practica2.control.Control;
+import practica2.controller.Controller;
 import practica2.model.Model;
-import practica2.vista.Vista;
+import practica2.view.View;
 
 /**
  *
@@ -12,8 +12,8 @@ import practica2.vista.Vista;
 public class Main implements EventListener {
     // components MVC centralitzat
     private Model model;
-    private Vista vista;
-    private Control control;
+    private View vista;
+    private Controller control;
 
     /**
      * @param args the command line arguments
@@ -25,13 +25,13 @@ public class Main implements EventListener {
     
     private void init() {
         model = new Model(this);
-        control = new Control(this);
-        vista = new Vista(this);
+        control = new Controller(this);
+        vista = new View(this);
     }
     
     public void reset() {
         model = new Model(this);
-        control = new Control(this);
+        control = new Controller(this);
     }
 
     @Override

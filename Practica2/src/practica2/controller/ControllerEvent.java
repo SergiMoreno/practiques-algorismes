@@ -1,4 +1,4 @@
-package practica2.control;
+package practica2.controller;
 
 import java.util.List;
 import practica2.Event;
@@ -8,7 +8,7 @@ import practica2.EventType;
  *
  * @author usuario
  */
-public class ControlEvent extends Event {
+public class ControllerEvent extends Event {
     public EventType[] types;
         
     public boolean operationType;   // If true means start executions, if false
@@ -16,7 +16,7 @@ public class ControlEvent extends Event {
              
     private boolean corruptData;
     
-    public ControlEvent(List<EventType> executiontypes, boolean operationType) {
+    public ControllerEvent(List<EventType> executiontypes, boolean operationType) {
         super(EventOrigin.Control);
         this.operationType = operationType;
         this.types = new EventType[executiontypes.size()];

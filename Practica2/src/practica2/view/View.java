@@ -1,4 +1,4 @@
-package practica2.vista;
+package practica2.view;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -7,14 +7,14 @@ import practica2.Event;
 import practica2.EventListener;
 import practica2.EventType;
 import practica2.Main;
-import practica2.control.ControlEvent;
+import practica2.controller.ControllerEvent;
 import practica2.model.ModelEvent;
 
 /**
  *
  * @author usuario
  */
-public class Vista extends javax.swing.JFrame implements EventListener {
+public class View extends javax.swing.JFrame implements EventListener {
     private Main main;
     private List<EventType> alg;
     private int n;
@@ -22,7 +22,7 @@ public class Vista extends javax.swing.JFrame implements EventListener {
     /**
      * Creates new form Vista
      */
-    public Vista(Main main) {
+    public View(Main main) {
         this.main = main;
         initComponents();
         this.alg = new ArrayList<EventType>();
@@ -315,7 +315,7 @@ public class Vista extends javax.swing.JFrame implements EventListener {
            buttonStart.setEnabled(false);
            panelGrafica.setN(this.n);
            this.main.notify(new ModelEvent(this.n));
-           this.main.notify(new ControlEvent(this.alg, true));
+           this.main.notify(new ControllerEvent(this.alg, true));
        }
     }//GEN-LAST:event_buttonStartActionPerformed
 
@@ -333,7 +333,7 @@ public class Vista extends javax.swing.JFrame implements EventListener {
 
     @Override
     public void notify(Event e) {
-        VistaEvent event = (VistaEvent) e;
+        ViewEvent event = (ViewEvent) e;
         
         System.out.println(event.type.toString() + " TIME : " + event.time);
         panelGrafica.refreshGrafica(event);

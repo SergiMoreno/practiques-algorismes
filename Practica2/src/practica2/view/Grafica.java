@@ -1,4 +1,4 @@
-package practica2.vista;
+package practica2.view;
 
 import java.awt.BasicStroke;
 import java.awt.Graphics;
@@ -118,7 +118,7 @@ public class Grafica extends JPanel {
         }
     }
     
-    public void refreshGrafica(VistaEvent event) {
+    public void refreshGrafica(ViewEvent event) {
         if (((event.type.equals(EventType.VECTORIAL) && event.time < TIME_LIMIT && !this.stopped) 
                 || !event.type.equals(EventType.VECTORIAL)) && this.maxTime < event.time) {
             this.maxTime = event.time;
