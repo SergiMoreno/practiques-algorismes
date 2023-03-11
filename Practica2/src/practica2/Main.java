@@ -27,6 +27,7 @@ public class Main implements EventListener {
         model = new Model(this, 5);
         control = new Controller(this);
         vista = new View(this);
+        model.addPiecePlayer("King");
     }
     
     public void reset() {
