@@ -46,7 +46,6 @@ public class View extends javax.swing.JFrame implements EventListener {
         jPanel1 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        panelGrafica = new Grafica(this.main, this.bar);
         jPanel2 = new javax.swing.JPanel();
         buttonArray = new javax.swing.JButton();
         buttonHash = new javax.swing.JButton();
@@ -70,19 +69,6 @@ public class View extends javax.swing.JFrame implements EventListener {
 
         jLabel6.setText("Time");
 
-        panelGrafica.setBackground(new java.awt.Color(230, 230, 230));
-
-        javax.swing.GroupLayout panelGraficaLayout = new javax.swing.GroupLayout(panelGrafica);
-        panelGrafica.setLayout(panelGraficaLayout);
-        panelGraficaLayout.setHorizontalGroup(
-            panelGraficaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 482, Short.MAX_VALUE)
-        );
-        panelGraficaLayout.setVerticalGroup(
-            panelGraficaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 355, Short.MAX_VALUE)
-        );
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -91,24 +77,20 @@ public class View extends javax.swing.JFrame implements EventListener {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel6)
-                        .addGap(18, 18, 18)
-                        .addComponent(panelGrafica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel6))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(269, 269, 269)
                         .addComponent(jLabel5)))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(288, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(181, 181, 181)
                 .addComponent(jLabel6)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(267, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(panelGrafica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
                 .addContainerGap())
         );
@@ -307,14 +289,14 @@ public class View extends javax.swing.JFrame implements EventListener {
         buttonStart.setEnabled(true);
         this.main.reset();
         this.alg.clear();
-        panelGrafica.reset();
+        //panelGrafica.reset();
     }//GEN-LAST:event_buttonResetActionPerformed
 
     private void buttonStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonStartActionPerformed
        if (!this.alg.isEmpty()) {
            buttonStart.setEnabled(false);
-           panelGrafica.setN(this.n);
-           this.main.notify(new ModelEvent(this.n));
+           //panelGrafica.setN(this.n);
+           //this.main.notify(new ModelEvent(this.n, 5));
            this.main.notify(new ControllerEvent(this.alg, true));
        }
     }//GEN-LAST:event_buttonStartActionPerformed
@@ -336,7 +318,7 @@ public class View extends javax.swing.JFrame implements EventListener {
         ViewEvent event = (ViewEvent) e;
         
         System.out.println(event.type.toString() + " TIME : " + event.time);
-        panelGrafica.refreshGrafica(event);
+        //panelGrafica.refreshGrafica(event);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -356,9 +338,5 @@ public class View extends javax.swing.JFrame implements EventListener {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JSpinner nNumber;
-    /*
-    private javax.swing.JPanel panelGrafica;
-    */
-    Grafica panelGrafica;
     // End of variables declaration//GEN-END:variables
 }
