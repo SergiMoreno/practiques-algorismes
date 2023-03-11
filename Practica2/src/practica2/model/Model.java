@@ -1,5 +1,7 @@
 package practica2.model;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Set;
@@ -24,12 +26,11 @@ public class Model implements EventListener {
     private BoardCell[][] board;
     
     // Contains the pieces playing
-    private ArrayList<Piece> players;
+    private final ArrayList<Piece> players = new ArrayList<Piece>();
     
     public Model(Main main, int boardSize) {
         this.main = main;
         createBoard(boardSize);
-        this.players = null;
     }
     
     private void createBoard (int size) {
@@ -47,8 +48,38 @@ public class Model implements EventListener {
         this.board[x][y].movement = movement;
     }
     
-    public void addPiecePlayer (String name) {
+    private void addPiecePlayer (String name) {
+        try {
+            // Instantiating the object from the class using the class name (string)
+            Class loader = Class.forName("practica2.pieces."+name);
+            Constructor ctor = loader.getDeclaredConstructor(new Class[0]);
+            Piece newpiece = (Piece) ctor.newInstance(new Object[0]);
+            players.add(newpiece);
+        } catch (ClassNotFoundException ex) {
+            System.out.println("ERROR(Controller): The specified piece doesn't exist.");
+        } catch (NoSuchMethodException ex) {
+            Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SecurityException ex) {
+            Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalArgumentException ex) {
+            Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvocationTargetException ex) {
+            Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
+        }
     } 
+    
+    private void removePiecePlayers () {
+        players.clear();
+    } 
+    
+    private void resetModel (int boardSize) {
+        removePiecePlayers();
+        createBoard(boardSize);
+    }
     
     public BoardCell[][] getBoard () {
         return this.board;
