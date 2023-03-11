@@ -24,13 +24,13 @@ public class Main implements EventListener {
     }
     
     private void init() {
-        model = new Model(this);
+        model = new Model(this, 5);
         control = new Controller(this);
         vista = new View(this);
     }
     
     public void reset() {
-        model = new Model(this);
+        model = new Model(this, 5);
         control = new Controller(this);
     }
 
