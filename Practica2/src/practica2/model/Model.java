@@ -8,6 +8,7 @@ import practica2.Event;
 import practica2.EventListener;
 import practica2.EventType;
 import practica2.Main;
+import practica2.pieces.Piece;
 
 /**
  *
@@ -16,48 +17,36 @@ import practica2.Main;
 public class Model implements EventListener {
     
     private Main main;
-    public int [] vector;
-    // N_PUNTS representa el nombre de punts que voldrem visualitzar
-    public final int N_PUNTS = 60, MAX_RANDOM = 100;
     
-    // cada algorisme tindra associada una llista de temps
-    private ConcurrentHashMap<EventType, ArrayList<Long>> llistaTime;
+    // Data structure that conatains the chess board
+    private BoardCell[][] board;
     
-    public Model(Main main) {
+    public Model(Main main, int boardSize) {
         this.main = main;
+        createBoard(boardSize);
+    }
+    
+    private void createBoard (int size) {
+        this.board = new BoardCell[size][size];
 
-        this.llistaTime = new ConcurrentHashMap<>();
-
-        for (EventType alg : EventType.values()) {
-            this.llistaTime.put(alg, new ArrayList<>());
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                this.board[i][j] = new BoardCell(); 
+            }
         }
     }
     
-    private void assignRandoms() {
-        Random rnd = new Random();
-        for (int i = 0; i < this.vector.length; i++) {
-            this.vector[i] = rnd.nextInt(MAX_RANDOM);
-        }
+    public void visitCell (int x, int y, String pieceImage, int movement) {
+        this.board[x][y].pieceImage = pieceImage;
+        this.board[x][y].movement = movement;
     }
     
-    public void addTime(EventType alg, long time) {
-        ArrayList<Long> timeValues = this.llistaTime.get(alg);
-
-        timeValues.add(time);
-
-        this.llistaTime.put(alg, timeValues);
-    }
-    
-    public ConcurrentHashMap<EventType, ArrayList<Long>> getTimes() {
-        return this.llistaTime;
+    public BoardCell[][] getBoard () {
+        return this.board;
     }
 
     @Override
     public void notify(Event e) {
         ModelEvent event = (ModelEvent) e;
-        
-        this.vector = new int[event.length];
-        assignRandoms();
     }
-    
 }

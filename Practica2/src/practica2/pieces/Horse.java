@@ -9,11 +9,11 @@ package practica2.pieces;
  *
  * @author mascport
  */
-public class Caballo extends Piece {
+public class Horse extends Piece {
 
-    public Caballo() {
+    public Horse() {
         name = this.getClass().getName();
-        image = "/imagenes/caballo.png";
+        image = "/images/horse.png";
         movx = new int[8];
         movy = new int[8];
         int pos = 0;

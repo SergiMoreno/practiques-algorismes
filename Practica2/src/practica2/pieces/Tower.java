@@ -9,17 +9,17 @@ package practica2.pieces;
  *
  * @author mascport
  */
-public class Torre extends Piece {
+public class Tower extends Piece {
 
-    public Torre() {
+    public Tower() {
         affectsdimension = true; //se mueve en dimensión tablero
         name = this.getClass().getName();
-        image = "/imagenes/torre.png";
+        image = "/images/tower.png";
         movx = new int[0];
         movy = new int[0];
     }
 
-    public Torre(int d) {
+    public Tower(int d) {
         affectsdimension = true; //se mueve en dimensión tablero
         name = this.getClass().getName();
         image = "/imagenes/torre.png";

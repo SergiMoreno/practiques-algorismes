@@ -9,17 +9,17 @@ package practica2.pieces;
  *
  * @author mascport
  */
-public class Reina extends Piece {
+public class Queen extends Piece {
 
-    public Reina() {
+    public Queen() {
         affectsdimension = true; //se mueve en dimensión tablero
-        image = "/imagenes/reina.png";
+        image = "/images/queen.png";
         movx = new int[0];
         movy = new int[0];
         name = this.getClass().getName();
     }
 
-    public Reina(int d) {
+    public Queen(int d) {
         affectsdimension = true; //se mueve en dimensión tablero
         name = this.getClass().getName();
         image = "/imagenes/reina.png";

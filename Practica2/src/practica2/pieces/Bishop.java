@@ -9,11 +9,11 @@ package practica2.pieces;
  *
  * @author mascport
  */
-public class Bomba3 extends Piece {
+public class Bishop extends Piece {
 
-    public Bomba3() {
+    public Bishop() {
         name = this.getClass().getName();
-        image = "/imagenes/bomba3.png";
+        image = "/images/bishop.png";
         movx = new int[48];  // 49 movimientos menos el (0,0)
         movy = new int[48];
         int pos = 0;
