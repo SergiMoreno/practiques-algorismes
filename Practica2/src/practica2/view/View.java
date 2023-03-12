@@ -16,8 +16,6 @@ import practica2.model.ModelEvent;
  */
 public class View extends javax.swing.JFrame implements EventListener {
     private Main main;
-    private List<EventType> alg;
-    private int n;
 
     /**
      * Creates new form Vista
@@ -25,11 +23,9 @@ public class View extends javax.swing.JFrame implements EventListener {
     public View(Main main) {
         this.main = main;
         initComponents();
-        this.alg = new ArrayList<EventType>();
         this.setVisible(true);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-        this.n = 1000;
         this.setTitle("Asymptotic complexity");
     }
 
@@ -43,92 +39,32 @@ public class View extends javax.swing.JFrame implements EventListener {
     private void initComponents() {
 
         bar = new javax.swing.JProgressBar();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        board = new BoardDisplay();
         jPanel2 = new javax.swing.JPanel();
-        buttonArray = new javax.swing.JButton();
-        buttonHash = new javax.swing.JButton();
-        buttonProducte = new javax.swing.JButton();
         buttonReset = new javax.swing.JButton();
-        buttonStart = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        nNumber = new javax.swing.JSpinner();
         jLabel7 = new javax.swing.JLabel();
+        jComboBox2 = new javax.swing.JComboBox<>();
+        jRadioButton1 = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         bar.setForeground(new java.awt.Color(51, 255, 255));
 
-        jPanel1.setBackground(new java.awt.Color(204, 255, 255));
+        board.setBackground(new java.awt.Color(204, 255, 255));
 
-        jLabel5.setText("N");
-
-        jLabel6.setText("Time");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel6))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(269, 269, 269)
-                        .addComponent(jLabel5)))
-                .addContainerGap(288, Short.MAX_VALUE))
+        javax.swing.GroupLayout boardLayout = new javax.swing.GroupLayout(board);
+        board.setLayout(boardLayout);
+        boardLayout.setHorizontalGroup(
+            boardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 566, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(181, 181, 181)
-                .addComponent(jLabel6)
-                .addContainerGap(267, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel5)
-                .addContainerGap())
+        boardLayout.setVerticalGroup(
+            boardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 464, Short.MAX_VALUE)
         );
 
         jPanel2.setBackground(new java.awt.Color(0, 51, 51));
-
-        buttonArray.setBackground(new java.awt.Color(0, 102, 102));
-        buttonArray.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        buttonArray.setForeground(new java.awt.Color(255, 255, 255));
-        buttonArray.setText("n*log(n)");
-        buttonArray.setBorderPainted(false);
-        buttonArray.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonArrayActionPerformed(evt);
-            }
-        });
-
-        buttonHash.setBackground(new java.awt.Color(0, 102, 102));
-        buttonHash.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        buttonHash.setForeground(new java.awt.Color(255, 255, 255));
-        buttonHash.setText("n");
-        buttonHash.setBorderPainted(false);
-        buttonHash.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonHashActionPerformed(evt);
-            }
-        });
-
-        buttonProducte.setBackground(new java.awt.Color(0, 102, 102));
-        buttonProducte.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        buttonProducte.setForeground(new java.awt.Color(255, 255, 255));
-        buttonProducte.setText("n²");
-        buttonProducte.setBorderPainted(false);
-        buttonProducte.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonProducteActionPerformed(evt);
-            }
-        });
 
         buttonReset.setBackground(new java.awt.Color(0, 102, 102));
         buttonReset.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -141,91 +77,47 @@ public class View extends javax.swing.JFrame implements EventListener {
             }
         });
 
-        buttonStart.setBackground(new java.awt.Color(0, 102, 102));
-        buttonStart.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        buttonStart.setForeground(new java.awt.Color(255, 255, 255));
-        buttonStart.setText("START");
-        buttonStart.setBorderPainted(false);
-        buttonStart.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonStartActionPerformed(evt);
-            }
-        });
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("N");
-
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("ALGORITHMS");
-
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Click to draw");
-
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Click to remove draw");
-
-        nNumber.setValue(1000);
-        nNumber.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                nNumberStateChanged(evt);
-            }
-        });
+        jLabel2.setText("BOARD GAME");
 
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("Insert & Enter :");
+        jLabel7.setText("Pieces");
+
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jRadioButton1.setText("jRadioButton1");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(buttonReset, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(buttonStart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(buttonProducte, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(buttonArray, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(buttonHash, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(nNumber)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(9, 9, 9)))
+                        .addGap(18, 18, 18)
+                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jRadioButton1)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(9, 9, 9)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(nNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addContainerGap()
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(buttonHash, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(buttonArray, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(buttonProducte, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel3)
-                .addGap(5, 5, 5)
-                .addComponent(buttonStart)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jRadioButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(buttonReset))
         );
 
@@ -239,12 +131,12 @@ public class View extends javax.swing.JFrame implements EventListener {
                     .addComponent(bar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(board, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(board, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
                 .addComponent(bar, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -253,64 +145,9 @@ public class View extends javax.swing.JFrame implements EventListener {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void buttonArrayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonArrayActionPerformed
-        if (!this.alg.contains(EventType.ARRAY)) {
-            this.alg.add(EventType.ARRAY);
-            buttonArray.setForeground(EventType.ARRAY.getColor());
-            buttonArray.setBackground(new Color(0,102,102).darker());
-        }
-    }//GEN-LAST:event_buttonArrayActionPerformed
-
-    private void buttonHashActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonHashActionPerformed
-        if (!this.alg.contains(EventType.HASH)) {
-            this.alg.add(EventType.HASH);
-            buttonHash.setForeground(EventType.HASH.getColor());
-            buttonHash.setBackground(new Color(0,102,102).darker());
-        }
-    }//GEN-LAST:event_buttonHashActionPerformed
-
-    private void buttonProducteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonProducteActionPerformed
-        if (!this.alg.contains(EventType.VECTORIAL)) {
-            this.alg.add(EventType.VECTORIAL);
-            buttonProducte.setForeground(EventType.VECTORIAL.getColor());
-            buttonProducte.setBackground(new Color(0,102,102).darker());
-        }
-    }//GEN-LAST:event_buttonProducteActionPerformed
-
     private void buttonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonResetActionPerformed
-        buttonProducte.setBackground(new Color(0,102,102));
-        buttonArray.setBackground(new Color(0,102,102));
-        buttonHash.setBackground(new Color(0,102,102));
         
-        buttonProducte.setForeground(Color.white);
-        buttonArray.setForeground(Color.white);
-        buttonHash.setForeground(Color.white);
-        
-        buttonStart.setEnabled(true);
-        this.main.reset();
-        this.alg.clear();
-        //panelGrafica.reset();
     }//GEN-LAST:event_buttonResetActionPerformed
-
-    private void buttonStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonStartActionPerformed
-       if (!this.alg.isEmpty()) {
-           buttonStart.setEnabled(false);
-           //panelGrafica.setN(this.n);
-           //this.main.notify(new ModelEvent(this.n, 5));
-           this.main.notify(new ControllerEvent(this.alg, true));
-       }
-    }//GEN-LAST:event_buttonStartActionPerformed
-
-    private void nNumberStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_nNumberStateChanged
-        // Canviam la n màxima per fer els càlculs
-        int number = (int) nNumber.getValue();
-        if (number < 10) {
-            this.n = 10;
-            nNumber.setValue(10);
-        } else {
-            this.n = number;
-        }
-    }//GEN-LAST:event_nNumberStateChanged
 
 
     @Override
@@ -323,20 +160,14 @@ public class View extends javax.swing.JFrame implements EventListener {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JProgressBar bar;
-    private javax.swing.JButton buttonArray;
-    private javax.swing.JButton buttonHash;
-    private javax.swing.JButton buttonProducte;
+    /*
+    private javax.swing.JPanel board;
+    */BoardDisplay board;
     private javax.swing.JButton buttonReset;
-    private javax.swing.JButton buttonStart;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JSpinner nNumber;
+    private javax.swing.JRadioButton jRadioButton1;
     // End of variables declaration//GEN-END:variables
 }

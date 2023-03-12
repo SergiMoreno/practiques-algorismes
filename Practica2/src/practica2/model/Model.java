@@ -49,7 +49,7 @@ public class Model implements EventListener {
     }
     
     private void addPiecePlayer (String name) {
-        try {
+        /*try {
             // Instantiating the object from the class using the class name (string)
             Class loader = Class.forName("practica2.pieces."+name);
             Constructor ctor = loader.getDeclaredConstructor(new Class[0]);
@@ -69,7 +69,7 @@ public class Model implements EventListener {
             Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InvocationTargetException ex) {
             Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
     } 
     
     private void removePiecePlayers () {
