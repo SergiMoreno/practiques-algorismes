@@ -14,6 +14,8 @@ public class Main implements EventListener {
     private Model model;
     private View vista;
     private Controller control;
+    
+    static final int BOARD_DEFAULT_SIZE = 8;
 
     /**
      * @param args the command line arguments
@@ -24,15 +26,9 @@ public class Main implements EventListener {
     }
     
     private void init() {
-        model = new Model(this, 5);
+        model = new Model(this, Main.BOARD_DEFAULT_SIZE);
         control = new Controller(this);
         vista = new View(this);
-        model.addPiecePlayer("King");
-    }
-    
-    public void reset() {
-        model = new Model(this, 5);
-        control = new Controller(this);
     }
 
     @Override
