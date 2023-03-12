@@ -9,7 +9,7 @@ public class ControllerEvent extends Event {
     static final int START = 0;
     static final int STOP = 1;
     
-    public int event;
+    public int event;   // The op. that will be finally launched
     
     public ControllerEvent(int eventKind) {
         super(EventOrigin.Control);
