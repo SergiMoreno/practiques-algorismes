@@ -41,6 +41,7 @@ public class BoardDisplay extends JPanel {
                 if ((i % 2) == 0) { //la fila empieza por blanco
                     if ((j % 2) == 1) {
                         g.fillRect(j * ancho, i * alto, ancho, alto);
+                        
                     }
                 } else // la fila empieza por negro
                 {
