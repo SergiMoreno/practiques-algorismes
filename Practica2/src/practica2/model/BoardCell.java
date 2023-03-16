@@ -24,4 +24,17 @@ public class BoardCell {
         this.pieceImage = null;
         this.movement = -1;
     }
+    
+    public void visitCell(int m) {
+        this.visited = true;
+        this.movement = m;
+    }
+    
+    public boolean isVisited() {
+        return this.visited;
+    }
+    
+    public int getMovement() {
+        return this.movement;
+    }
 }

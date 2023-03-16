@@ -34,7 +34,7 @@ public class Main implements EventListener {
 
     @Override
     public void notify(Event e) {
-        switch (e.getEventOrigin()){
+        switch (e.getEventType()){
             case Model -> {
                 model.notify(e);
             }

@@ -2,18 +2,30 @@ package practica2.controller;
 
 import java.util.List;
 import practica2.Event;
-import practica2.EventType;
 
 public class ControllerEvent extends Event {    
-    // Types of operations that can be launched with this event
-    static final int START = 0;
-    static final int STOP = 1;
+    public int speed;
+    public ControlEventType type;
     
-    public int event;   // The op. that will be finally launched
+    public ControllerEvent(boolean start) {
+        super(EventType.Control);
+        if (start) {
+            this.type = ControlEventType.START;
+        } else {
+            this.type = ControlEventType.STOP;
+        }
+    }
     
-    public ControllerEvent(int eventKind) {
-        super(EventOrigin.Control);
+    public ControllerEvent(int speed) {
+        super(EventType.Control);
         
-        this.event = eventKind;
+        this.speed = speed;
+        this.type = ControlEventType.SET_SPEED;
+    }
+    
+    enum ControlEventType {
+        SET_SPEED,
+        START,
+        STOP
     }
 }

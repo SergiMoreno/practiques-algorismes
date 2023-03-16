@@ -12,35 +12,33 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Controller extends Thread implements EventListener {
     private Main main;
-    private Controller game;
     static private AtomicBoolean stop;  // Avoid dirty reads between threads
+    private int speed;
     
     public Controller(Main main) {
         this.main = main;
-        this.stop = new AtomicBoolean();
-        this.stop.set(false);
     }
     
     @Override
     public void run () {
-        game();
-    }
-    
-    private void game () {
-        // TODO: Write backtracking algorithm here
-        // Have in mind that each iteration needs to check the stop condition
+
+        
     }
     
     @Override
     public void notify(Event e) {
         ControllerEvent event = (ControllerEvent) e;
-        if (event.event == ControllerEvent.START) {
-            // Starts new thread that executes backtacking
-            this.game = new Controller(this.main);
-            this.game.start();
-        } 
-        if (event.event == ControllerEvent.STOP) {
-            this.stop.set(true);    // Stops the backtracking algorithm
+        
+        switch (event.type) {
+            case SET_SPEED -> {
+                this.speed = event.speed;
+            }
+            case START -> {
+                run();
+            }
+            case STOP -> {
+                this.stop.set(true);    // Stops the backtracking algorithm
+            }
         }
     }
 }
