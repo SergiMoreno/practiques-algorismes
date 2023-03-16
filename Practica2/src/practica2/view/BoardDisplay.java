@@ -61,4 +61,8 @@ public class BoardDisplay extends JPanel {
         }
         gr.drawImage(bima,0,0,this);
     }
+    
+    public void refresh() {
+        this.repaint();
+    }
 }

@@ -3,6 +3,8 @@ package practica2.model;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -10,7 +12,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import practica2.Event;
 import practica2.EventListener;
-import practica2.EventType;
 import practica2.Main;
 import practica2.pieces.*;
 
@@ -26,7 +27,9 @@ public class Model implements EventListener {
     private BoardCell[][] board;
     
     // Contains the pieces playing
-    private final ArrayList<Piece> players = new ArrayList<Piece>();
+    private Piece [] pieces;
+    
+    private int boardSize;
     
     public Model(Main main, int boardSize) {
         this.main = main;
@@ -34,6 +37,7 @@ public class Model implements EventListener {
     }
     
     private void createBoard (int size) {
+        this.boardSize = size;
         this.board = new BoardCell[size][size];
 
         for (int i = 0; i < size; i++) {
@@ -73,7 +77,9 @@ public class Model implements EventListener {
     } 
     
     private void removePiecePlayers () {
-        players.clear();
+        for (int i = 0; i < this.pieces.length; i++) {
+            this.pieces[i] = null;
+        }
     } 
     
     private void resetModel (int boardSize) {
@@ -84,9 +90,28 @@ public class Model implements EventListener {
     public BoardCell[][] getBoard () {
         return this.board;
     }
-    
+
     @Override
     public void notify(Event e) {
         ModelEvent event = (ModelEvent) e;
+        
+        switch (event.type) {
+            case START:
+                int i = 0;
+                for (Piece p : event.pieces) {
+                    pieces[i] = p;
+                    i++;
+                }
+                break;
+            case SET_DIMENSION:
+                createBoard(event.dimension);
+                break;
+            case MOVE_PIECE:
+                int x = event.posx;
+                int y = event.posy;
+                this.board[x][y].visitCell(event.movement);
+                this.pieces[event.pieceIndex].setPos(x, y);
+                break;
+        }
     }
 }
