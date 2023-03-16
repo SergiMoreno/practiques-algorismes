@@ -21,8 +21,7 @@ public class Controller extends Thread implements EventListener {
     
     @Override
     public void run () {
-
-        
+       
     }
     
     @Override
