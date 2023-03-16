@@ -13,7 +13,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class Controller extends Thread implements EventListener {
     private Main main;
     private Controller game;
-    static private AtomicBoolean stop;  // Avoid dirty reads between threads
+    static private AtomicBoolean stop;  // stop condition
+    // Atomic: Avoid dirty reads between threads
     
     public Controller(Main main) {
         this.main = main;
