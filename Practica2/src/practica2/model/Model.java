@@ -114,4 +114,8 @@ public class Model implements EventListener {
                 break;
         }
     }
+    
+    public int getSize () {
+        return this.boardSize;
+    }
 }

@@ -59,7 +59,7 @@
         </Property>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new BoardDisplay();"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new BoardDisplay(main.getModel());"/>
         <AuxValue name="JavaCodeGenerator_DeclarationPost" type="java.lang.String" value="*/BoardDisplay board;"/>
         <AuxValue name="JavaCodeGenerator_DeclarationPre" type="java.lang.String" value="/*"/>
       </AuxValues>
@@ -72,7 +72,7 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="464" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
@@ -168,6 +168,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JSpinner" name="jSpinner1">
+          <Events>
+            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="sizeChanged"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>

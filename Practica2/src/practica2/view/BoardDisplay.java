@@ -4,15 +4,17 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
+import practica2.model.Model;
 
 /**
  *
  * @author usuario
  */
 public class BoardDisplay extends JPanel {
+    final private Model model;
     
-    public BoardDisplay() {
-        
+    public BoardDisplay(Model model) {
+        this.model = model;
     }
     
     @Override
@@ -30,7 +32,7 @@ public class BoardDisplay extends JPanel {
         g.setColor(new Color(255, 255, 255));
         g.fillRect(0, 0, this.getWidth(), this.getHeight());
         //int dim = dat.getDimension();
-        int dim = 8;
+        int dim = model.getSize();
         //calculamos el ancho y alto de la casilla
         int ancho = this.getWidth() / dim;
         int alto = this.getHeight() / dim;

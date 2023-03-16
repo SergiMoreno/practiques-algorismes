@@ -38,7 +38,7 @@ public class View extends javax.swing.JFrame implements EventListener {
     private void initComponents() {
 
         bar = new javax.swing.JProgressBar();
-        board = new BoardDisplay();
+        board = new BoardDisplay(main.getModel());
         jPanel2 = new javax.swing.JPanel();
         buttonReset = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -64,7 +64,7 @@ public class View extends javax.swing.JFrame implements EventListener {
         );
         boardLayout.setVerticalGroup(
             boardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 464, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         jPanel2.setBackground(new java.awt.Color(0, 51, 51));
@@ -85,6 +85,12 @@ public class View extends javax.swing.JFrame implements EventListener {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("BOARD GAME");
         jLabel2.setToolTipText("");
+
+        jSpinner1.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                sizeChanged(evt);
+            }
+        });
 
         jLabel1.setText("Game size :");
 
@@ -184,6 +190,12 @@ public class View extends javax.swing.JFrame implements EventListener {
     private void buttonReset1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonReset1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_buttonReset1ActionPerformed
+
+    private void sizeChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sizeChanged
+        int size = (int) jSpinner1.getValue();
+        main.notify(new ModelEvent(size));
+        board.refresh();
+    }//GEN-LAST:event_sizeChanged
 
 
     @Override
