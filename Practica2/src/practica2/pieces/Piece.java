@@ -15,6 +15,7 @@ public abstract class Piece {
     protected String name;
     protected String image;
     protected boolean affectsdimension = false;
+    protected int posx, posy;
 
     public boolean afectaDimension() {
         return affectsdimension;
@@ -38,5 +39,18 @@ public abstract class Piece {
     
     public int getMovY(int i) {
         return movy[i];
+    }
+    
+    public void setPos(int x, int y) {
+        this.posx = x;
+        this.posy = y;
+    }
+    
+    public int getPosX() {
+        return posx;
+    }
+    
+    public int getMovY() {
+        return posy;
     }
 }

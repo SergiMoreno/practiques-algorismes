@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import practica2.Event;
 import practica2.EventListener;
-import practica2.EventType;
 import practica2.Main;
 import practica2.controller.ControllerEvent;
 import practica2.model.ModelEvent;
@@ -154,8 +153,7 @@ public class View extends javax.swing.JFrame implements EventListener {
     public void notify(Event e) {
         ViewEvent event = (ViewEvent) e;
         
-        System.out.println(event.type.toString() + " TIME : " + event.time);
-        //panelGrafica.refreshGrafica(event);
+        board.refresh();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
