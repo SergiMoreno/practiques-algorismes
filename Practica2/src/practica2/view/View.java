@@ -8,6 +8,7 @@ import practica2.EventListener;
 import practica2.Main;
 import practica2.controller.ControllerEvent;
 import practica2.model.ModelEvent;
+import practica2.pieces.Piece;
 
 /**
  *
@@ -15,17 +16,20 @@ import practica2.model.ModelEvent;
  */
 public class View extends javax.swing.JFrame implements EventListener {
     private Main main;
+    private ArrayList<Piece> pieces;
+    private int boardSize;
 
     /**
      * Creates new form Vista
      */
     public View(Main main) {
         this.main = main;
+        this.boardSize = this.main.getDefaultBoardSize();
         initComponents();
         this.setVisible(true);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-        this.setTitle("Asymptotic complexity");
+        this.setTitle("Board Game");
     }
 
     /**
@@ -37,30 +41,35 @@ public class View extends javax.swing.JFrame implements EventListener {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        bar = new javax.swing.JProgressBar();
         board = new BoardDisplay(main.getModel());
         jPanel2 = new javax.swing.JPanel();
-        buttonReset = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
+        buttonStart = new javax.swing.JButton();
         jSpinner1 = new javax.swing.JSpinner();
         jLabel1 = new javax.swing.JLabel();
-        buttonReset1 = new javax.swing.JButton();
+        buttonReset = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
-        jButton1 = new javax.swing.JButton();
+        pieceList = new javax.swing.JList<>();
+        buttonAdd = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        speedSlider = new javax.swing.JSlider();
+        jLabel3 = new javax.swing.JLabel();
+        speedText = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        bar.setForeground(new java.awt.Color(51, 255, 255));
-
         board.setBackground(new java.awt.Color(204, 255, 255));
+        board.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                boardMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout boardLayout = new javax.swing.GroupLayout(board);
         board.setLayout(boardLayout);
         boardLayout.setHorizontalGroup(
             boardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 420, Short.MAX_VALUE)
         );
         boardLayout.setVerticalGroup(
             boardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -69,10 +78,31 @@ public class View extends javax.swing.JFrame implements EventListener {
 
         jPanel2.setBackground(new java.awt.Color(0, 51, 51));
 
+        buttonStart.setBackground(new java.awt.Color(0, 102, 102));
+        buttonStart.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        buttonStart.setForeground(new java.awt.Color(255, 255, 255));
+        buttonStart.setText("START");
+        buttonStart.setBorderPainted(false);
+        buttonStart.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonStartActionPerformed(evt);
+            }
+        });
+
+        jSpinner1.setValue(this.boardSize);
+        jSpinner1.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                sizeChanged(evt);
+            }
+        });
+
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Board size :");
+
         buttonReset.setBackground(new java.awt.Color(0, 102, 102));
         buttonReset.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         buttonReset.setForeground(new java.awt.Color(255, 255, 255));
-        buttonReset.setText("START");
+        buttonReset.setText("RESET");
         buttonReset.setBorderPainted(false);
         buttonReset.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -80,83 +110,113 @@ public class View extends javax.swing.JFrame implements EventListener {
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("BOARD GAME");
-        jLabel2.setToolTipText("");
-
-        jSpinner1.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                sizeChanged(evt);
-            }
-        });
-
-        jLabel1.setText("Game size :");
-
-        buttonReset1.setBackground(new java.awt.Color(0, 102, 102));
-        buttonReset1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        buttonReset1.setForeground(new java.awt.Color(255, 255, 255));
-        buttonReset1.setText("RESET");
-        buttonReset1.setBorderPainted(false);
-        buttonReset1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonReset1ActionPerformed(evt);
-            }
-        });
-
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+        pieceList.setBackground(new java.awt.Color(0, 102, 102));
+        pieceList.setForeground(new java.awt.Color(255, 255, 255));
+        pieceList.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = Piece.getPiecesTypes();
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setViewportView(pieceList);
 
-        jButton1.setText("ADD ");
-        jButton1.setToolTipText("");
+        buttonAdd.setBackground(new java.awt.Color(0, 102, 102));
+        buttonAdd.setForeground(new java.awt.Color(255, 255, 255));
+        buttonAdd.setText("ADD ");
+        buttonAdd.setToolTipText("");
+        buttonAdd.setBorder(null);
+        buttonAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonAddActionPerformed(evt);
+            }
+        });
 
+        jButton2.setBackground(new java.awt.Color(0, 102, 102));
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("DELETE");
+        jButton2.setBorder(null);
+
+        speedSlider.setBackground(new java.awt.Color(0, 51, 51));
+        speedSlider.setMaximum(40);
+        speedSlider.setMinimum(20);
+        speedSlider.setValue(30);
+        speedSlider.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                speedSliderStateChanged(evt);
+            }
+        });
+
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Speed :");
+
+        speedText.setBackground(new java.awt.Color(0, 51, 51));
+        speedText.setForeground(new java.awt.Color(255, 255, 255));
+        speedText.setText("30");
+        speedText.setBorder(null);
+        speedText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                speedTextActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("PIECES");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(buttonReset1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(buttonReset, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(buttonReset, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(buttonStart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSpinner1))
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(speedText, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(8, 8, 8))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                        .addComponent(jButton2)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(speedSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(buttonAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(buttonAdd, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addGap(36, 36, 36)
-                .addComponent(buttonReset)
+                    .addComponent(jLabel3)
+                    .addComponent(speedText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(speedSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(buttonStart)
                 .addGap(12, 12, 12)
-                .addComponent(buttonReset1)
+                .addComponent(buttonReset)
                 .addContainerGap())
         );
 
@@ -166,36 +226,76 @@ public class View extends javax.swing.JFrame implements EventListener {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(bar, javax.swing.GroupLayout.DEFAULT_SIZE, 622, Short.MAX_VALUE)
-                    .addComponent(board, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(board, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(board, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0)
-                .addComponent(bar, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(board, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void buttonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonResetActionPerformed
-        
-    }//GEN-LAST:event_buttonResetActionPerformed
+    private void buttonStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonStartActionPerformed
+        buttonStart.setEnabled(false);
+        this.main.notify(new ModelEvent(pieces));
+        this.main.notify(new ControllerEvent(true, speedSlider.getValue()));
+    }//GEN-LAST:event_buttonStartActionPerformed
 
-    private void buttonReset1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonReset1ActionPerformed
+    private void buttonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonResetActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_buttonReset1ActionPerformed
+    }//GEN-LAST:event_buttonResetActionPerformed
 
     private void sizeChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sizeChanged
         int size = (int) jSpinner1.getValue();
+        if (size < 2) {
+            size = 2;
+            jSpinner1.setValue(size);
+        }
+        this.boardSize = size;
         main.notify(new ModelEvent(size));
         board.refresh();
     }//GEN-LAST:event_sizeChanged
+
+    private void speedTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_speedTextActionPerformed
+        // TODO add your handling code here:
+        int speed = Integer.parseInt(speedText.getText());
+        if (speed > 40) {
+            speed = 40;
+        } else if (speed < 20) {
+            speed = 20;
+        }
+        speedSlider.setValue(speed);
+        main.notify(new ControllerEvent(speed));
+    }//GEN-LAST:event_speedTextActionPerformed
+
+    private void speedSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_speedSliderStateChanged
+        // TODO add your handling code here:
+        int speed = speedSlider.getValue();
+        speedText.setText(Integer.toString(speed));
+        main.notify(new ControllerEvent(speed));
+    }//GEN-LAST:event_speedSliderStateChanged
+
+    private void boardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_boardMouseClicked
+        // TODO add your handling code here:
+        int x = evt.getX();
+        int y = evt.getY();
+        System.out.println("X: " + x + " Y: " + y);
+        int maxX = this.board.getHeight();
+        int maxY = this.board.getWidth();
+        System.out.println("Cell : (" + (x*this.boardSize)/maxX + ", " + (y*this.boardSize)/maxY + ")");
+    }//GEN-LAST:event_boardMouseClicked
+
+    private void buttonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddActionPerformed
+        // TODO add your handling code here:
+        String pieceName = pieceList.getSelectedValue();
+        if (pieceName != null) {
+            System.out.println("Piece added: " + pieceName);
+        }
+    }//GEN-LAST:event_buttonAddActionPerformed
 
 
     @Override
@@ -206,19 +306,21 @@ public class View extends javax.swing.JFrame implements EventListener {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JProgressBar bar;
     /*
     private javax.swing.JPanel board;
     */BoardDisplay board;
+    private javax.swing.JButton buttonAdd;
     private javax.swing.JButton buttonReset;
-    private javax.swing.JButton buttonReset1;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton buttonStart;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JList<String> jList1;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSpinner jSpinner1;
+    private javax.swing.JList<String> pieceList;
+    private javax.swing.JSlider speedSlider;
+    private javax.swing.JTextField speedText;
     // End of variables declaration//GEN-END:variables
 }

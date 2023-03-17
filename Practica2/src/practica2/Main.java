@@ -50,4 +50,8 @@ public class Main implements EventListener {
     public Model getModel() {
         return this.model;
     }
+    
+    public int getDefaultBoardSize() {
+        return Main.BOARD_DEFAULT_SIZE;
+    }
 }

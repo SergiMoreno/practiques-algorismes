@@ -53,4 +53,23 @@ public abstract class Piece {
     public int getMovY() {
         return posy;
     }
+    
+    public static String [] getPiecesTypes() {
+        String [] result = new String[PieceTypes.values().length];
+        int i = 0;
+        for (PieceTypes p : PieceTypes.values()) {
+            result[i] = p.name();
+            i++;
+        }
+        return result;
+    }
+    
+    public enum PieceTypes {
+        BicMac,
+        Bishop,
+        Horse,
+        King,
+        Queen,
+        Tower
+    }
 }

@@ -7,8 +7,9 @@ public class ControllerEvent extends Event {
     public int speed;
     public ControlEventType type;
     
-    public ControllerEvent(boolean start) {
+    public ControllerEvent(boolean start, int speed) {
         super(EventType.Control);
+        this.speed = speed;
         if (start) {
             this.type = ControlEventType.START;
         } else {
