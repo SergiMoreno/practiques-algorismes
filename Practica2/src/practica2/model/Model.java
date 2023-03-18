@@ -97,6 +97,7 @@ public class Model implements EventListener {
         
         switch (event.type) {
             case START:
+                pieces = new Piece[event.pieces.size()];
                 int i = 0;
                 for (Piece p : event.pieces) {
                     pieces[i] = p;
