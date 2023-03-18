@@ -13,7 +13,7 @@ public class Bishop extends Piece {
 
     public Bishop() {
         name = this.getClass().getName();
-        image = "/images/bishop.png";
+        image = "bishop.png";
         movx = new int[48];  // 49 movimientos menos el (0,0)
         movy = new int[48];
         int pos = 0;

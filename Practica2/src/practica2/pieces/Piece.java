@@ -75,30 +75,6 @@ public abstract class Piece {
         Horse,
         King,
         Queen,
-        Tower;
-                
-        public String getImageRef() {
-        switch (this) {
-            case BicMac -> {
-                return "bicmac.png";
-            }
-            case Bishop -> {
-                return "bishop.png";
-            }
-            case Horse -> {
-                return "horse.png";
-            }
-            case King -> {
-                return "king.png";
-            }
-            case Queen -> {
-                return "queen.png";
-            }
-            case Tower -> {
-                return "tower.png";
-            }
-        }
-        return null;
-    }
+        Tower
     }
 }

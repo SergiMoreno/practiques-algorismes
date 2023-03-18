@@ -13,16 +13,15 @@ public class ModelEvent extends Event {
     public int posy;
     public int movement;
     public int pieceIndex;
+    public String name;
     
     public ModelEventType type;
     public int dimension;
-    public ArrayList<Piece> pieces;
     
     // Inicialize pieces on the board
-    public ModelEvent(ArrayList<Piece> pieces) {
+    public ModelEvent() {
         super(EventType.Model);
-        
-        this.pieces = pieces;
+
         this.type = ModelEventType.START;
     }
     
@@ -44,9 +43,20 @@ public class ModelEvent extends Event {
         this.type = ModelEventType.SET_DIMENSION;
     }
     
+    // Add selected piece
+    public ModelEvent(String name, int x, int y) {
+        super(EventType.Model);
+        this.name = name;
+        this.posx = x;
+        this.posy = y;
+        this.type = ModelEventType.ADD_SELECTED_PIECE;
+        
+    }
+    
     enum ModelEventType {
         SET_DIMENSION,
         START,
-        MOVE_PIECE
+        MOVE_PIECE,
+        ADD_SELECTED_PIECE
     }
 }

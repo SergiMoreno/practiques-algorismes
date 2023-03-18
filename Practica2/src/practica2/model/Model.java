@@ -25,6 +25,7 @@ public class Model implements EventListener {
     
     // Data structure that conatains the chess board
     private BoardCell[][] board;
+    private ArrayList<Piece> selectedPieces;
     
     // Contains the pieces playing
     private Piece [] pieces;
@@ -33,6 +34,7 @@ public class Model implements EventListener {
     
     public Model(Main main, int boardSize) {
         this.main = main;
+        this.selectedPieces = new ArrayList<Piece>();
         createBoard(boardSize);
     }
     
@@ -52,13 +54,15 @@ public class Model implements EventListener {
         this.board[x][y].movement = movement;
     }
     
-    private void addPiecePlayer (String name) {
-        /*try {
+    private Piece addPiecePlayer (String name, int x, int y) {
+        try {
             // Instantiating the object from the class using the class name (string)
             Class loader = Class.forName("practica2.pieces."+name);
             Constructor ctor = loader.getDeclaredConstructor(new Class[0]);
             Piece newpiece = (Piece) ctor.newInstance(new Object[0]);
-            players.add(newpiece);
+            newpiece.setPos(x, y);
+            selectedPieces.add(newpiece);
+            return newpiece;
         } catch (ClassNotFoundException ex) {
             System.out.println("ERROR(Controller): The specified piece doesn't exist.");
         } catch (NoSuchMethodException ex) {
@@ -73,7 +77,8 @@ public class Model implements EventListener {
             Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InvocationTargetException ex) {
             Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
+        }
+        return null;
     } 
     
     private void removePiecePlayers () {
@@ -97,9 +102,9 @@ public class Model implements EventListener {
         
         switch (event.type) {
             case START:
-                pieces = new Piece[event.pieces.size()];
+                pieces = new Piece[selectedPieces.size()];
                 int i = 0;
-                for (Piece p : event.pieces) {
+                for (Piece p : selectedPieces) {
                     pieces[i] = p;
                     i++;
                 }
@@ -108,15 +113,34 @@ public class Model implements EventListener {
                 createBoard(event.dimension);
                 break;
             case MOVE_PIECE:
-                int x = event.posx;
-                int y = event.posy;
-                this.board[x][y].visitCell(event.movement);
-                this.pieces[event.pieceIndex].setPos(x, y);
+                if (isOutOfBounds(event.posx, event.posy)) {
+                    System.out.println("ERROR(Model): The specified coordinades are incorrect.");
+                    break;
+                }
+                this.board[event.posx][event.posy].visitCell(event.movement);
+                this.pieces[event.pieceIndex].setPos(event.posx, event.posy);
+                break;
+            case ADD_SELECTED_PIECE:
+                if (isOutOfBounds(event.posx, event.posy)) {
+                    System.out.println("ERROR(Model): The specified coordinades are incorrect.");
+                    break;
+                }
+                Piece piece = addPiecePlayer(event.name, event.posx, event.posy);
+                if (piece != null) 
+                        this.board[event.posx][event.posy].pieceImage = piece.getImage();
                 break;
         }
     }
     
     public int getSize () {
         return this.boardSize;
+    }
+    
+    public String getPieceImageRef (int x, int y) {
+        return this.board[x][y].pieceImage;
+    }
+    
+    private boolean isOutOfBounds (int x, int y) {
+        return x < 0 || x >= this.boardSize || y < 0 || y >= this.boardSize;
     }
 }

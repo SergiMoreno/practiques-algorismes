@@ -13,7 +13,7 @@ public class King extends Piece {
 
     public King() {
         name = this.getClass().getName();
-        image = "/images/king.png";
+        image = "king.png";
         movx = new int[8];
         movy = new int[8];
         int pos = 0;

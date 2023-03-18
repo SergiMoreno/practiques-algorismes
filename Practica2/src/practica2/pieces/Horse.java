@@ -13,7 +13,7 @@ public class Horse extends Piece {
 
     public Horse() {
         name = this.getClass().getName();
-        image = "/images/horse.png";
+        image = "horse.png";
         movx = new int[8];
         movy = new int[8];
         int pos = 0;

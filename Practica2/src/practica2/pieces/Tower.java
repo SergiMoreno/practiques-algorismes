@@ -14,7 +14,7 @@ public class Tower extends Piece {
     public Tower() {
         affectsdimension = true; //se mueve en dimensión tablero
         name = this.getClass().getName();
-        image = "/images/tower.png";
+        image = "tower.png";
         movx = new int[0];
         movy = new int[0];
     }

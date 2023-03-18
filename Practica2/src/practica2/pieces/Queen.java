@@ -13,7 +13,7 @@ public class Queen extends Piece {
 
     public Queen() {
         affectsdimension = true; //se mueve en dimensión tablero
-        image = "/images/queen.png";
+        image = "queen.png";
         movx = new int[0];
         movy = new int[0];
         name = this.getClass().getName();

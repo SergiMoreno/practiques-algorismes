@@ -16,7 +16,6 @@ import practica2.pieces.Piece;
  */
 public class View extends javax.swing.JFrame implements EventListener {
     private Main main;
-    private ArrayList<PieceDisplay> selectedPieces;
     private int boardSize;
 
     /**
@@ -41,7 +40,7 @@ public class View extends javax.swing.JFrame implements EventListener {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        board = new BoardDisplay(main.getModel(), this);
+        board = new BoardDisplay(main.getModel());
         jPanel2 = new javax.swing.JPanel();
         buttonStart = new javax.swing.JButton();
         jSpinner1 = new javax.swing.JSpinner();
@@ -214,7 +213,7 @@ public class View extends javax.swing.JFrame implements EventListener {
 
     private void buttonStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonStartActionPerformed
         buttonStart.setEnabled(false);
-        this.main.notify(new ModelEvent(pieces));
+        this.main.notify(new ModelEvent());
         this.main.notify(new ControllerEvent(true, speedSlider.getValue()));
     }//GEN-LAST:event_buttonStartActionPerformed
 
@@ -262,9 +261,8 @@ public class View extends javax.swing.JFrame implements EventListener {
             int maxY = this.board.getWidth();
             int x = (coordx*this.boardSize)/maxX;
             int y = (coordy*this.boardSize)/maxY;
-
-            String imageRef = Piece.PieceTypes.valueOf(selected).getImageRef();
-            board.addPieceDisplay(imageRef, x, y);
+            
+            main.notify(new ModelEvent(selected, x, y));
             board.refresh();
         }
     }//GEN-LAST:event_boardMouseClicked

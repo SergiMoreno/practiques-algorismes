@@ -16,15 +16,9 @@ import practica2.model.Model;
 
 public class BoardDisplay extends JPanel {
     final private Model model;
-    final private View view;
     
-    public BoardDisplay(Model model, View view) {
+    public BoardDisplay(Model model) {
         this.model = model;
-        this.selectedPieces = new ArrayList<PieceDisplay>();
-    }
-    
-    public void addPieceDisplay(String imageRef, int x, int y) {
-        this.selectedPieces.add(new PieceDisplay(imageRef, x, y));
     }
     
     @Override
@@ -48,6 +42,7 @@ public class BoardDisplay extends JPanel {
         int alto = this.getHeight() / dim;
         //Pintamos el tablero
         g.setColor(new Color(0, 0, 0));
+        String imageref;
         for (int i = 0; i < dim; i++) {
             for (int j = 0; j < dim; j++) {
                 if ((i % 2) == 0) { //la fila empieza por blanco
@@ -60,13 +55,12 @@ public class BoardDisplay extends JPanel {
                         g.fillRect(j * ancho, i * alto, ancho, alto);
                     }
                 }
+                imageref = model.getPieceImageRef(j, i);
+                if (imageref != null) {
+                    URL imageURL = getClass().getResource("../../resources/"+imageref);
+                    g.drawImage((new ImageIcon(imageURL)).getImage(), j * ancho, i * alto, ancho, alto, this);
+                }
             }
-        }
-        //colocamos las piezas
-        for (int i = 0; i < this.selectedPieces.size(); i++) {
-            PieceDisplay pieced = this.selectedPieces.get(i);
-            URL imageURL = getClass().getResource("../../resources/"+pieced.name);
-            g.drawImage((new ImageIcon(imageURL)).getImage(), pieced.x * ancho, pieced.y * alto, ancho, alto, this);
         }
         gr.drawImage(bima,0,0,this);
     }

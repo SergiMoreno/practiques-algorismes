@@ -13,6 +13,7 @@ public class BicMac extends Piece {
 
     public BicMac() {
         name = this.getClass().getName();
+        image = "bicmac.png";
         movx = new int[8];
         movy = new int[8];
         int pos = 0;
