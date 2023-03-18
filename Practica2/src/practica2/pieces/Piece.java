@@ -55,7 +55,7 @@ public abstract class Piece {
         return posx;
     }
     
-    public int getMovY() {
+    public int getPosY() {
         return posy;
     }
     

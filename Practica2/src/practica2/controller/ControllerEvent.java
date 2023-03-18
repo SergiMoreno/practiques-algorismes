@@ -1,6 +1,5 @@
 package practica2.controller;
 
-import java.util.List;
 import practica2.Event;
 
 public class ControllerEvent extends Event {    

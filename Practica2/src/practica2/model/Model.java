@@ -117,7 +117,7 @@ public class Model implements EventListener {
                     System.out.println("ERROR(Model): The specified coordinades are incorrect.");
                     break;
                 }
-                this.board[event.posx][event.posy].visitCell(event.movement);
+                //this.board[event.posx][event.posy].visitCell("", event.movement);
                 this.pieces[event.pieceIndex].setPos(event.posx, event.posy);
                 break;
             case ADD_SELECTED_PIECE:
@@ -127,7 +127,7 @@ public class Model implements EventListener {
                 }
                 Piece piece = addPiecePlayer(event.name, event.posx, event.posy);
                 if (piece != null) 
-                        this.board[event.posx][event.posy].pieceImage = piece.getImage();
+                        this.board[event.posx][event.posy].visitCell(piece.getImage(), 0);
                 break;
         }
     }
@@ -142,5 +142,35 @@ public class Model implements EventListener {
     
     private boolean isOutOfBounds (int x, int y) {
         return x < 0 || x >= this.boardSize || y < 0 || y >= this.boardSize;
+    }
+    
+    public Piece getPiece (int index) {
+        return this.pieces[index];
+    }
+    
+    public int getNumPieces () {
+        return this.pieces.length;
+    }
+    
+    public boolean movePiece (int pieceIndex, int x, int y, int movement) {
+        if (isOutOfBounds(x, y))
+                return false;
+        
+        if (this.board[x][y].visited)
+                return false;
+            
+        this.board[x][y].visitCell(pieceIndex, this.pieces[pieceIndex].getImage(), movement);
+        return true;
+    }
+    
+    public void reconstruct (int pieceIndex, int currentMove) {
+        for (int i = 0; i < this.boardSize; i++) {
+            for (int j = 0; j < this.boardSize; j++) {
+                if (this.board[i][j].pieceIndex == pieceIndex && 
+                    this.board[i][j].movement >= currentMove) {
+                    this.board[i][j].resetCell();
+                }
+            }
+        }
     }
 }

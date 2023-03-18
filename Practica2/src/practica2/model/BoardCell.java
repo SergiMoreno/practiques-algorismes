@@ -13,6 +13,7 @@ import practica2.pieces.*;
 public class BoardCell {
     public boolean visited;
     public String pieceImage;
+    public int pieceIndex;
     public int movement;
     
     public BoardCell () {
@@ -23,11 +24,14 @@ public class BoardCell {
         this.visited = false;
         this.pieceImage = null;
         this.movement = -1;
+        this.pieceIndex = -1;
     }
     
-    public void visitCell(int m) {
+    public void visitCell(int pieceIndex, String image, int m) {
         this.visited = true;
         this.movement = m;
+        this.pieceImage = image;
+        this.pieceIndex = pieceIndex;
     }
     
     public boolean isVisited() {
