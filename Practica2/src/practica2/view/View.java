@@ -16,7 +16,7 @@ import practica2.pieces.Piece;
  */
 public class View extends javax.swing.JFrame implements EventListener {
     private Main main;
-    private ArrayList<Piece> pieces;
+    private ArrayList<PieceDisplay> selectedPieces;
     private int boardSize;
 
     /**
@@ -41,7 +41,7 @@ public class View extends javax.swing.JFrame implements EventListener {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        board = new BoardDisplay(main.getModel());
+        board = new BoardDisplay(main.getModel(), this);
         jPanel2 = new javax.swing.JPanel();
         buttonStart = new javax.swing.JButton();
         jSpinner1 = new javax.swing.JSpinner();
@@ -49,8 +49,6 @@ public class View extends javax.swing.JFrame implements EventListener {
         buttonReset = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         pieceList = new javax.swing.JList<>();
-        buttonAdd = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         speedSlider = new javax.swing.JSlider();
         jLabel3 = new javax.swing.JLabel();
         speedText = new javax.swing.JTextField();
@@ -119,22 +117,6 @@ public class View extends javax.swing.JFrame implements EventListener {
         });
         jScrollPane1.setViewportView(pieceList);
 
-        buttonAdd.setBackground(new java.awt.Color(0, 102, 102));
-        buttonAdd.setForeground(new java.awt.Color(255, 255, 255));
-        buttonAdd.setText("ADD ");
-        buttonAdd.setToolTipText("");
-        buttonAdd.setBorder(null);
-        buttonAdd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonAddActionPerformed(evt);
-            }
-        });
-
-        jButton2.setBackground(new java.awt.Color(0, 102, 102));
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("DELETE");
-        jButton2.setBorder(null);
-
         speedSlider.setBackground(new java.awt.Color(0, 51, 51));
         speedSlider.setMaximum(40);
         speedSlider.setMinimum(20);
@@ -182,12 +164,7 @@ public class View extends javax.swing.JFrame implements EventListener {
                         .addComponent(speedText, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(8, 8, 8))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(speedSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(buttonAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(speedSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -202,12 +179,8 @@ public class View extends javax.swing.JFrame implements EventListener {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(buttonAdd, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(speedText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -281,22 +254,20 @@ public class View extends javax.swing.JFrame implements EventListener {
 
     private void boardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_boardMouseClicked
         // TODO add your handling code here:
-        int coordx = evt.getX();
-        int coordy = evt.getY();
-        int maxX = this.board.getHeight();
-        int maxY = this.board.getWidth();
-        int x = (coordx*this.boardSize)/maxX;
-        int y = (coordy*this.boardSize)/maxY;
-        System.out.println("Cell : (" + x + ", " + y + ")");
-    }//GEN-LAST:event_boardMouseClicked
+        String selected = pieceList.getSelectedValue();
+        if (selected != null) {
+            int coordx = evt.getX();
+            int coordy = evt.getY();
+            int maxX = this.board.getHeight();
+            int maxY = this.board.getWidth();
+            int x = (coordx*this.boardSize)/maxX;
+            int y = (coordy*this.boardSize)/maxY;
 
-    private void buttonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddActionPerformed
-        // TODO add your handling code here:
-        String pieceName = pieceList.getSelectedValue();
-        if (pieceName != null) {
-            System.out.println("Piece added: " + pieceName);
+            String imageRef = Piece.PieceTypes.valueOf(selected).getImageRef();
+            board.addPieceDisplay(imageRef, x, y);
+            board.refresh();
         }
-    }//GEN-LAST:event_buttonAddActionPerformed
+    }//GEN-LAST:event_boardMouseClicked
 
 
     @Override
@@ -310,10 +281,8 @@ public class View extends javax.swing.JFrame implements EventListener {
     /*
     private javax.swing.JPanel board;
     */BoardDisplay board;
-    private javax.swing.JButton buttonAdd;
     private javax.swing.JButton buttonReset;
     private javax.swing.JButton buttonStart;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

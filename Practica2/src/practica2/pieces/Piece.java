@@ -5,6 +5,11 @@
  */
 package practica2.pieces;
 
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
+import java.lang.reflect.Constructor;
+import practica2.model.Model;
+
 /**
  *
  * @author mascport
@@ -70,6 +75,30 @@ public abstract class Piece {
         Horse,
         King,
         Queen,
-        Tower
+        Tower;
+                
+        public String getImageRef() {
+        switch (this) {
+            case BicMac -> {
+                return "bicmac.png";
+            }
+            case Bishop -> {
+                return "bishop.png";
+            }
+            case Horse -> {
+                return "horse.png";
+            }
+            case King -> {
+                return "king.png";
+            }
+            case Queen -> {
+                return "queen.png";
+            }
+            case Tower -> {
+                return "tower.png";
+            }
+        }
+        return null;
+    }
     }
 }
