@@ -281,12 +281,13 @@ public class View extends javax.swing.JFrame implements EventListener {
 
     private void boardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_boardMouseClicked
         // TODO add your handling code here:
-        int x = evt.getX();
-        int y = evt.getY();
-        System.out.println("X: " + x + " Y: " + y);
+        int coordx = evt.getX();
+        int coordy = evt.getY();
         int maxX = this.board.getHeight();
         int maxY = this.board.getWidth();
-        System.out.println("Cell : (" + (x*this.boardSize)/maxX + ", " + (y*this.boardSize)/maxY + ")");
+        int x = (coordx*this.boardSize)/maxX;
+        int y = (coordy*this.boardSize)/maxY;
+        System.out.println("Cell : (" + x + ", " + y + ")");
     }//GEN-LAST:event_boardMouseClicked
 
     private void buttonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddActionPerformed
