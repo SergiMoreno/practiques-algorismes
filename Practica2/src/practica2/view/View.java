@@ -56,6 +56,7 @@ public class View extends javax.swing.JFrame implements EventListener {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         board.setBackground(new java.awt.Color(204, 255, 255));
+        board.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         board.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 boardMouseClicked(evt);
