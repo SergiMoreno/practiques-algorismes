@@ -8,19 +8,33 @@ package practica2.pieces;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
 import java.lang.reflect.Constructor;
+import java.util.ArrayList;
 import practica2.model.Model;
 
 /**
  *
  * @author mascport
  */
+
+class RouteNode {
+    final public int x;
+    final public int y;
+    final public int movement;
+    
+    public RouteNode (int x, int y, int movement) {
+        this.x = x;
+        this.y = y;
+        this.movement = movement;
+    }
+}
+
 public abstract class Piece {
     protected int movx[];
     protected int movy[];
     protected String name;
     protected String image;
     protected boolean affectsdimension = false;
-    protected int posx, posy;
+    protected final ArrayList<RouteNode> route = new ArrayList<RouteNode>();
 
     public boolean afectaDimension() {
         return affectsdimension;
@@ -46,19 +60,6 @@ public abstract class Piece {
         return movy[i];
     }
     
-    public void setPos(int x, int y) {
-        this.posx = x;
-        this.posy = y;
-    }
-    
-    public int getPosX() {
-        return posx;
-    }
-    
-    public int getPosY() {
-        return posy;
-    }
-    
     public static String [] getPiecesTypes() {
         String [] result = new String[PieceTypes.values().length];
         int i = 0;
@@ -67,6 +68,30 @@ public abstract class Piece {
             i++;
         }
         return result;
+    }
+    
+    public void pruneRoute (int movementToPrune) {
+        // Prunning (rollback) a piece route once a branch has been cutted 
+        // during the backtracking process
+        for (int i = this.route.size()-1; i >= movementToPrune; i--) {
+            this.route.remove(i);
+        }
+    }   
+    
+    public void expandRoute (int x, int y, int movement) {
+        this.route.add(new RouteNode(x, y, movement));
+    }
+    
+    public int getRouteSize () {
+        return this.route.size();
+    } 
+    
+    public int getRouteNodeX (int nodeIndex) {
+        return this.route.get(nodeIndex).x;
+    }
+    
+    public int getRouteNodeY (int nodeIndex) {
+        return this.route.get(nodeIndex).y;
     }
     
     public enum PieceTypes {

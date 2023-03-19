@@ -19,12 +19,13 @@ import practica2.pieces.*;
  *
  * @author usuario
  */
+
 public class Model implements EventListener {
     
     private Main main;
     
     // Data structure that conatains the chess board
-    private BoardCell[][] board;
+    private boolean[][] board;
     private ArrayList<Piece> selectedPieces;
     
     // Contains the pieces playing
@@ -40,18 +41,13 @@ public class Model implements EventListener {
     
     private void createBoard (int size) {
         this.boardSize = size;
-        this.board = new BoardCell[size][size];
+        this.board = new boolean[size][size];
 
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                this.board[i][j] = new BoardCell(); 
+                this.board[i][j] = false; 
             }
         }
-    }
-    
-    private void visitCell (int x, int y, String pieceImage, int movement) {
-        this.board[x][y].pieceImage = pieceImage;
-        this.board[x][y].movement = movement;
     }
     
     private Piece addPiecePlayer (String name, int x, int y) {
@@ -60,7 +56,7 @@ public class Model implements EventListener {
             Class loader = Class.forName("practica2.pieces."+name);
             Constructor ctor = loader.getDeclaredConstructor(new Class[0]);
             Piece newpiece = (Piece) ctor.newInstance(new Object[0]);
-            newpiece.setPos(x, y);
+            newpiece.expandRoute(x, y, 0);
             selectedPieces.add(newpiece);
             return newpiece;
         } catch (ClassNotFoundException ex) {
@@ -92,7 +88,7 @@ public class Model implements EventListener {
         createBoard(boardSize);
     }
     
-    public BoardCell[][] getBoard () {
+    public boolean[][] getBoard () {
         return this.board;
     }
 
@@ -117,8 +113,7 @@ public class Model implements EventListener {
                     System.out.println("ERROR(Model): The specified coordinades are incorrect.");
                     break;
                 }
-                //this.board[event.posx][event.posy].visitCell("", event.movement);
-                this.pieces[event.pieceIndex].setPos(event.posx, event.posy);
+                movePiece(event.pieceIndex, event.posx, event.posy, event.movement);
                 break;
             case ADD_SELECTED_PIECE:
                 if (isOutOfBounds(event.posx, event.posy)) {
@@ -127,7 +122,7 @@ public class Model implements EventListener {
                 }
                 Piece piece = addPiecePlayer(event.name, event.posx, event.posy);
                 if (piece != null) 
-                        this.board[event.posx][event.posy].visitCell(piece.getImage(), 0);
+                        this.board[event.posx][event.posy] = true;
                 break;
         }
     }
@@ -136,41 +131,43 @@ public class Model implements EventListener {
         return this.boardSize;
     }
     
-    public String getPieceImageRef (int x, int y) {
-        return this.board[x][y].pieceImage;
-    }
-    
     private boolean isOutOfBounds (int x, int y) {
         return x < 0 || x >= this.boardSize || y < 0 || y >= this.boardSize;
     }
     
-    public Piece getPiece (int index) {
-        return this.pieces[index];
-    }
-    
     public int getNumPieces () {
-        return this.pieces.length;
+        if (this.pieces != null) return this.pieces.length;
+        return this.selectedPieces.size();
     }
     
-    public boolean movePiece (int pieceIndex, int x, int y, int movement) {
-        if (isOutOfBounds(x, y))
-                return false;
-        
-        if (this.board[x][y].visited)
-                return false;
-            
-        this.board[x][y].visitCell(pieceIndex, this.pieces[pieceIndex].getImage(), movement);
-        return true;
+    public boolean isValidMovement (int x, int y) {
+        return !(isOutOfBounds(x, y) || this.board[x][y]);        
     }
     
-    public void reconstruct (int pieceIndex, int currentMove) {
-        for (int i = 0; i < this.boardSize; i++) {
-            for (int j = 0; j < this.boardSize; j++) {
-                if (this.board[i][j].pieceIndex == pieceIndex && 
-                    this.board[i][j].movement >= currentMove) {
-                    this.board[i][j].resetCell();
-                }
-            }
-        }
+    public int getPieceRouteNodeX (int pieceIndex, int nodeIndex) {
+        if (this.pieces != null) return this.pieces[pieceIndex].getRouteNodeX(nodeIndex);
+        return this.selectedPieces.get(pieceIndex).getRouteNodeX(nodeIndex);
+    }
+    
+    public int getPieceRouteNodeY (int pieceIndex, int nodeIndex) {
+        if (this.pieces != null) return this.pieces[pieceIndex].getRouteNodeY(nodeIndex);
+        return this.selectedPieces.get(pieceIndex).getRouteNodeY(nodeIndex);
+    }
+    
+    public int getPieceRouteSize (int pieceIndex) {
+        if (this.pieces == null ) return this.selectedPieces.get(pieceIndex).getRouteSize();
+        return this.pieces[pieceIndex].getRouteSize();
+    }
+    
+    public String getPieceImage (int pieceIndex) {
+        if (this.pieces == null ) return this.selectedPieces.get(pieceIndex).getImage();
+        return this.pieces[pieceIndex].getImage();
+    }
+    
+    public void movePiece (int pieceIndex, int x, int y, int movement) {
+        // Reflecting changes onto the board
+        this.board[x][y] = true;
+        // Adding node to the piece route
+        this.pieces[pieceIndex].expandRoute(x, y, movement);
     }
 }

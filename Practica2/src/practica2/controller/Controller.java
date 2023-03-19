@@ -41,19 +41,11 @@ public class Controller extends Thread implements EventListener {
         Model model = this.main.getModel();
         Stack<PieceState[]> states = new Stack<PieceState[]>();
         
-        int[] pieceMoveToTry = new int[model.getNumPieces()];
-        int[] pieceMovement = new int[model.getNumPieces()];
-        for (int i = 0; i < pieceMoveToTry.length; i++) {
-            pieceMoveToTry[i] = 0;
-            pieceMovement[i] = 0;
-        }
-        int pieceIndex = 0;
-        
         // Put first state into the stack
         PieceState[] gameState = new PieceState[model.getNumPieces()];
         for (int i = 0; i < gameState.length; i++) {
-            Piece piece = model.getPiece(i);
-            gameState[i] = new PieceState(i, piece.getPosX(), piece.getPosY(), 0);
+            //Piece piece = model.getPiece(i);
+            //gameState[i] = new PieceState(i, piece.getPosX(), piece.getPosY(), 0);
         }
         states.add(gameState);
         
@@ -61,7 +53,7 @@ public class Controller extends Thread implements EventListener {
         PieceState[] current;
         while (!states.empty()) {
             current = states.pop();
-            model.movePiece(current.piece, current.posx, current.posy, movy)
+            //model.movePiece(current.piece, current.posx, current.posy, movy);
         }
     }
     
