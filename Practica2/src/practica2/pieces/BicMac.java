@@ -20,19 +20,19 @@ public class BicMac extends Piece {
         
         movx[pos] = 2; 
         movy[pos++] = 0;            
-        movx[pos] = 2; 
-        movy[pos++] = -2;            
+        movx[pos] = 1; 
+        movy[pos++] = -1;            
         movx[pos] = 0; 
         movy[pos++] = -2;            
-        movx[pos] = -2; 
-        movy[pos++] = -2;        
+        movx[pos] = -1; 
+        movy[pos++] = -1;        
         movx[pos] = -2; 
         movy[pos++] = 0;            
-        movx[pos] = -2; 
-        movy[pos++] = 2;            
+        movx[pos] = -1; 
+        movy[pos++] = 1;            
         movx[pos] = 0; 
         movy[pos++] = 2;            
-        movx[pos] = 2; 
-        movy[pos++] = 2;
+        movx[pos] = 1; 
+        movy[pos++] = 1;
     }
 }

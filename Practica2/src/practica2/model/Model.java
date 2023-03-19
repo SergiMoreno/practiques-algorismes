@@ -27,6 +27,7 @@ public class Model implements EventListener {
     // Data structure that conatains the chess board
     private boolean[][] board;
     private ArrayList<Piece> selectedPieces;
+    private int occupiedCells = 0;
     
     // Contains the pieces playing
     private Piece [] pieces;
@@ -91,7 +92,17 @@ public class Model implements EventListener {
     public boolean[][] getBoard () {
         return this.board;
     }
+    
+    public int getOccupiedCells () {
+        return this.occupiedCells;
+    }
 
+    public void setCell (int x, int y, boolean value) {
+        this.board[x][y] = value;
+        if (value) this.occupiedCells++;
+        else this.occupiedCells--;
+    }
+    
     @Override
     public void notify(Event e) {
         ModelEvent event = (ModelEvent) e;
@@ -122,7 +133,7 @@ public class Model implements EventListener {
                 }
                 Piece piece = addPiecePlayer(event.name, event.posx, event.posy);
                 if (piece != null) 
-                        this.board[event.posx][event.posy] = true;
+                        setCell(event.posx, event.posy, true);
                 break;
         }
     }
@@ -142,6 +153,14 @@ public class Model implements EventListener {
     
     public boolean isValidMovement (int x, int y) {
         return !(isOutOfBounds(x, y) || this.board[x][y]);        
+    }
+    
+    public int getPieceCurrentX (int pieceIndex) {
+        return this.pieces[pieceIndex].getRouteNodeX(this.pieces[pieceIndex].lastMovement());
+    }
+    
+    public int getPieceCurrentY (int pieceIndex) {
+        return this.pieces[pieceIndex].getRouteNodeY(this.pieces[pieceIndex].lastMovement());
     }
     
     public int getPieceRouteNodeX (int pieceIndex, int nodeIndex) {
@@ -164,9 +183,29 @@ public class Model implements EventListener {
         return this.pieces[pieceIndex].getImage();
     }
     
+    public int getNumPieceMovements (int pieceIndex) {
+        return this.pieces[pieceIndex].getNumMovs();
+    }
+    
+    public int getPieceMovX (int pieceIndex, int movementIndex) {
+        return this.pieces[pieceIndex].getMovX(movementIndex);
+    }
+    
+    public int getPieceMovY (int pieceIndex, int movementIndex) {
+        return this.pieces[pieceIndex].getMovY(movementIndex);
+    }
+    
+    public int getPieceLastMov (int pieceIndex) {
+        return this.pieces[pieceIndex].lastMovement();
+    }
+    
+    public void prunePieceRoute (int pieceIndex, int movementToPrune) {
+        this.pieces[pieceIndex].pruneRoute(movementToPrune, this);
+    }
+    
     public void movePiece (int pieceIndex, int x, int y, int movement) {
         // Reflecting changes onto the board
-        this.board[x][y] = true;
+        setCell(x, y, true);
         // Adding node to the piece route
         this.pieces[pieceIndex].expandRoute(x, y, movement);
     }

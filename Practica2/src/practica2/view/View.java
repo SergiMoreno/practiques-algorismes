@@ -23,7 +23,7 @@ public class View extends javax.swing.JFrame implements EventListener {
      */
     public View(Main main) {
         this.main = main;
-        this.boardSize = this.main.getDefaultBoardSize();
+        this.boardSize = Main.BOARD_DEFAULT_SIZE;
         initComponents();
         this.setVisible(true);
         this.setLocationRelativeTo(null);
@@ -120,7 +120,7 @@ public class View extends javax.swing.JFrame implements EventListener {
         speedSlider.setBackground(new java.awt.Color(0, 51, 51));
         speedSlider.setMaximum(40);
         speedSlider.setMinimum(20);
-        speedSlider.setValue(30);
+        speedSlider.setValue(Main.DEFAULT_SPEED);
         speedSlider.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 speedSliderStateChanged(evt);

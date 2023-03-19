@@ -16,7 +16,8 @@ public class Main implements EventListener {
     private View vista;
     private Controller control;
     
-    static final int BOARD_DEFAULT_SIZE = 8;
+    static final public int BOARD_DEFAULT_SIZE = 8;
+    static final public int DEFAULT_SPEED = 30;
 
     /**
      * @param args the command line arguments
@@ -49,9 +50,5 @@ public class Main implements EventListener {
     
     public Model getModel() {
         return this.model;
-    }
-    
-    public int getDefaultBoardSize() {
-        return Main.BOARD_DEFAULT_SIZE;
     }
 }

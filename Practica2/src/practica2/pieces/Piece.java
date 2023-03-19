@@ -60,6 +60,10 @@ public abstract class Piece {
         return movy[i];
     }
     
+    public int lastMovement () {
+        return this.route.size()-1;
+    }
+    
     public static String [] getPiecesTypes() {
         String [] result = new String[PieceTypes.values().length];
         int i = 0;
@@ -70,10 +74,11 @@ public abstract class Piece {
         return result;
     }
     
-    public void pruneRoute (int movementToPrune) {
+    public void pruneRoute (int movementToPrune, Model model) {
         // Prunning (rollback) a piece route once a branch has been cutted 
         // during the backtracking process
         for (int i = this.route.size()-1; i >= movementToPrune; i--) {
+            model.setCell(this.route.get(i).x, this.route.get(i).y, false);
             this.route.remove(i);
         }
     }   
