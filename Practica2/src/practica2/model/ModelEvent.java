@@ -12,7 +12,6 @@ public class ModelEvent extends Event {
     public int posx;
     public int posy;
     public int movement;
-    public int pieceIndex;
     public String name;
     
     public ModelEventType type;
@@ -26,13 +25,12 @@ public class ModelEvent extends Event {
     }
     
     // Move piece on the board
-    public ModelEvent(int pieceIndex, int x, int y, int movement) {
+    public ModelEvent(int x, int y, int movement) {
         super(EventType.Model);
         
         this.posx = x;
         this.posy = y;
         this.movement = movement;
-        this.pieceIndex = pieceIndex;
         this.type = ModelEventType.MOVE_PIECE;
     }
     

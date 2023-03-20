@@ -78,7 +78,7 @@ public abstract class Piece {
         // Prunning (rollback) a piece route once a branch has been cutted 
         // during the backtracking process
         for (int i = this.route.size()-1; i >= movementToPrune; i--) {
-            model.setCell(this.route.get(i).x, this.route.get(i).y, false);
+            model.setCell(this.route.get(i).x, this.route.get(i).y, -1);
             this.route.remove(i);
         }
     }   

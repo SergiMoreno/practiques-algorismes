@@ -25,9 +25,10 @@ public class Model implements EventListener {
     private Main main;
     
     // Data structure that conatains the chess board
-    private boolean[][] board;
+    private int[][] board;
     private ArrayList<Piece> selectedPieces;
     private int occupiedCells = 0;
+    private int movementCounter = 0;
     
     // Contains the pieces playing
     private Piece [] pieces;
@@ -42,11 +43,11 @@ public class Model implements EventListener {
     
     private void createBoard (int size) {
         this.boardSize = size;
-        this.board = new boolean[size][size];
+        this.board = new int[size][size];
 
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                this.board[i][j] = false; 
+                this.board[i][j] = -1; 
             }
         }
     }
@@ -78,6 +79,18 @@ public class Model implements EventListener {
         return null;
     } 
     
+    public int getPieceTurn () {
+        return this.movementCounter % this.pieces.length;
+    }
+    
+    public void setMovement (int movement) {
+        this.movementCounter = movement;
+    }
+    
+    public int getMovement () {
+        return this.movementCounter;
+    }
+    
     private void removePiecePlayers () {
         for (int i = 0; i < this.pieces.length; i++) {
             this.pieces[i] = null;
@@ -89,7 +102,7 @@ public class Model implements EventListener {
         createBoard(boardSize);
     }
     
-    public boolean[][] getBoard () {
+    public int[][] getBoard () {
         return this.board;
     }
     
@@ -97,10 +110,8 @@ public class Model implements EventListener {
         return this.occupiedCells;
     }
 
-    public void setCell (int x, int y, boolean value) {
+    public void setCell (int x, int y, int value) {
         this.board[x][y] = value;
-        if (value) this.occupiedCells++;
-        else this.occupiedCells--;
     }
     
     @Override
@@ -124,7 +135,7 @@ public class Model implements EventListener {
                     System.out.println("ERROR(Model): The specified coordinades are incorrect.");
                     break;
                 }
-                movePiece(event.pieceIndex, event.posx, event.posy, event.movement);
+                movePiece(event.posx, event.posy, this.movementCounter++);
                 break;
             case ADD_SELECTED_PIECE:
                 if (isOutOfBounds(event.posx, event.posy)) {
@@ -133,7 +144,7 @@ public class Model implements EventListener {
                 }
                 Piece piece = addPiecePlayer(event.name, event.posx, event.posy);
                 if (piece != null) 
-                        setCell(event.posx, event.posy, true);
+                        setCell(event.posx, event.posy, this.movementCounter++);
                 break;
         }
     }
@@ -152,7 +163,7 @@ public class Model implements EventListener {
     }
     
     public boolean isValidMovement (int x, int y) {
-        return !(isOutOfBounds(x, y) || this.board[x][y]);        
+        return !(isOutOfBounds(x, y) || (this.board[x][y] > -1));        
     }
     
     public int getPieceCurrentX (int pieceIndex) {
@@ -199,14 +210,22 @@ public class Model implements EventListener {
         return this.pieces[pieceIndex].lastMovement();
     }
     
-    public void prunePieceRoute (int pieceIndex, int movementToPrune) {
-        this.pieces[pieceIndex].pruneRoute(movementToPrune, this);
+    public void prune (int movementToPrune) {
+        int val;
+        for (int i = 0; i < this.boardSize; i++) {
+            for (int j = 0; j < this.boardSize; j++) {
+                val = this.board[i][j];
+                if (val >= movementToPrune) {
+                    this.board[i][j] = -1;
+                }
+            }
+        }
     }
     
-    public void movePiece (int pieceIndex, int x, int y, int movement) {
+    public void movePiece (int x, int y, int movement) {
         // Reflecting changes onto the board
-        setCell(x, y, true);
+        setCell(x, y, movement);
         // Adding node to the piece route
-        this.pieces[pieceIndex].expandRoute(x, y, movement);
+        this.pieces[this.getPieceTurn()].expandRoute(x, y, movement);
     }
 }

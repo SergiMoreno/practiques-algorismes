@@ -17,7 +17,7 @@ import practica2.view.ViewEvent;
  *
  * @author usuario
  */
-
+/*
 class PieceState {
     final public int piece;
     final public int posx;
@@ -29,6 +29,18 @@ class PieceState {
         this.posx = x;
         this.posy = y;
         this.movementCounter = movementCounter;
+    }
+}
+*/
+class PieceState {
+    final public int posx;
+    final public int posy;
+    final public int movement;
+    
+    public PieceState (int x, int y, int movement) {
+        this.posx = x;
+        this.posy = y;
+        this.movement = movement;
     }
 }
 
@@ -44,29 +56,45 @@ public class Controller extends Thread implements EventListener {
     
     @Override
     public void run () {
-        /*
         Model model = this.main.getModel();
-        Stack<PieceState[]> states = new Stack<PieceState[]>;       
-        ArrayList<PieceState[]> children = new ArrayList<PieceState[]>();
-        int index = 0;
-        for (int i = 0; i < model.getNumPieces(); i++) {
-            for (int j = i; j < model.getNumPieces(); j++) {
-                for (int m = 0; m < model.getNumPieceMovements(i); m++) {
-                    PieceState[] gameState;
-                    if (i == 0) {
-                        gameState = new PieceState[model.getNumPieces()]
-                        children.add(gameState);
-                    }
-                    PieceState[] gameState = new PieceState[model.getNumPieces()];
-                    gameState[i] = new PieceState(
-                            i,
-                            model.getPieceCurrentX(i) + model.getPieceMovX(i, j),
-                            model.getPieceCurrentY(i) + model.getPieceMovY(i, j),
-                            model.getPieceLastMov(i) + 1
-                    );
-                }
+        boolean isSolution = false, noSolution = false;
+        int turn;
+        int modelSize = model.getSize();
+        Stack<PieceState> states = new Stack<PieceState>();   // Stack of states
+        // Start algorithm
+        while (!isSolution && !noSolution) {
+            turn = model.getPieceTurn();
+            // Generate descendance
+            for (int j = 0; j < model.getNumPieceMovements(turn); j++) {
+                PieceState state = new PieceState(
+                        model.getPieceCurrentX(turn) + model.getPieceMovX(turn, j),
+                        model.getPieceCurrentY(turn) + model.getPieceMovY(turn, j),
+                        model.getMovement()
+                );
+                if (model.isValidMovement(state.posx, state.posy))
+                    states.add(state);
             }
-        }*/
+            noSolution = states.empty();
+            if (!noSolution) {
+                PieceState current = states.pop();
+                
+                if (current.movement < model.getMovement())
+                    model.prune(current.movement);
+                
+                main.notify(new ModelEvent(current.posx, current.posy, current.movement));
+                main.notify(new ViewEvent());
+                
+                if (model.getOccupiedCells() == (modelSize * modelSize)) 
+                    isSolution = true;
+            }
+            
+            try {
+                Thread.sleep(10000/speed);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+/*
                 
         Model model = this.main.getModel();
         Stack<PieceState>[] states = new Stack[model.getNumPieces()];
@@ -111,6 +139,7 @@ public class Controller extends Thread implements EventListener {
                 Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+*/
     }
     
     @Override
