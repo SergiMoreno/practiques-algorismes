@@ -55,18 +55,16 @@ public class BoardDisplay extends JPanel {
                         g.fillRect(j * ancho, i * alto, ancho, alto);
                     }
                 }
-            }
-        }
-        String imageref;
-        URL imageURL = null;
-        for (int i = 0; i < model.getNumPieces(); i++) {
-            for (int j = 0; j < model.getPieceRouteSize(i); j++) {
-                int x = model.getPieceRouteNodeX(i, j);
-                int y = model.getPieceRouteNodeY(i, j);
-                imageref = model.getPieceImage(i);
+                
+                // Paint piece and movement
+                String imageref = null;
+                URL imageURL = null;
+                int pieceIndex = model.getCellPiece(j, i);
+                if (pieceIndex > -1)
+                    imageref = model.getPieceImage(pieceIndex);
                 if (imageref != null) {
                     imageURL = getClass().getResource("../../resources/"+imageref);
-                    g.drawImage((new ImageIcon(imageURL)).getImage(), x * ancho, y * alto, ancho, alto, this);
+                    g.drawImage((new ImageIcon(imageURL)).getImage(), j * ancho, i * alto, ancho, alto, this);
                 }
             }
         }

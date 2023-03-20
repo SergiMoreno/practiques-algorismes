@@ -20,12 +20,22 @@ import practica2.pieces.*;
  * @author usuario
  */
 
+class BoardCell {
+    public int movement;
+    public int piece;
+    
+    public BoardCell (int movement, int piece) {
+        this.movement = movement;
+        this.piece = piece;
+    }    
+}
+
 public class Model implements EventListener {
     
     private Main main;
     
     // Data structure that conatains the chess board
-    private int[][] board;
+    private BoardCell[][] board;
     private ArrayList<Piece> selectedPieces;
     private int occupiedCells = 0;
     private int movementCounter = 0;
@@ -43,11 +53,11 @@ public class Model implements EventListener {
     
     private void createBoard (int size) {
         this.boardSize = size;
-        this.board = new int[size][size];
+        this.board = new BoardCell[size][size];
 
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                this.board[i][j] = -1; 
+                this.board[i][j] = new BoardCell(-1, -1); 
             }
         }
     }
@@ -58,7 +68,7 @@ public class Model implements EventListener {
             Class loader = Class.forName("practica2.pieces."+name);
             Constructor ctor = loader.getDeclaredConstructor(new Class[0]);
             Piece newpiece = (Piece) ctor.newInstance(new Object[0]);
-            newpiece.expandRoute(x, y, 0);
+            newpiece.setPos(x, y);
             selectedPieces.add(newpiece);
             return newpiece;
         } catch (ClassNotFoundException ex) {
@@ -80,7 +90,8 @@ public class Model implements EventListener {
     } 
     
     public int getPieceTurn () {
-        return this.movementCounter % this.pieces.length;
+        if (this.pieces != null) return this.movementCounter % this.pieces.length;
+        return this.movementCounter % this.selectedPieces.size();
     }
     
     public void setMovement (int movement) {
@@ -102,7 +113,7 @@ public class Model implements EventListener {
         createBoard(boardSize);
     }
     
-    public int[][] getBoard () {
+    public BoardCell[][] getBoard () {
         return this.board;
     }
     
@@ -111,7 +122,7 @@ public class Model implements EventListener {
     }
 
     public void setCell (int x, int y, int value) {
-        this.board[x][y] = value;
+        this.board[x][y] = new BoardCell(value, getPieceTurn());
     }
     
     @Override
@@ -163,30 +174,17 @@ public class Model implements EventListener {
     }
     
     public boolean isValidMovement (int x, int y) {
-        return !(isOutOfBounds(x, y) || (this.board[x][y] > -1));        
+        return !(isOutOfBounds(x, y) || (this.board[x][y].movement > -1));        
     }
     
-    public int getPieceCurrentX (int pieceIndex) {
-        return this.pieces[pieceIndex].getRouteNodeX(this.pieces[pieceIndex].lastMovement());
+    public int getPiecePosX (int pieceIndex) {
+        if (this.pieces != null) return this.pieces[pieceIndex].getPosX();
+        return this.selectedPieces.get(pieceIndex).getPosX();
     }
     
-    public int getPieceCurrentY (int pieceIndex) {
-        return this.pieces[pieceIndex].getRouteNodeY(this.pieces[pieceIndex].lastMovement());
-    }
-    
-    public int getPieceRouteNodeX (int pieceIndex, int nodeIndex) {
-        if (this.pieces != null) return this.pieces[pieceIndex].getRouteNodeX(nodeIndex);
-        return this.selectedPieces.get(pieceIndex).getRouteNodeX(nodeIndex);
-    }
-    
-    public int getPieceRouteNodeY (int pieceIndex, int nodeIndex) {
-        if (this.pieces != null) return this.pieces[pieceIndex].getRouteNodeY(nodeIndex);
-        return this.selectedPieces.get(pieceIndex).getRouteNodeY(nodeIndex);
-    }
-    
-    public int getPieceRouteSize (int pieceIndex) {
-        if (this.pieces == null ) return this.selectedPieces.get(pieceIndex).getRouteSize();
-        return this.pieces[pieceIndex].getRouteSize();
+    public int getPiecePosY (int pieceIndex) {
+        if (this.pieces != null) return this.pieces[pieceIndex].getPosY();
+        return this.selectedPieces.get(pieceIndex).getPosY();
     }
     
     public String getPieceImage (int pieceIndex) {
@@ -206,17 +204,13 @@ public class Model implements EventListener {
         return this.pieces[pieceIndex].getMovY(movementIndex);
     }
     
-    public int getPieceLastMov (int pieceIndex) {
-        return this.pieces[pieceIndex].lastMovement();
-    }
-    
     public void prune (int movementToPrune) {
-        int val;
+        BoardCell val;
         for (int i = 0; i < this.boardSize; i++) {
             for (int j = 0; j < this.boardSize; j++) {
                 val = this.board[i][j];
-                if (val >= movementToPrune) {
-                    this.board[i][j] = -1;
+                if (val.movement >= movementToPrune) {
+                    this.board[i][j] = new BoardCell(-1, -1);
                 }
             }
         }
@@ -226,6 +220,10 @@ public class Model implements EventListener {
         // Reflecting changes onto the board
         setCell(x, y, movement);
         // Adding node to the piece route
-        this.pieces[this.getPieceTurn()].expandRoute(x, y, movement);
+        this.pieces[this.getPieceTurn()].setPos(x, y);
+    }
+    
+    public int getCellPiece (int x, int y) {
+        return this.board[x][y].piece;
     }
 }

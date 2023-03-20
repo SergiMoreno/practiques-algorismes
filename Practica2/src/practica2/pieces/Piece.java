@@ -16,25 +16,14 @@ import practica2.model.Model;
  * @author mascport
  */
 
-class RouteNode {
-    final public int x;
-    final public int y;
-    final public int movement;
-    
-    public RouteNode (int x, int y, int movement) {
-        this.x = x;
-        this.y = y;
-        this.movement = movement;
-    }
-}
-
 public abstract class Piece {
     protected int movx[];
     protected int movy[];
     protected String name;
     protected String image;
     protected boolean affectsdimension = false;
-    protected final ArrayList<RouteNode> route = new ArrayList<RouteNode>();
+    protected int x;
+    protected int y;
 
     public boolean afectaDimension() {
         return affectsdimension;
@@ -60,10 +49,6 @@ public abstract class Piece {
         return movy[i];
     }
     
-    public int lastMovement () {
-        return this.route.size()-1;
-    }
-    
     public static String [] getPiecesTypes() {
         String [] result = new String[PieceTypes.values().length];
         int i = 0;
@@ -74,29 +59,17 @@ public abstract class Piece {
         return result;
     }
     
-    public void pruneRoute (int movementToPrune, Model model) {
-        // Prunning (rollback) a piece route once a branch has been cutted 
-        // during the backtracking process
-        for (int i = this.route.size()-1; i >= movementToPrune; i--) {
-            model.setCell(this.route.get(i).x, this.route.get(i).y, -1);
-            this.route.remove(i);
-        }
-    }   
-    
-    public void expandRoute (int x, int y, int movement) {
-        this.route.add(new RouteNode(x, y, movement));
+    public void setPos (int x, int y) {
+        this.x = x;
+        this.y = y;
     }
     
-    public int getRouteSize () {
-        return this.route.size();
-    } 
-    
-    public int getRouteNodeX (int nodeIndex) {
-        return this.route.get(nodeIndex).x;
+    public int getPosX () {
+        return this.x;
     }
     
-    public int getRouteNodeY (int nodeIndex) {
-        return this.route.get(nodeIndex).y;
+    public int getPosY () {
+        return this.y;
     }
     
     public enum PieceTypes {

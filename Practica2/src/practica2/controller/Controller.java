@@ -67,8 +67,8 @@ public class Controller extends Thread implements EventListener {
             // Generate descendance
             for (int j = 0; j < model.getNumPieceMovements(turn); j++) {
                 PieceState state = new PieceState(
-                        model.getPieceCurrentX(turn) + model.getPieceMovX(turn, j),
-                        model.getPieceCurrentY(turn) + model.getPieceMovY(turn, j),
+                        model.getPiecePosX(turn) + model.getPieceMovX(turn, j),
+                        model.getPiecePosY(turn) + model.getPieceMovY(turn, j),
                         model.getMovement()
                 );
                 if (model.isValidMovement(state.posx, state.posy))
