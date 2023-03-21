@@ -81,6 +81,10 @@ public class Model implements EventListener {
     public int getCellPiece(int x, int y) {
         return this.board[x][y].piece;
     }
+    
+    public boolean isValid(int x, int y, int movement, int pieceIndex) {
+        return !isOutOfBounds(x, y) && (this.board[x][y].piece == -1 || (this.board[x][y].piece > pieceIndex && this.board[x][y].movement >= movement));
+    }
     /*    *********************              */
     
     

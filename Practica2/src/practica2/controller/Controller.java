@@ -11,7 +11,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import practica2.model.Model;
 import practica2.model.ModelEvent;
-import practica2.pieces.Piece;
 import practica2.view.ViewEvent;
 
 /**
@@ -33,7 +32,7 @@ class PieceState {
 public class Controller extends Thread implements EventListener {
     private Main main;
     static private AtomicBoolean stop;  // Avoid dirty reads between threads
-    private int speed;
+    static int speed;
     
     public Controller(Main main) {
         this.main = main;
@@ -79,11 +78,34 @@ public class Controller extends Thread implements EventListener {
             noSolution = currentStack.empty();
             if (!noSolution) {
                 PieceState current = currentStack.pop();
+              
 
-                boolean valid = model.isValidMovement(current.posx, current.posy);
+                /*boolean valid = model.isValidMovement(current.posx, current.posy);
                 while (!valid) {
                     current = currentStack.pop();
                     valid = model.isValidMovement(current.posx, current.posy);
+                }*/
+                
+                boolean hasToPrune = false;
+                boolean valid = model.isValid(current.posx, current.posy, current.movement, turn);
+                while (!valid && !currentStack.empty()) {
+                    current = currentStack.pop();
+                    valid = model.isValid(current.posx, current.posy, current.movement, turn);
+                    hasToPrune = true;
+                }
+                
+                if (hasToPrune) {
+                    for (int i = 0; i < states.size(); i++) {
+                        Stack<PieceState> others = states.get(i);
+                        if (!others.isEmpty()) {
+                            PieceState top = others.peek();
+                            while (top.movement > current.movement) {
+                                others.pop();
+                                if (others.isEmpty()) break;
+                                top = others.peek();
+                            }
+                        }
+                    }
                 }
                 
                 if (current.movement < model.getMovement())
@@ -97,7 +119,6 @@ public class Controller extends Thread implements EventListener {
             }
             
             try {
-                //Thread.sleep(10000/speed);
                 Thread.sleep(10000/speed);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);

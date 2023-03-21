@@ -5,11 +5,9 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.net.URL;
-import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import practica2.model.Model;
-import practica2.pieces.Piece;
 
 /**
  *
@@ -37,7 +35,6 @@ public class BoardDisplay extends JPanel {
         Graphics g = bima.getGraphics();
         g.setColor(new Color(255, 255, 255));
         g.fillRect(0, 0, this.getWidth(), this.getHeight());
-        //int dim = dat.getDimension();
         int dim = model.getBoardSize();
         //calculamos el ancho y alto de la casilla
         int ancho = this.getWidth() / dim;
@@ -72,9 +69,12 @@ public class BoardDisplay extends JPanel {
                     /**/
                     int pieceIndex = model.getCellPiece(j, i);
                     if (pieceIndex == 0) g.setColor(new Color(255, 0, 236));
-                    else g.setColor(new Color(12, 255, 0));
+                    else if (pieceIndex == 1) g.setColor(new Color(12, 255, 0));
+                    else if (pieceIndex == 2) g.setColor(new Color(0, 236, 255));
+                    else if (pieceIndex == 3) g.setColor(new Color(255, 185, 0));
                     /**/
-                    g.setFont(new Font("Arial", Font.BOLD, 20));
+                    int fontSize = (20 * 8) / model.getBoardSize();
+                    g.setFont(new Font("Arial", Font.BOLD, fontSize));
                     g.drawString(Integer.toString(movement), x, y);
                     g.setColor(new Color(0, 0, 0));
                 }

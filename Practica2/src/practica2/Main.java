@@ -32,17 +32,17 @@ public class Main implements EventListener {
         control = new Controller(this);
         vista = new View(this);
     }
-
+    
     @Override
     public void notify(Event e) {
         switch (e.getEventType()){
             case Model -> {
                 model.notify(e);
             }
-            case Vista -> {
+            case View -> {
                 vista.notify(e);
             }
-            case Control -> {
+            case Controller -> {
                 control.notify(e);
             }
         }

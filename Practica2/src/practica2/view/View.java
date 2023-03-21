@@ -1,8 +1,6 @@
 package practica2.view;
 
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
+import java.awt.Cursor;
 import practica2.Event;
 import practica2.EventListener;
 import practica2.Main;
@@ -118,8 +116,8 @@ public class View extends javax.swing.JFrame implements EventListener {
         jScrollPane1.setViewportView(pieceList);
 
         speedSlider.setBackground(new java.awt.Color(0, 51, 51));
-        speedSlider.setMaximum(40);
-        speedSlider.setMinimum(20);
+        speedSlider.setMaximum(300);
+        speedSlider.setMinimum(10);
         speedSlider.setValue(Main.DEFAULT_SPEED);
         speedSlider.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -214,12 +212,16 @@ public class View extends javax.swing.JFrame implements EventListener {
 
     private void buttonStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonStartActionPerformed
         buttonStart.setEnabled(false);
+        this.board.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        this.jSpinner1.setEnabled(false);
         this.main.notify(new ModelEvent());
         this.main.notify(new ControllerEvent(true, speedSlider.getValue()));
     }//GEN-LAST:event_buttonStartActionPerformed
 
     private void buttonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonResetActionPerformed
         // TODO add your handling code here:
+        /*this.main.notify(new ModelEvent());
+        this.main.notify(new ControllerEvent(false, speedSlider.getValue()));*/
     }//GEN-LAST:event_buttonResetActionPerformed
 
     private void sizeChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sizeChanged
@@ -236,10 +238,10 @@ public class View extends javax.swing.JFrame implements EventListener {
     private void speedTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_speedTextActionPerformed
         // TODO add your handling code here:
         int speed = Integer.parseInt(speedText.getText());
-        if (speed > 40) {
-            speed = 40;
-        } else if (speed < 20) {
-            speed = 20;
+        if (speed > this.speedSlider.getMaximum()) {
+            speed = this.speedSlider.getMaximum();
+        } else if (speed < this.speedSlider.getMinimum()) {
+            speed = this.speedSlider.getMinimum();
         }
         speedSlider.setValue(speed);
         main.notify(new ControllerEvent(speed));
@@ -254,17 +256,19 @@ public class View extends javax.swing.JFrame implements EventListener {
 
     private void boardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_boardMouseClicked
         // TODO add your handling code here:
-        String selected = pieceList.getSelectedValue();
-        if (selected != null) {
-            int coordx = evt.getX();
-            int coordy = evt.getY();
-            int maxX = this.board.getHeight();
-            int maxY = this.board.getWidth();
-            int x = (coordx*this.boardSize)/maxX;
-            int y = (coordy*this.boardSize)/maxY;
-            
-            main.notify(new ModelEvent(selected, x, y));
-            board.refresh();
+        if (this.buttonStart.isEnabled()) {
+            String selected = pieceList.getSelectedValue();
+            if (selected != null) {
+                int coordx = evt.getX();
+                int coordy = evt.getY();
+                int maxX = this.board.getHeight();
+                int maxY = this.board.getWidth();
+                int x = (coordx*this.boardSize)/maxX;
+                int y = (coordy*this.boardSize)/maxY;
+
+                main.notify(new ModelEvent(selected, x, y));
+                board.refresh();
+            }
         }
     }//GEN-LAST:event_boardMouseClicked
 

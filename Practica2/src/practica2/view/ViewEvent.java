@@ -11,7 +11,7 @@ public class ViewEvent extends Event {
     public EventType type;
     
     public ViewEvent() {
-        super(EventType.Vista);
+        super(EventType.View);
 
     }
 }
