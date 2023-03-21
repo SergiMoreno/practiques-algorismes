@@ -1,6 +1,7 @@
 package practica2.view;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.net.URL;
@@ -37,7 +38,7 @@ public class BoardDisplay extends JPanel {
         g.setColor(new Color(255, 255, 255));
         g.fillRect(0, 0, this.getWidth(), this.getHeight());
         //int dim = dat.getDimension();
-        int dim = model.getSize();
+        int dim = model.getBoardSize();
         //calculamos el ancho y alto de la casilla
         int ancho = this.getWidth() / dim;
         int alto = this.getHeight() / dim;
@@ -57,14 +58,25 @@ public class BoardDisplay extends JPanel {
                 }
                 
                 // Paint piece and movement
-                String imageref = null;
                 URL imageURL = null;
-                int pieceIndex = model.getCellPiece(j, i);
-                if (pieceIndex > -1)
-                    imageref = model.getPieceImage(pieceIndex);
-                if (imageref != null) {
-                    imageURL = getClass().getResource("../../resources/"+imageref);
+                String pieceImage = model.getCellImage(j, i);
+                if (pieceImage != null) {
+                    imageURL = getClass().getResource("../../resources/"+pieceImage);
                     g.drawImage((new ImageIcon(imageURL)).getImage(), j * ancho, i * alto, ancho, alto, this);
+                }
+                
+                int movement = model.getCellMovement(j, i);
+                if (movement != -1) {
+                    int x = j * ancho + (ancho - g.getFontMetrics().stringWidth(Integer.toString(movement))) / 2;
+                    int y = i * ancho + ((ancho - g.getFontMetrics().getHeight()) / 2) + g.getFontMetrics().getAscent();
+                    /**/
+                    int pieceIndex = model.getCellPiece(j, i);
+                    if (pieceIndex == 0) g.setColor(new Color(255, 0, 236));
+                    else g.setColor(new Color(12, 255, 0));
+                    /**/
+                    g.setFont(new Font("Arial", Font.BOLD, 20));
+                    g.drawString(Integer.toString(movement), x, y);
+                    g.setColor(new Color(0, 0, 0));
                 }
             }
         }

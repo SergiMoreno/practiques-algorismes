@@ -1,15 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package practica2.pieces;
-
-import java.lang.System.Logger;
-import java.lang.System.Logger.Level;
-import java.lang.reflect.Constructor;
-import java.util.ArrayList;
-import practica2.model.Model;
 
 /**
  *
@@ -22,8 +11,21 @@ public abstract class Piece {
     protected String name;
     protected String image;
     protected boolean affectsdimension = false;
-    protected int x;
-    protected int y;
+    // added
+    protected int x, y;
+    
+    public void setPos(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+    
+    public int getPosX() {
+        return x;
+    }
+    
+    public int getPosY() {
+        return y;
+    }
 
     public boolean afectaDimension() {
         return affectsdimension;
@@ -57,19 +59,6 @@ public abstract class Piece {
             i++;
         }
         return result;
-    }
-    
-    public void setPos (int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
-    
-    public int getPosX () {
-        return this.x;
-    }
-    
-    public int getPosY () {
-        return this.y;
     }
     
     public enum PieceTypes {
