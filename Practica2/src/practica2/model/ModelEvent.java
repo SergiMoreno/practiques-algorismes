@@ -1,8 +1,6 @@
 package practica2.model;
 
-import java.util.ArrayList;
 import practica2.Event;
-import practica2.pieces.Piece;
 
 /**
  *
@@ -19,7 +17,7 @@ public class ModelEvent extends Event {
     public ModelEventType type;
     public int dimension;
     
-    // Inicialize pieces on the board
+    // Set the piece to be played
     public ModelEvent() {
         super(EventType.Model);
 

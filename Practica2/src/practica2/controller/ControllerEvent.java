@@ -6,6 +6,7 @@ public class ControllerEvent extends Event {
     public int speed;
     public ControlEventType type;
     
+    // Start/ algorithm execution
     public ControllerEvent(boolean start, int speed) {
         super(EventType.Controller);
         this.speed = speed;
@@ -16,6 +17,7 @@ public class ControllerEvent extends Event {
         }
     }
     
+    // Update algorithm speed
     public ControllerEvent(int speed) {
         super(EventType.Controller);
         

@@ -36,18 +36,18 @@ public class BoardDisplay extends JPanel {
         g.setColor(new Color(255, 255, 255));
         g.fillRect(0, 0, this.getWidth(), this.getHeight());
         int dim = model.getBoardSize();
-        //calculamos el ancho y alto de la casilla
+        // calculate cell weight and height
         int ancho = this.getWidth() / dim;
         int alto = this.getHeight() / dim;
-        //Pintamos el tablero
+        // paint board
         g.setColor(new Color(0, 0, 0));
         for (int i = 0; i < dim; i++) {
             for (int j = 0; j < dim; j++) {
-                if ((i % 2) == 0) { //la fila empieza por blanco
+                if ((i % 2) == 0) {
                     if ((j % 2) == 1) {
                         g.fillRect(j * ancho, i * alto, ancho, alto);
                     }
-                } else // la fila empieza por negro
+                } else
                 {
                     if ((j % 2) == 0) {
                         g.fillRect(j * ancho, i * alto, ancho, alto);

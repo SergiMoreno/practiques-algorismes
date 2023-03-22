@@ -17,7 +17,7 @@ public class Main implements EventListener {
     private Controller control;
     
     static final public int BOARD_DEFAULT_SIZE = 8;
-    static final public int DEFAULT_SPEED = 30;
+    static final public int DEFAULT_SPEED = 100;
 
     /**
      * @param args the command line arguments

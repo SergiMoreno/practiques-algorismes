@@ -1,6 +1,7 @@
 package practica2.view;
 
 import java.awt.Cursor;
+import javax.swing.JOptionPane;
 import practica2.Event;
 import practica2.EventListener;
 import practica2.Main;
@@ -130,7 +131,7 @@ public class View extends javax.swing.JFrame implements EventListener {
 
         speedText.setBackground(new java.awt.Color(0, 51, 51));
         speedText.setForeground(new java.awt.Color(255, 255, 255));
-        speedText.setText("30");
+        speedText.setText(Integer.toString(Main.DEFAULT_SPEED));
         speedText.setBorder(null);
         speedText.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -259,6 +260,7 @@ public class View extends javax.swing.JFrame implements EventListener {
         if (this.buttonStart.isEnabled()) {
             String selected = pieceList.getSelectedValue();
             if (selected != null) {
+                // get cell position
                 int coordx = evt.getX();
                 int coordy = evt.getY();
                 int maxX = this.board.getHeight();
@@ -277,7 +279,20 @@ public class View extends javax.swing.JFrame implements EventListener {
     public void notify(Event e) {
         ViewEvent event = (ViewEvent) e;
         
-        board.refresh();
+        switch (event.type) {
+            case REFRESH_BOARD -> {
+                board.refresh();
+                break;
+            }
+            case END -> {
+                if (event.exit) {
+                    JOptionPane.showMessageDialog(this, "All the cells have been visited", "SUCCESS!", JOptionPane.INFORMATION_MESSAGE);
+                    break;
+                }
+                JOptionPane.showMessageDialog(this, "None solution was reached", "FAILURE!", JOptionPane.WARNING_MESSAGE);
+                break;
+            }
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

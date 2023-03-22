@@ -11,7 +11,7 @@ public abstract class Piece {
     protected String name;
     protected String image;
     protected boolean affectsdimension = false;
-    // added
+    // piece position on board
     protected int x, y;
     
     public void setPos(int x, int y) {
@@ -51,6 +51,7 @@ public abstract class Piece {
         return movy[i];
     }
     
+    // static method to compose the list of pieces shown in View
     public static String [] getPiecesTypes() {
         String [] result = new String[PieceTypes.values().length];
         int i = 0;

@@ -26,19 +26,19 @@ class BoardCell {
 }
 
 public class Model implements EventListener {
-    
     private Main main;
     
     // Data structure that conatains the chess board
     private BoardCell[][] board;
-    private ArrayList<Piece> selectedPieces;
-    //private int occupiedCells = 0;
-    private int movementCounter = 0;
+    private int boardSize;
     
+    // Contains de list of pieces placed by the user on the board
+    private ArrayList<Piece> selectedPieces;
     // Contains the pieces playing
     private Piece [] pieces;
     
-    private int boardSize;
+    // Counter of total movements on board
+    private int movementCounter = 0;
     
     public Model(Main main, int boardSize) {
         this.main = main;
@@ -57,6 +57,7 @@ public class Model implements EventListener {
         }
     }
     
+    // NOT IMPLEMENTED
     private void resetModel (int boardSize) {
         //removePiecePlayers();
         createBoard(boardSize);
@@ -67,12 +68,9 @@ public class Model implements EventListener {
     }
     
     public int getOccupiedCells () {
-        //return this.occupiedCells;
         return this.movementCounter;
     }
     
-    
-    /*    *********************              */
     public int getNumPieces() {
         if (this.pieces != null) return this.pieces.length;
         return this.selectedPieces.size();
@@ -82,24 +80,31 @@ public class Model implements EventListener {
         return this.board[x][y].piece;
     }
     
-    public boolean isValid(int x, int y, int movement, int pieceIndex) {
-        return !isOutOfBounds(x, y) && (this.board[x][y].piece == -1 || (this.board[x][y].piece > pieceIndex && this.board[x][y].movement >= movement));
+    public int getCellMovement(int x, int y) {
+        return this.board[x][y].movement;
     }
-    /*    *********************              */
     
+    public String getCellImage (int x, int y) {
+        int pieceIndex = this.board[x][y].piece;
+        if (pieceIndex == -1) return null;
+        if (this.pieces == null) return this.selectedPieces.get(pieceIndex).getImage();
+        return this.pieces[pieceIndex].getImage();
+    }
     
-    
+    // Return turn to move as piece index
     public int getPieceTurn() {
         if (this.pieces != null) return this.movementCounter % this.pieces.length;
         return this.movementCounter % this.selectedPieces.size();
     }
     
+    // Return movement to be taken by the piece
     public int getMovement() {
         if (this.pieces != null) return this.movementCounter / this.pieces.length;
         return this.movementCounter / this.selectedPieces.size();
     }
     
-    public int getNumPieceMovements(int pieceIndex) {
+    // Return number of moves that can performed the indexed piece
+    public int getNumPieceMoves(int pieceIndex) {
         return this.pieces[pieceIndex].getNumMovs();
     }
     
@@ -119,46 +124,38 @@ public class Model implements EventListener {
         return this.pieces[pieceIndex].getPosY();
     }
     
-    public int getCellMovement(int x, int y) {
-        return this.board[x][y].movement;
-    }
-    
-    public String getCellImage (int x, int y) {
-        int pieceIndex = this.board[x][y].piece;
-        if (pieceIndex == -1) return null;
-        if (this.pieces == null) return this.selectedPieces.get(pieceIndex).getImage();
-        return this.pieces[pieceIndex].getImage();
-    }
-
-    /*public void setCell (int x, int y, int value) {
-        this.board[x][y] = new BoardCell(value, getPieceTurn());
-    }*/
-    
     public boolean isOutOfBounds(int x, int y) {
         return x < 0 || x >= this.boardSize || y < 0 || y >= this.boardSize; 
     }
     
+    // Cell position is inside board and empty
     public boolean isValidMovement(int x, int y) {
         return !isOutOfBounds(x, y) && this.board[x][y].piece == -1;
     }
     
+    // Cell position is inside board and empty or occupied by less priority piece with greater movement than the paramter one
+    public boolean isFreeCell(int x, int y, int movement, int pieceIndex) {
+        return !isOutOfBounds(x, y) && (this.board[x][y].piece == -1 || (this.board[x][y].piece > pieceIndex && this.board[x][y].movement >= movement));
+    }
+    
+    // Check all the board and reset cells to return to previous movements
     public void prune (int movementToPrune, int pieceIndex) {
         BoardCell val;
         for (int i = 0; i < this.boardSize; i++) {
             for (int j = 0; j < this.boardSize; j++) {
                 val = this.board[i][j];
-                if (pieceIndex <= val.piece) {
-                    if (val.movement >= movementToPrune) {
+                if (pieceIndex <= val.piece) { // cell with piece of less priority than the one that moves
+                    if (val.movement >= movementToPrune) { // reset cells with greater or equal movement than the one to be taken
                         this.board[i][j] = new BoardCell(-1, -1);
                         this.movementCounter--;
-                    } else if (val.movement == movementToPrune - 1) {
+                    } else if (val.movement == movementToPrune - 1) { // reset piece position to the one previous to the movement
                         this.pieces[val.piece].setPos(i, j);
                     }
-                } else if (val.piece != -1 && pieceIndex > val.piece) {
-                    if (val.movement > movementToPrune) {
+                } else if (val.piece != -1 && pieceIndex > val.piece) { // cell with piece of mpre priority than the one that moves
+                    if (val.movement > movementToPrune) { // reset cells with greater movement than the one to be taken
                         this.board[i][j] = new BoardCell(-1, -1);
                         this.movementCounter--;
-                    } else if (val.movement == movementToPrune) {
+                    } else if (val.movement == movementToPrune) { // reset piece position to the one with the movement
                         this.pieces[val.piece].setPos(i, j);
                     }
                 }
@@ -166,12 +163,14 @@ public class Model implements EventListener {
         }
     }
     
+    @SuppressWarnings("unchecked")
     private Piece addPiecePlayer (String name, int x, int y) {
         try {
             // Instantiating the object from the class using the class name (string)
             Class loader = Class.forName("practica2.pieces."+name);
             Constructor ctor = loader.getDeclaredConstructor(new Class[0]);
             Piece newpiece = (Piece) ctor.newInstance(new Object[0]);
+            // Set position piece
             newpiece.setPos(x, y);
             return newpiece;
         } catch (ClassNotFoundException ex) {
@@ -190,8 +189,8 @@ public class Model implements EventListener {
             Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
-    } 
-    
+    }
+
     @Override
     public void notify(Event e) {
         ModelEvent event = (ModelEvent) e;
@@ -228,7 +227,6 @@ public class Model implements EventListener {
                     board[event.posx][event.posy] = new BoardCell(this.getMovement(), selectedPieces.size()-1);
                     this.movementCounter++;
                 }
-                        //setCell(event.posx, event.posy, this.movementCounter++);
                 break;
         }
     }
