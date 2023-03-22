@@ -5,6 +5,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Random;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import practica2.model.Model;
@@ -17,8 +19,11 @@ import practica2.model.Model;
 public class BoardDisplay extends JPanel {
     final private Model model;
     
+    HashMap<Integer, Color> pieceColor;
+    
     public BoardDisplay(Model model) {
         this.model = model;
+        this.pieceColor = new HashMap<Integer, Color>();
     }
     
     @Override
@@ -66,13 +71,27 @@ public class BoardDisplay extends JPanel {
                 if (movement != -1) {
                     int x = j * ancho + (ancho - g.getFontMetrics().stringWidth(Integer.toString(movement))) / 2;
                     int y = i * ancho + ((ancho - g.getFontMetrics().getHeight()) / 2) + g.getFontMetrics().getAscent();
+                    
                     /**/
                     int pieceIndex = model.getCellPiece(j, i);
-                    if (pieceIndex == 0) g.setColor(new Color(255, 0, 236));
+                    
+                    if (this.pieceColor.containsKey(pieceIndex)) {
+                        g.setColor(this.pieceColor.get(pieceIndex));
+                    } else {
+                        Random rnd = new Random();
+                        int r = rnd.nextInt(256);
+                        int gColor = rnd.nextInt(256);
+                        int b = rnd.nextInt(256);
+                        Color color = new Color(r, gColor, b);
+                        this.pieceColor.put(pieceIndex, color);
+                        g.setColor(color);
+                    }
+                    /*if (pieceIndex == 0) g.setColor(new Color(255, 0, 236));
                     else if (pieceIndex == 1) g.setColor(new Color(12, 255, 0));
                     else if (pieceIndex == 2) g.setColor(new Color(0, 236, 255));
-                    else if (pieceIndex == 3) g.setColor(new Color(255, 185, 0));
+                    else if (pieceIndex == 3) g.setColor(new Color(255, 185, 0));*/
                     /**/
+                    
                     int fontSize = (20 * 8) / model.getBoardSize();
                     g.setFont(new Font("Arial", Font.BOLD, fontSize));
                     g.drawString(Integer.toString(movement), x, y);

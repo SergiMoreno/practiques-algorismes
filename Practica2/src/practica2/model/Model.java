@@ -168,8 +168,20 @@ public class Model implements EventListener {
         try {
             // Instantiating the object from the class using the class name (string)
             Class loader = Class.forName("practica2.pieces."+name);
-            Constructor ctor = loader.getDeclaredConstructor(new Class[0]);
-            Piece newpiece = (Piece) ctor.newInstance(new Object[0]);
+            /**********************************************************/
+            int numberOfConstructors = loader.getConstructors().length;
+            Piece newpiece;
+            if (numberOfConstructors > 1) {
+                Constructor ctor = loader.getConstructor(int.class);
+                newpiece = (Piece) ctor.newInstance(this.boardSize );
+            } else {
+                Constructor ctor = loader.getDeclaredConstructor(new Class[0]);
+                newpiece = (Piece) ctor.newInstance(new Object[0]);
+            }
+            
+            /*if (newpiece.afectaDimension()) {
+                newpiece = (Piece) ctor.newInstance(new Object[] { this.boardSize });
+            }*/
             // Set position piece
             newpiece.setPos(x, y);
             return newpiece;

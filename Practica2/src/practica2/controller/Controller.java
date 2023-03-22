@@ -107,7 +107,9 @@ public class Controller extends Thread implements EventListener {
                 if (current.movement < model.getMovement()) // Prune board cells
                     model.prune(current.movement, turn);
                 
+                // Move piece
                 main.notify(new ModelEvent(current.posx, current.posy, current.movement, turn));
+                // Refresh board display
                 main.notify(new ViewEvent());
                 
                 // Check if all the cells have been occupied
@@ -123,6 +125,7 @@ public class Controller extends Thread implements EventListener {
         }
         
         System.out.println("Number of cell visited : " + model.getOccupiedCells() + "/" + (boardSize*boardSize));
+        // Notify the algorithm end
         main.notify(new ViewEvent(true));
     }
     

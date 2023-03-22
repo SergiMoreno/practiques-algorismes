@@ -17,7 +17,7 @@ public class Queen extends Piece {
     public Queen(int d) {
         affectsdimension = true; //se mueve en dimensión tablero
         name = this.getClass().getName();
-        image = "/imagenes/reina.png";
+        image = "queen.png";
         movx = new int[(d-1)*4*2];
         movy = new int[(d-1)*4*2];
         int pos = 0;

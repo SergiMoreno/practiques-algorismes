@@ -11,11 +11,13 @@ public class ViewEvent extends Event {
     public boolean exit;
     public ViewEventType type;
     
+    // Refresh board display
     public ViewEvent() {
         super(EventType.View);
         this.type = ViewEventType.REFRESH_BOARD;
     }
     
+    // Message end dialog
     public ViewEvent(boolean exit) {
         super(EventType.View);
         this.exit = exit;
