@@ -21,11 +21,20 @@ class PieceState {
     final public int posx;
     final public int posy;
     final public int movement;
+    final public int pieceIndex;
     
-    public PieceState (int x, int y, int movement) {
+    public PieceState (int x, int y, int movement, int pieceIndex) {
         this.posx = x;
         this.posy = y;
         this.movement = movement;
+        this.pieceIndex = pieceIndex;
+    }
+    
+    public boolean isEqual(PieceState other) {
+        return this.posx == other.posx 
+                && this.posy == other.posy 
+                && this.movement == other.movement 
+                && this.pieceIndex == other.pieceIndex;
     }
 }
 
@@ -47,16 +56,20 @@ public class Controller extends Thread implements EventListener {
         int turn;
         int boardSize = model.getBoardSize();
         
-        List<Stack<PieceState>> states = new ArrayList<Stack<PieceState>>();   // List of stacks of states
+        PieceState [] initStates = new PieceState[model.getNumPieces()];
+        Stack<PieceState> stack = new Stack<PieceState>();   // Stack of states
         for (int i = 0; i < model.getNumPieces(); i++) { // Initialize each stack
-            Stack<PieceState> stack = new Stack<PieceState>();
-            states.add(stack);
+            int x = model.getPiecePosX(i);
+            int y = model.getPiecePosY(i);
+            PieceState initialState = new PieceState(x,y,0,i);
+            initStates[i] = initialState;
+            stack.add(initialState);
         }
         
         // Start algorithm
         while (!isSolution && !noSolution) {
             turn = model.getPieceTurn(); // Piece turn
-            Stack<PieceState> currentStack = states.get(turn); // Piece states
+            //Stack<PieceState> currentStack = states.get(turn); // Piece states
             
             int posx = model.getPiecePosX(turn);
             int posy = model.getPiecePosY(turn);
@@ -68,29 +81,38 @@ public class Controller extends Thread implements EventListener {
                 
                 int x = movex + posx;
                 int y = movey + posy;
-                PieceState state = new PieceState(x, y, movement);
+                PieceState state = new PieceState(x, y, movement, turn);
                 
                 boolean valid = model.isValidMovement(x, y);
                 if (valid) {
-                    currentStack.add(state);
+                    stack.add(state);
                 }
             }
             
-            noSolution = currentStack.empty();
+            noSolution = stack.empty();
             if (!noSolution) {
-                PieceState current = currentStack.pop();
+                PieceState current = stack.pop();
 
                 // Get the last valid state on the stack
-                boolean hasToPrune = false;
+                //boolean hasToPrune = false;
                 boolean valid = model.isFreeCell(current.posx, current.posy, current.movement, turn);
-                while (!valid && !currentStack.empty()) {
-                    current = currentStack.pop();
+                if (current.posx == 0 && current.posy == 1) {
+                        System.out.println("");
+                    }
+                while ((!valid || current.pieceIndex != turn) && !stack.empty()) {
+                //while ((!valid && !stack.empty()) || current.pieceIndex != turn) {
+                    current = stack.pop();
+                    if (current.posx == 0 && current.posy == 1) {
+                        System.out.println("");
+                    }
                     valid = model.isFreeCell(current.posx, current.posy, current.movement, turn);
-                    hasToPrune = true;
+                    //hasToPrune = true;
                 }
                 
+                //if (stack.empty()) break;
+                
                 // Prune non-necessary states of each stack in the list
-                if (hasToPrune) {
+                /*if (hasToPrune) {
                     for (int i = 0; i < states.size(); i++) {
                         Stack<PieceState> others = states.get(i);
                         if (!others.isEmpty()) {
@@ -102,10 +124,11 @@ public class Controller extends Thread implements EventListener {
                             }
                         }
                     }
-                }
+                }*/
                 
                 if (current.movement < model.getMovement()) // Prune board cells
                     model.prune(current.movement, turn);
+                //else if (stack.empty()) model.prune(0, turn);
                 
                 // Move piece
                 main.notify(new ModelEvent(current.posx, current.posy, current.movement, turn));
@@ -115,6 +138,9 @@ public class Controller extends Thread implements EventListener {
                 // Check if all the cells have been occupied
                 if (model.getOccupiedCells() == (boardSize * boardSize)) 
                     isSolution = true;
+                /*if (current.isEqual(initStates[turn])) {
+                    noSolution = true;
+                }*/
             }
             
             try {

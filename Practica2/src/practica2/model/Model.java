@@ -39,7 +39,7 @@ public class Model implements EventListener {
     private Piece [] pieces;
     
     // Counter of total movements on board
-    private int movementCounter = 0;
+    private int movementCounter;
     
     public Model(Main main, int boardSize) {
         this.main = main;
@@ -48,6 +48,7 @@ public class Model implements EventListener {
     }
     
     private void createBoard (int size) {
+        this.movementCounter = 0;
         this.boardSize = size;
         this.board = new BoardCell[size][size];
 
@@ -59,9 +60,22 @@ public class Model implements EventListener {
     }
     
     // NOT IMPLEMENTED
-    private void resetModel (int boardSize) {
-        //removePiecePlayers();
-        createBoard(boardSize);
+    private void resetModel () {
+        removePieces();
+        createBoard(this.boardSize);
+    }
+    
+    public void removePieces() {
+        if (!this.selectedPieces.isEmpty()) {
+           this.selectedPieces.clear();
+        }
+        
+        if (this.pieces != null && this.pieces.length > 0) {
+            for (int i = 0; i < this.pieces.length;i++) {
+                this.pieces[i] = null;
+            }
+            this.pieces = null;
+        }
     }
     
     public int getBoardSize() {
@@ -79,6 +93,10 @@ public class Model implements EventListener {
     
     public int getCellPiece(int x, int y) {
         return this.board[x][y].piece;
+    }
+    
+    public boolean isOccupied(int x, int y) {
+        return this.board[x][y].piece != -1;
     }
     
     public int getCellMovement(int x, int y) {
@@ -238,6 +256,9 @@ public class Model implements EventListener {
                     board[event.posx][event.posy] = new BoardCell(this.getMovement(), selectedPieces.size()-1);
                     this.movementCounter++;
                 }
+                break;
+            case RESET:
+                this.resetModel();
                 break;
         }
     }

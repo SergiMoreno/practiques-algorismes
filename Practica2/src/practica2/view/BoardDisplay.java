@@ -60,19 +60,15 @@ public class BoardDisplay extends JPanel {
                 }
                 
                 // Paint piece and movement
-                URL imageURL = null;
-                String pieceImage = model.getCellImage(j, i);
-                if (pieceImage != null) {
-                    imageURL = getClass().getResource("../../resources/"+pieceImage);
+                if (this.model.isOccupied(j, i)) {
+                    String pieceImage = model.getCellImage(j, i);
+                    URL imageURL = getClass().getResource("../../resources/"+pieceImage);
                     g.drawImage((new ImageIcon(imageURL)).getImage(), j * ancho, i * alto, ancho, alto, this);
-                }
-                
-                int movement = model.getCellMovement(j, i);
-                if (movement != -1) {
+                    int movement = model.getCellMovement(j, i);
                     int x = j * ancho + (ancho - g.getFontMetrics().stringWidth(Integer.toString(movement))) / 2;
                     int y = i * ancho + ((ancho - g.getFontMetrics().getHeight()) / 2) + g.getFontMetrics().getAscent();
                     
-                    /**/
+                
                     int pieceIndex = model.getCellPiece(j, i);
                     
                     if (this.pieceColor.containsKey(pieceIndex)) {
@@ -85,17 +81,12 @@ public class BoardDisplay extends JPanel {
                         Color color = new Color(r, gColor, b);
                         this.pieceColor.put(pieceIndex, color);
                         g.setColor(color);
-                    }
-                    /*if (pieceIndex == 0) g.setColor(new Color(255, 0, 236));
-                    else if (pieceIndex == 1) g.setColor(new Color(12, 255, 0));
-                    else if (pieceIndex == 2) g.setColor(new Color(0, 236, 255));
-                    else if (pieceIndex == 3) g.setColor(new Color(255, 185, 0));*/
-                    /**/
-                    
+                    } 
+                                   
                     int fontSize = (20 * 8) / model.getBoardSize();
                     g.setFont(new Font("Arial", Font.BOLD, fontSize));
                     g.drawString(Integer.toString(movement), x, y);
-                    g.setColor(new Color(0, 0, 0));
+                    g.setColor(new Color(0, 0, 0));         
                 }
             }
         }

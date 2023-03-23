@@ -18,10 +18,14 @@ public class ModelEvent extends Event {
     public int dimension;
     
     // Set the piece to be played
-    public ModelEvent() {
+    public ModelEvent(boolean start) {
         super(EventType.Model);
-
-        this.type = ModelEventType.START;
+        
+        if (start) {
+            this.type = ModelEventType.START;
+        } else {
+            this.type = ModelEventType.RESET;
+        }
     }
     
     // Move piece on the board
@@ -56,6 +60,7 @@ public class ModelEvent extends Event {
         SET_DIMENSION,
         START,
         MOVE_PIECE,
-        ADD_SELECTED_PIECE
+        ADD_SELECTED_PIECE,
+        RESET
     }
 }
