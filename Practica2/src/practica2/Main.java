@@ -17,7 +17,7 @@ public class Main implements EventListener {
     private Controller control;
     
     static final public int BOARD_DEFAULT_SIZE = 8;
-    static final public int DEFAULT_SPEED = 30;
+    static final public int DEFAULT_SPEED = 100;
 
     /**
      * @param args the command line arguments
@@ -32,17 +32,17 @@ public class Main implements EventListener {
         control = new Controller(this);
         vista = new View(this);
     }
-
+    
     @Override
     public void notify(Event e) {
         switch (e.getEventType()){
             case Model -> {
                 model.notify(e);
             }
-            case Vista -> {
+            case View -> {
                 vista.notify(e);
             }
-            case Control -> {
+            case Controller -> {
                 control.notify(e);
             }
         }

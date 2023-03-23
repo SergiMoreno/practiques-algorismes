@@ -8,8 +8,8 @@ public abstract class Event {
     
     public enum EventType {
         Model,
-        Vista,
-        Control
+        View,
+        Controller
     }
     
     private final EventType TYPE;

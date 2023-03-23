@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package practica2.pieces;
 
 /**
@@ -22,7 +17,7 @@ public class Queen extends Piece {
     public Queen(int d) {
         affectsdimension = true; //se mueve en dimensión tablero
         name = this.getClass().getName();
-        image = "/imagenes/reina.png";
+        image = "queen.png";
         movx = new int[(d-1)*4*2];
         movy = new int[(d-1)*4*2];
         int pos = 0;
