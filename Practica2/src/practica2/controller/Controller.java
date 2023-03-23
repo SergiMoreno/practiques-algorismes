@@ -118,7 +118,8 @@ public class Controller extends Thread implements EventListener {
             }
             
             try {
-                Thread.sleep(10000/speed);
+                Thread.sleep(10000/(speed*20));
+                //Thread.sleep(1000);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -126,7 +127,7 @@ public class Controller extends Thread implements EventListener {
         
         System.out.println("Number of cell visited : " + model.getOccupiedCells() + "/" + (boardSize*boardSize));
         // Notify the algorithm end
-        main.notify(new ViewEvent(true));
+        main.notify(new ViewEvent(isSolution));
     }
     
     @Override

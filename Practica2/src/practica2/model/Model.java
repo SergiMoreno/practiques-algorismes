@@ -2,6 +2,7 @@ package practica2.model;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.TypeVariable;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -168,28 +169,22 @@ public class Model implements EventListener {
         try {
             // Instantiating the object from the class using the class name (string)
             Class loader = Class.forName("practica2.pieces."+name);
-            /**********************************************************/
             int numberOfConstructors = loader.getConstructors().length;
             Piece newpiece;
             if (numberOfConstructors > 1) {
-                Constructor ctor = loader.getConstructor(int.class);
-                newpiece = (Piece) ctor.newInstance(this.boardSize );
+                Constructor ctor = loader.getDeclaredConstructor(new Class[] {int.class});
+                newpiece = (Piece) ctor.newInstance(new Object[] {this.boardSize} );
             } else {
                 Constructor ctor = loader.getDeclaredConstructor(new Class[0]);
                 newpiece = (Piece) ctor.newInstance(new Object[0]);
             }
             
-            /*if (newpiece.afectaDimension()) {
-                newpiece = (Piece) ctor.newInstance(new Object[] { this.boardSize });
-            }*/
             // Set position piece
             newpiece.setPos(x, y);
             return newpiece;
+            
+            //return null;
         } catch (ClassNotFoundException ex) {
-            System.out.println("ERROR(Controller): The specified piece doesn't exist.");
-        } catch (NoSuchMethodException ex) {
-            Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SecurityException ex) {
             Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
             Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
@@ -198,6 +193,10 @@ public class Model implements EventListener {
         } catch (IllegalArgumentException ex) {
             Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InvocationTargetException ex) {
+            Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchMethodException ex) {
+            Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SecurityException ex) {
             Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
