@@ -1,7 +1,5 @@
 package practica2.controller;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Stack;
 import practica2.Event;
 import practica2.EventListener;
@@ -56,15 +54,15 @@ public class Controller extends Thread implements EventListener {
         int turn;
         int boardSize = model.getBoardSize();
         
-        PieceState [] initStates = new PieceState[model.getNumPieces()];
+        //PieceState [] initStates = new PieceState[model.getNumPieces()];
         Stack<PieceState> stack = new Stack<PieceState>();   // Stack of states
-        for (int i = 0; i < model.getNumPieces(); i++) { // Initialize each stack
+        /*for (int i = 0; i < model.getNumPieces(); i++) { // Initialize each stack
             int x = model.getPiecePosX(i);
             int y = model.getPiecePosY(i);
             PieceState initialState = new PieceState(x,y,0,i);
             initStates[i] = initialState;
             stack.add(initialState);
-        }
+        }*/
         
         // Start algorithm
         while (!isSolution && !noSolution) {
@@ -95,40 +93,24 @@ public class Controller extends Thread implements EventListener {
 
                 // Get the last valid state on the stack
                 //boolean hasToPrune = false;
-                boolean valid = model.isFreeCell(current.posx, current.posy, current.movement, turn);
-                if (current.posx == 0 && current.posy == 1) {
-                        System.out.println("");
-                    }
-                while ((!valid || current.pieceIndex != turn) && !stack.empty()) {
+                boolean valid = false;
+                if (current.pieceIndex == turn) valid = model.isFreeCell(current.posx, current.posy, current.movement, current.pieceIndex);
+                //while ((!valid || current.pieceIndex != turn) && !stack.empty()) {
                 //while ((!valid && !stack.empty()) || current.pieceIndex != turn) {
+                while (!valid && !stack.empty()) {
                     current = stack.pop();
-                    if (current.posx == 0 && current.posy == 1) {
-                        System.out.println("");
-                    }
-                    valid = model.isFreeCell(current.posx, current.posy, current.movement, turn);
-                    //hasToPrune = true;
+                    if (current.pieceIndex == turn) valid = model.isFreeCell(current.posx, current.posy, current.movement, current.pieceIndex);
                 }
                 
-                //if (stack.empty()) break;
-                
-                // Prune non-necessary states of each stack in the list
-                /*if (hasToPrune) {
-                    for (int i = 0; i < states.size(); i++) {
-                        Stack<PieceState> others = states.get(i);
-                        if (!others.isEmpty()) {
-                            PieceState top = others.peek();
-                            while (top.movement > current.movement) {
-                                others.pop();
-                                if (others.isEmpty()) break;
-                                top = others.peek();
-                            }
-                        }
-                    }
+                if (current.movement == 1) {
+                    System.out.println("");
+                }
+                /*while (!stack.isEmpty() && stack.peek().movement > current.movement) {
+                    stack.pop();
                 }*/
                 
                 if (current.movement < model.getMovement()) // Prune board cells
                     model.prune(current.movement, turn);
-                //else if (stack.empty()) model.prune(0, turn);
                 
                 // Move piece
                 main.notify(new ModelEvent(current.posx, current.posy, current.movement, turn));
@@ -145,7 +127,6 @@ public class Controller extends Thread implements EventListener {
             
             try {
                 Thread.sleep(10000/(speed*20));
-                //Thread.sleep(1000);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
             }

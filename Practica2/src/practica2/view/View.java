@@ -16,6 +16,7 @@ import practica2.pieces.Piece;
 public class View extends javax.swing.JFrame implements EventListener {
     private Main main;
     private int boardSize;
+    //private boolean enableReset;
 
     /**
      * Creates new form Vista
@@ -101,6 +102,7 @@ public class View extends javax.swing.JFrame implements EventListener {
         buttonReset.setForeground(new java.awt.Color(255, 255, 255));
         buttonReset.setText("RESET");
         buttonReset.setBorderPainted(false);
+        buttonReset.setEnabled(false);
         buttonReset.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonResetActionPerformed(evt);
@@ -228,6 +230,7 @@ public class View extends javax.swing.JFrame implements EventListener {
         this.board.setCursor(new Cursor(Cursor.HAND_CURSOR));
         this.jSpinner1.setEnabled(true);
         this.buttonStart.setEnabled(true);
+        this.buttonReset.setEnabled(false);
         /*this.main.notify(new ControllerEvent(false, speedSlider.getValue()));*/
     }//GEN-LAST:event_buttonResetActionPerformed
 
@@ -292,6 +295,7 @@ public class View extends javax.swing.JFrame implements EventListener {
                 break;
             }
             case END -> {
+                this.buttonReset.setEnabled(true);
                 if (event.exit) {
                     JOptionPane.showMessageDialog(this, "All the cells have been visited", "SUCCESS!", JOptionPane.INFORMATION_MESSAGE);
                     break;
