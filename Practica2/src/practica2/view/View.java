@@ -212,17 +212,23 @@ public class View extends javax.swing.JFrame implements EventListener {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonStartActionPerformed
-        buttonStart.setEnabled(false);
-        this.board.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-        this.jSpinner1.setEnabled(false);
-        this.main.notify(new ModelEvent());
-        this.main.notify(new ControllerEvent(true, speedSlider.getValue()));
+        if (this.main.getModel().getNumPieces() > 0) {
+            buttonStart.setEnabled(false);
+            this.board.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            this.jSpinner1.setEnabled(false);
+            this.main.notify(new ModelEvent(true));
+            this.main.notify(new ControllerEvent(true, speedSlider.getValue()));
+        }
     }//GEN-LAST:event_buttonStartActionPerformed
 
     private void buttonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonResetActionPerformed
         // TODO add your handling code here:
-        /*this.main.notify(new ModelEvent());
-        this.main.notify(new ControllerEvent(false, speedSlider.getValue()));*/
+        this.main.notify(new ModelEvent(false));
+        this.board.refresh();
+        this.board.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        this.jSpinner1.setEnabled(true);
+        this.buttonStart.setEnabled(true);
+        /*this.main.notify(new ControllerEvent(false, speedSlider.getValue()));*/
     }//GEN-LAST:event_buttonResetActionPerformed
 
     private void sizeChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sizeChanged
@@ -267,9 +273,10 @@ public class View extends javax.swing.JFrame implements EventListener {
                 int maxY = this.board.getWidth();
                 int x = (coordx*this.boardSize)/maxX;
                 int y = (coordy*this.boardSize)/maxY;
-
-                main.notify(new ModelEvent(selected, x, y));
-                board.refresh();
+                if(!this.main.getModel().isOccupied(x, y)) {
+                    main.notify(new ModelEvent(selected, x, y));
+                    board.refresh();
+                }
             }
         }
     }//GEN-LAST:event_boardMouseClicked
