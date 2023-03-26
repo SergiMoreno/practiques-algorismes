@@ -16,7 +16,6 @@ import practica2.pieces.Piece;
 public class View extends javax.swing.JFrame implements EventListener {
     private Main main;
     private int boardSize;
-    //private boolean enableReset;
 
     /**
      * Creates new form Vista
@@ -231,7 +230,6 @@ public class View extends javax.swing.JFrame implements EventListener {
         this.jSpinner1.setEnabled(true);
         this.buttonStart.setEnabled(true);
         this.buttonReset.setEnabled(false);
-        /*this.main.notify(new ControllerEvent(false, speedSlider.getValue()));*/
     }//GEN-LAST:event_buttonResetActionPerformed
 
     private void sizeChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sizeChanged
@@ -254,14 +252,14 @@ public class View extends javax.swing.JFrame implements EventListener {
             speed = this.speedSlider.getMinimum();
         }
         speedSlider.setValue(speed);
-        main.notify(new ControllerEvent(speed));
+        main.notify(new ControllerEvent(false, speed));
     }//GEN-LAST:event_speedTextActionPerformed
 
     private void speedSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_speedSliderStateChanged
         // TODO add your handling code here:
         int speed = speedSlider.getValue();
         speedText.setText(Integer.toString(speed));
-        main.notify(new ControllerEvent(speed));
+        main.notify(new ControllerEvent(false, speed));
     }//GEN-LAST:event_speedSliderStateChanged
 
     private void boardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_boardMouseClicked
@@ -294,9 +292,9 @@ public class View extends javax.swing.JFrame implements EventListener {
                 board.refresh();
                 break;
             }
-            case END -> {
+            case ALGORITHM_END -> {
                 this.buttonReset.setEnabled(true);
-                if (event.exit) {
+                if (event.success) {
                     JOptionPane.showMessageDialog(this, "All the cells have been visited", "SUCCESS!", JOptionPane.INFORMATION_MESSAGE);
                     break;
                 }

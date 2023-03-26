@@ -31,7 +31,6 @@ class PieceState {
 
 public class Controller extends Thread implements EventListener {
     private Main main;
-    static private AtomicBoolean stop;  // Avoid dirty reads between threads
     static int speed;
     
     public Controller(Main main) {
@@ -104,8 +103,9 @@ public class Controller extends Thread implements EventListener {
                     }
                 }
                 
-                if (current.movement < model.getMovement()) // Prune board cells
-                    model.prune(current.movement, turn);
+                if (current.movement < model.getMovement()) {// Prune board cells
+                    this.main.notify(new ModelEvent(current.movement, turn));
+                }
                 
                 // Move piece
                 main.notify(new ModelEvent(current.posx, current.posy, current.movement, turn));
@@ -140,9 +140,6 @@ public class Controller extends Thread implements EventListener {
             }
             case START -> {
                 (new Controller(this.main)).start();
-            }
-            case STOP -> {
-                this.stop.set(true);    // Stops the backtracking algorithm
             }
         }
     }
