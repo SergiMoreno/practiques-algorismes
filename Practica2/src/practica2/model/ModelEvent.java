@@ -52,15 +52,24 @@ public class ModelEvent extends Event {
         this.name = name;
         this.posx = x;
         this.posy = y;
-        this.type = ModelEventType.ADD_SELECTED_PIECE;
-        
+        this.type = ModelEventType.ADD_SELECTED_PIECE;  
+    }
+    
+    // Prune descendants from board
+    public ModelEvent(int movement, int pieceIndex) {
+        super(EventType.Model);
+ 
+        this.movement = movement;
+        this.pieceIndex = pieceIndex;
+        this.type = ModelEventType.PRUNE;
     }
     
     enum ModelEventType {
         SET_DIMENSION,
+        ADD_SELECTED_PIECE,
         START,
         MOVE_PIECE,
-        ADD_SELECTED_PIECE,
+        PRUNE,
         RESET
     }
 }

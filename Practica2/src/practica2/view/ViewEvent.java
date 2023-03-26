@@ -8,7 +8,7 @@ import practica2.Event;
  * @author usuario
  */
 public class ViewEvent extends Event {
-    public boolean exit;
+    public boolean success;
     public ViewEventType type;
     
     // Refresh board display
@@ -18,14 +18,14 @@ public class ViewEvent extends Event {
     }
     
     // Message end dialog
-    public ViewEvent(boolean exit) {
+    public ViewEvent(boolean success) {
         super(EventType.View);
-        this.exit = exit;
-        this.type = ViewEventType.END;
+        this.success = success;
+        this.type = ViewEventType.ALGORITHM_END;
     }
     
     enum ViewEventType {
         REFRESH_BOARD,
-        END
+        ALGORITHM_END
     }
 }

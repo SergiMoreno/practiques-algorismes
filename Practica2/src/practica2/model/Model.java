@@ -58,7 +58,6 @@ public class Model implements EventListener {
         }
     }
     
-    // NOT IMPLEMENTED
     private void resetModel () {
         removePieces();
         createBoard(this.boardSize);
@@ -224,25 +223,8 @@ public class Model implements EventListener {
         ModelEvent event = (ModelEvent) e;
         
         switch (event.type) {
-            case START:
-                pieces = new Piece[selectedPieces.size()];
-                int i = 0;
-                for (Piece p : selectedPieces) {
-                    pieces[i] = p;
-                    i++;
-                }
-                break;
             case SET_DIMENSION:
                 createBoard(event.dimension);
-                break;
-            case MOVE_PIECE:
-                if (isOutOfBounds(event.posx, event.posy)) {
-                    System.out.println("ERROR(Model): The specified coordinades are incorrect.");
-                    break;
-                }
-                board[event.posx][event.posy] = new BoardCell(event.movement, event.pieceIndex);
-                this.movementCounter++;
-                this.pieces[event.pieceIndex].setPos(event.posx, event.posy);
                 break;
             case ADD_SELECTED_PIECE:
                 if (isOutOfBounds(event.posx, event.posy)) {
@@ -255,6 +237,26 @@ public class Model implements EventListener {
                     board[event.posx][event.posy] = new BoardCell(this.getMovement(), selectedPieces.size()-1);
                     this.movementCounter++;
                 }
+                break;
+            case START:
+                pieces = new Piece[selectedPieces.size()];
+                int i = 0;
+                for (Piece p : selectedPieces) {
+                    pieces[i] = p;
+                    i++;
+                }
+                break;
+            case MOVE_PIECE:
+                if (isOutOfBounds(event.posx, event.posy)) {
+                    System.out.println("ERROR(Model): The specified coordinades are incorrect.");
+                    break;
+                }
+                board[event.posx][event.posy] = new BoardCell(event.movement, event.pieceIndex);
+                this.movementCounter++;
+                this.pieces[event.pieceIndex].setPos(event.posx, event.posy);
+                break;
+            case PRUNE:
+                this.prune(event.movement, event.pieceIndex);
                 break;
             case RESET:
                 this.resetModel();
