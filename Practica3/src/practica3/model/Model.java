@@ -19,7 +19,7 @@ public class Model implements EventListener {
     private int nPoints;
     
     // Constant to keep the coordinates range
-    private final int RANGE = 200;
+    public final int RANGE = 200;
     
     public Model(Main main, int nPoints) {
         this.main = main;
@@ -60,6 +60,10 @@ public class Model implements EventListener {
     
     public int getPointY(int index) {
         return this.points[index].y;
+    }
+    
+    public Point[] getPointsRef () {
+        return this.points;
     }
 
     @Override
