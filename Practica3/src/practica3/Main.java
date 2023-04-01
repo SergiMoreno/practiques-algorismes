@@ -15,7 +15,8 @@ public class Main implements EventListener {
     private View vista;
     private Controller control;
     
-    static final int DEFAULT_N = 10;
+    // Default number of points
+    static final int DEFAULT_N_POINTS = 10;
 
     /**
      * @param args the command line arguments
@@ -26,9 +27,9 @@ public class Main implements EventListener {
     }
     
     private void init() {
-        model = new Model(this, DEFAULT_N);
+        model = new Model(this, DEFAULT_N_POINTS);
         control = new Controller(this);
-        vista = new View(this, DEFAULT_N);
+        vista = new View(this, DEFAULT_N_POINTS);
     }
     
     @Override

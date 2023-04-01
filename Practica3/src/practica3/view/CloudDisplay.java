@@ -31,8 +31,25 @@ public class CloudDisplay extends JPanel {
         BufferedImage bima = new BufferedImage(this.getWidth(),
                 this.getHeight(), BufferedImage.TYPE_INT_ARGB);
         Graphics g = bima.getGraphics();
-        g.setColor(new Color(255, 255, 255));
+        g.setColor(new Color(255, 237, 197));
         g.fillRect(0, 0, this.getWidth(), this.getHeight());
+        
+        // Coordinates of the cloud center
+        int centerX = this.getWidth() / 2;
+        int centerY = this.getHeight() / 2;
+        int n = model.getNumberOfPoints();
+        // Draw Points
+        g.setColor(new Color(0, 0, 0));
+        for (int i = 0; i < n; i++) {
+            int x = model.getPointX(i);
+            int y = model.getPointY(i);
+            
+            int locationX = centerX + x;
+            int locationY = centerY + y;
+            
+            g.fillOval(locationX-3, locationY-3, 3, 3);
+            //g.drawOval(locationX, locationY, 2, 2);
+        }
         
         gr.drawImage(bima,0,0,this);
     }

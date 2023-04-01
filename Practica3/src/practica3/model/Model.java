@@ -12,24 +12,29 @@ import practica3.Main;
 
 public class Model implements EventListener {
     private Main main;
-
-    private Point [] points;
-    private int n;
     
-    public Model(Main main, int n) {
+    // Array to represent the cloud of points
+    private Point [] points;
+    // Number of points
+    private int nPoints;
+    
+    // Constant to keep the coordinates range
+    private final int RANGE = 100;
+    
+    public Model(Main main, int nPoints) {
         this.main = main;
-        this.n = n;
+        this.nPoints = nPoints;
         
         initializeCloud();
     }
     
     private void initializeCloud() {
-        points = new Point[this.n];
+        points = new Point[this.nPoints];
         Random rnd = new Random();
         
         for (int i = 0;i < points.length; i++) {
-            float x = rnd.nextFloat(-10, 11);
-            float y = rnd.nextFloat(-10, 11);
+            float x = rnd.nextFloat(-this.RANGE, this.RANGE+1);
+            float y = rnd.nextFloat(-this.RANGE, this.RANGE+1);
 
             int xc = Math.round(x);
             int yc = Math.round(y);
@@ -41,14 +46,26 @@ public class Model implements EventListener {
     public int getDistance(int origin, int end) {
         return this.points[origin].compareTo(this.points[end]);
     }
+    
+    public int getNumberOfPoints() {
+        return this.nPoints;
+    }
+    
+    public int getPointX(int index) {
+        return this.points[index].getX();
+    }
+    
+    public int getPointY(int index) {
+        return this.points[index].getY();
+    }
 
     @Override
     public void notify(Event e) {
         ModelEvent event = (ModelEvent) e;
         
         switch (event.type) {
-            case CHANGE_N -> {
-                this.n = event.n;
+            case CHANGE_N_POINTS -> {
+                this.nPoints = event.nPoints;
                 this.initializeCloud();
             }
         }
