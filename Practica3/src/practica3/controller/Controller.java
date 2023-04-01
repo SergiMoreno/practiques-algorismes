@@ -21,6 +21,11 @@ public class Controller extends Thread implements EventListener {
 
     }
     
+    // n^2 algorithm
+    
+    
+    // nlogn algorithm
+    
     @Override
     public void notify(Event e) {
         ControllerEvent event = (ControllerEvent) e;
