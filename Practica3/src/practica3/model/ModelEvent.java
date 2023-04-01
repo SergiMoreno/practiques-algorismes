@@ -8,16 +8,17 @@ import practica3.Event;
  */
 public class ModelEvent extends Event {
     public ModelEventType type;
-    public int n;
+    public int nPoints;
     
-    public ModelEvent(int newN) {
+    // Event to update the cloud number of points
+    public ModelEvent(int number) {
         super(EventType.Model);
         
-        this.n = newN;
-        this.type = ModelEventType.CHANGE_N;
+        this.nPoints = number;
+        this.type = ModelEventType.CHANGE_N_POINTS;
     }
     
     enum ModelEventType {
-        CHANGE_N
+        CHANGE_N_POINTS
     }
 }

@@ -11,19 +11,19 @@ import practica3.model.ModelEvent;
  */
 public class View extends javax.swing.JFrame implements EventListener {
     private Main main;
-    private int n;
+    private int nPoints;
 
     /**
      * Creates new form Vista
      */
-    public View(Main main, int n) {
+    public View(Main main, int nPoints) {
         this.main = main;
-        this.n = n;
+        this.nPoints = nPoints;
         initComponents();
         this.setVisible(true);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-        this.setTitle("Board Game");
+        this.setTitle("Cloud");
     }
 
     /**
@@ -47,7 +47,6 @@ public class View extends javax.swing.JFrame implements EventListener {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         cloud.setBackground(new java.awt.Color(204, 255, 255));
-        cloud.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout cloudLayout = new javax.swing.GroupLayout(cloud);
         cloud.setLayout(cloudLayout);
@@ -88,7 +87,7 @@ public class View extends javax.swing.JFrame implements EventListener {
             }
         });
 
-        spinnerN.setValue(this.n);
+        spinnerN.setValue(this.nPoints);
         spinnerN.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 spinnerNStateChanged(evt);
@@ -152,7 +151,8 @@ public class View extends javax.swing.JFrame implements EventListener {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonStartActionPerformed
-        this.main.notify(new ModelEvent(this.n));
+        this.main.notify(new ModelEvent(this.nPoints));
+        this.cloud.refresh();
     }//GEN-LAST:event_buttonStartActionPerformed
 
     private void buttonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonResetActionPerformed
@@ -162,10 +162,10 @@ public class View extends javax.swing.JFrame implements EventListener {
     private void spinnerNStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spinnerNStateChanged
         int number = (int) spinnerN.getValue();
         if (number < 2) {
-            this.n = 2;
+            this.nPoints = 2;
             spinnerN.setValue(2);
         } else {
-            this.n = number;
+            this.nPoints = number;
         }
     }//GEN-LAST:event_spinnerNStateChanged
 
