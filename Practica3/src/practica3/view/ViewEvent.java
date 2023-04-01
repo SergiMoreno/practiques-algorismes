@@ -12,10 +12,10 @@ public class ViewEvent extends Event {
     
     public ViewEvent() {
         super(EventType.View);
-
+        this.type = ViewEventType.REFRESH;
     }
     
     enum ViewEventType {
-
+        REFRESH
     }
 }

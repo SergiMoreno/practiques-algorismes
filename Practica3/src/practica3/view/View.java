@@ -3,6 +3,7 @@ package practica3.view;
 import practica3.Event;
 import practica3.EventListener;
 import practica3.Main;
+import practica3.controller.ControllerEvent;
 import practica3.model.ModelEvent;
 
 /**
@@ -41,8 +42,8 @@ public class View extends javax.swing.JFrame implements EventListener {
         jLabel1 = new javax.swing.JLabel();
         buttonReset = new javax.swing.JButton();
         spinnerN = new javax.swing.JSpinner();
-        nSquare = new javax.swing.JButton();
-        nQuick = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -52,7 +53,7 @@ public class View extends javax.swing.JFrame implements EventListener {
         cloud.setLayout(cloudLayout);
         cloudLayout.setHorizontalGroup(
             cloudLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 420, Short.MAX_VALUE)
+            .addGap(0, 463, Short.MAX_VALUE)
         );
         cloudLayout.setVerticalGroup(
             cloudLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -73,7 +74,7 @@ public class View extends javax.swing.JFrame implements EventListener {
         });
 
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Number of points :");
+        jLabel1.setText("Points:");
 
         buttonReset.setBackground(new java.awt.Color(0, 102, 102));
         buttonReset.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -94,9 +95,11 @@ public class View extends javax.swing.JFrame implements EventListener {
             }
         });
 
-        nSquare.setText("n^2");
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Exponential (n2)", "Logarithmic (nlogn)" }));
 
-        nQuick.setText("nlogn");
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Choose the algorithm to apply");
+        jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -106,12 +109,14 @@ public class View extends javax.swing.JFrame implements EventListener {
             .addComponent(buttonStart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(spinnerN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(nSquare, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(nQuick, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(spinnerN))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -120,11 +125,11 @@ public class View extends javax.swing.JFrame implements EventListener {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(spinnerN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(84, 84, 84)
-                .addComponent(nSquare)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(nQuick)
-                .addGap(177, 177, 177)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(246, 246, 246)
                 .addComponent(buttonStart)
                 .addGap(12, 12, 12)
                 .addComponent(buttonReset)
@@ -137,26 +142,34 @@ public class View extends javax.swing.JFrame implements EventListener {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(cloud, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cloud, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(cloud, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(cloud, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonStartActionPerformed
-        this.main.notify(new ModelEvent(this.nPoints));
-        this.cloud.refresh();
+        this.jComboBox1.setEnabled(false);
+        this.spinnerN.setEnabled(false);
+        this.buttonReset.setEnabled(true);
+        this.buttonStart.setEnabled(false);
+        
+        main.notify(new ControllerEvent(this.jComboBox1.getSelectedIndex()));     // Sending start event
     }//GEN-LAST:event_buttonStartActionPerformed
 
     private void buttonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonResetActionPerformed
-
+        main.notify(new ControllerEvent());    // Sending stop event
+        
+        this.jComboBox1.setEnabled(true);
+        this.spinnerN.setEnabled(true);
+        this.buttonReset.setEnabled(false);
+        this.buttonStart.setEnabled(true);
     }//GEN-LAST:event_buttonResetActionPerformed
 
     private void spinnerNStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spinnerNStateChanged
@@ -167,25 +180,28 @@ public class View extends javax.swing.JFrame implements EventListener {
         } else {
             this.nPoints = number;
         }
+        main.notify(new ModelEvent(number));
+        this.cloud.refresh();
     }//GEN-LAST:event_spinnerNStateChanged
 
 
     @Override
     public void notify(Event e) {
         ViewEvent event = (ViewEvent) e;
-
+        
     }
 
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonReset;
     private javax.swing.JButton buttonStart;
     /*
     private javax.swing.JPanel cloud;
     */CloudDisplay cloud;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JButton nQuick;
-    private javax.swing.JButton nSquare;
     private javax.swing.JSpinner spinnerN;
     // End of variables declaration//GEN-END:variables
 }

@@ -16,7 +16,7 @@ public class Main implements EventListener {
     private Controller control;
     
     // Default number of points
-    static final int DEFAULT_N_POINTS = 10;
+    static final int DEFAULT_N_POINTS = 100;
 
     /**
      * @param args the command line arguments

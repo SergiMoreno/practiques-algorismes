@@ -5,29 +5,21 @@ package practica3.model;
  * @author usuario
  */
 public class Point implements Comparable<Point> {
-    private int x, y;
+    public final int x, y;
     
     public Point(int x, int y) {
         this.x = x;
         this.y = y;
-    }
-    
-    public int getX() {
-        return this.x;
-    }
-    
-    public int getY() {
-        return this.y;
     }
 
     // Override method to compare Point objects
     @Override
     public int compareTo(Point o) {
         // X
-        int difX = o.getX() - this.x;
+        int difX = o.x - this.x;
         int powerX = difX * difX;
         // Y
-        int difY = o.getY() - this.y;
+        int difY = o.y - this.y;
         int powerY = difY * difY;
         
         int sum = powerX + powerY;

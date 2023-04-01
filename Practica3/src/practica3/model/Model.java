@@ -19,7 +19,7 @@ public class Model implements EventListener {
     private int nPoints;
     
     // Constant to keep the coordinates range
-    private final int RANGE = 100;
+    private final int RANGE = 200;
     
     public Model(Main main, int nPoints) {
         this.main = main;
@@ -32,13 +32,16 @@ public class Model implements EventListener {
         points = new Point[this.nPoints];
         Random rnd = new Random();
         
-        for (int i = 0;i < points.length; i++) {
-            float x = rnd.nextFloat(-this.RANGE, this.RANGE+1);
-            float y = rnd.nextFloat(-this.RANGE, this.RANGE+1);
-
-            int xc = Math.round(x);
-            int yc = Math.round(y);
-            points[i] = new Point(xc, yc);
+        int upperBound = this.RANGE+1;
+        int lowerBound = -this.RANGE;
+        
+        for (int i = 0; i < points.length; i++) {
+            points[i] = new Point(
+                    // Generating x coord
+                    Math.round(rnd.nextFloat(lowerBound, upperBound)), 
+                    // Generating y coord
+                    Math.round(rnd.nextFloat(lowerBound, upperBound))
+            );
         }
     }
     
@@ -52,11 +55,11 @@ public class Model implements EventListener {
     }
     
     public int getPointX(int index) {
-        return this.points[index].getX();
+        return this.points[index].x;
     }
     
     public int getPointY(int index) {
-        return this.points[index].getY();
+        return this.points[index].y;
     }
 
     @Override

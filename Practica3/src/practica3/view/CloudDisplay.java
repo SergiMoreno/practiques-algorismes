@@ -16,7 +16,6 @@ public class CloudDisplay extends JPanel {
     
     public CloudDisplay(Model model) {
         this.model = model;
-
     }
     
     @Override
@@ -40,14 +39,13 @@ public class CloudDisplay extends JPanel {
         int n = model.getNumberOfPoints();
         // Draw Points
         g.setColor(new Color(0, 0, 0));
-        for (int i = 0; i < n; i++) {
-            int x = model.getPointX(i);
-            int y = model.getPointY(i);
-            
-            int locationX = centerX + x;
-            int locationY = centerY + y;
-            
-            g.fillOval(locationX-3, locationY-3, 3, 3);
+        for (int i = 0; i < n; i++) {            
+            g.fillOval(
+                    centerX + model.getPointX(i)-3, 
+                    centerY + model.getPointY(i)-3, 
+                    3, 
+                    3
+            );
             //g.drawOval(locationX, locationY, 2, 2);
         }
         
