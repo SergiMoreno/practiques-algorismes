@@ -14,6 +14,8 @@ public class Main implements EventListener {
     private Model model;
     private View vista;
     private Controller control;
+    
+    static final int DEFAULT_N = 10;
 
     /**
      * @param args the command line arguments
@@ -24,9 +26,9 @@ public class Main implements EventListener {
     }
     
     private void init() {
-        model = new Model(this);
+        model = new Model(this, DEFAULT_N);
         control = new Controller(this);
-        vista = new View(this);
+        vista = new View(this, DEFAULT_N);
     }
     
     @Override

@@ -1,13 +1,8 @@
 package practica3.view;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.Random;
-import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import practica3.model.Model;
 
@@ -16,10 +11,10 @@ import practica3.model.Model;
  * @author usuario
  */
 
-public class BoardDisplay extends JPanel {
+public class CloudDisplay extends JPanel {
     final private Model model;
     
-    public BoardDisplay(Model model) {
+    public CloudDisplay(Model model) {
         this.model = model;
 
     }
