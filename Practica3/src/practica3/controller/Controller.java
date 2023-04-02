@@ -1,6 +1,9 @@
 package practica3.controller;
 
 import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import practica3.Event;
 import practica3.EventListener;
 import practica3.Main;
@@ -13,34 +16,46 @@ import practica3.model.Model;
 
 public class Controller extends Thread implements EventListener {
     private Main main;
-    private Model model;
+
+    // Represents the algorithm to be executed
     private int algorithm;
-    private Controller executionThread;
-    
+    // Thread to do the execution of the algorithm, being able to interrupt it
+    private Thread executionThread;
+
     public Controller(Main main) {
         this.main = main;
-        this.model = this.main.getModel();
-        this.executionThread = new Controller(this.main);
+        this.executionThread = new Thread(this);
     }
     
     @Override
     public void run () {
+        Model model = this.main.getModel();
+        
         if (this.algorithm == 0) exponentialSearch();
         if (this.algorithm == 1) {
             // Ordering the elements with mergesort
-            Arrays.sort(this.model.getPointsRef());
+            Arrays.sort(model.getPointsRef());
             // Executing D&C approach
             logarithmicSearch(
                     0,
                     0,
-                    this.model.RANGE, 
-                   this.model.RANGE
+                    model.RANGE, 
+                   model.RANGE
             );
         }
     }
     
     // n^2 algorithm
     public void exponentialSearch () {
+        try {
+            for (int i = 0; i < 100; i++) {
+                System.out.println("Iteration : " + i);
+                Thread.sleep(1000);
+            }
+        } catch (InterruptedException ex) {
+            System.out.println(
+                  "Thread was interrupted, Failed to complete operation");
+        }
     }
     
     // nlogn algorithm, D&C solution
@@ -54,11 +69,12 @@ public class Controller extends Thread implements EventListener {
         
         switch (event.type) {
             case START:
+                this.algorithm = event.algorithm;
                 if (!this.executionThread.isAlive())
                     this.executionThread.start();
                 break;
             case STOP:
-                // TODO: Trigger stop condition, to implement
+                this.executionThread.interrupt();
                 break;
         }
     }
