@@ -82,7 +82,6 @@ public class View extends javax.swing.JFrame implements EventListener {
         buttonReset.setForeground(new java.awt.Color(255, 255, 255));
         buttonReset.setText("RESET");
         buttonReset.setBorderPainted(false);
-        buttonReset.setEnabled(false);
         buttonReset.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonResetActionPerformed(evt);
@@ -158,7 +157,6 @@ public class View extends javax.swing.JFrame implements EventListener {
     private void buttonStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonStartActionPerformed
         this.jComboBox1.setEnabled(false);
         this.spinnerN.setEnabled(false);
-        this.buttonReset.setEnabled(true);
         this.buttonStart.setEnabled(false);
         
         int index = this.jComboBox1.getSelectedIndex();
@@ -166,14 +164,13 @@ public class View extends javax.swing.JFrame implements EventListener {
     }//GEN-LAST:event_buttonStartActionPerformed
 
     private void buttonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonResetActionPerformed
+        this.jComboBox1.setEnabled(true);
+        this.spinnerN.setEnabled(true);
+        this.buttonStart.setEnabled(true);
+        
         main.notify(new ControllerEvent());    // Sending stop event
         main.notify(new ModelEvent());
         this.cloud.refresh();
-        
-        this.jComboBox1.setEnabled(true);
-        this.spinnerN.setEnabled(true);
-        this.buttonReset.setEnabled(false);
-        this.buttonStart.setEnabled(true);
     }//GEN-LAST:event_buttonResetActionPerformed
 
     private void spinnerNStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spinnerNStateChanged

@@ -1,5 +1,7 @@
 package practica3.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import practica3.Event;
 import practica3.EventListener;
@@ -51,7 +53,7 @@ public class Model implements EventListener {
     
     // Gets distance between Point indexed by origin and Point indexed by end
     public int getDistance(int origin, int end) {
-        return this.points[origin].compareTo(this.points[end]);
+        return this.points[origin].distanceTo(this.points[end]);
     }
     
     public int getNumberOfPoints() {
@@ -69,6 +71,11 @@ public class Model implements EventListener {
     public Point[] getPointsRef () {
         return this.points;
     }
+    
+    /*public int[] getNearPointsRef(int index, int d) {
+        List<Integer> l = new ArrayList<Integer>();
+        return l.
+    }*/
 
     @Override
     public void notify(Event e) {
