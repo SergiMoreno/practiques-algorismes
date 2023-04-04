@@ -45,6 +45,10 @@ public class Model implements EventListener {
         }
     }
     
+    private void reset() {
+        this.initializeCloud();
+    }
+    
     // Gets distance between Point indexed by origin and Point indexed by end
     public int getDistance(int origin, int end) {
         return this.points[origin].compareTo(this.points[end]);
@@ -74,6 +78,9 @@ public class Model implements EventListener {
             case CHANGE_N_POINTS -> {
                 this.nPoints = event.nPoints;
                 this.initializeCloud();
+            }
+            case RESET -> {
+                this.reset();
             }
         }
     }
