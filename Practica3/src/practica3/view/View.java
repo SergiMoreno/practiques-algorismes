@@ -1,5 +1,6 @@
 package practica3.view;
 
+import practica3.AlgorithmType;
 import practica3.Event;
 import practica3.EventListener;
 import practica3.Main;
@@ -95,7 +96,7 @@ public class View extends javax.swing.JFrame implements EventListener {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Exponential (n2)", "Logarithmic (nlogn)" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(this.getCosts()));
 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Algorithm to apply");
@@ -160,11 +161,14 @@ public class View extends javax.swing.JFrame implements EventListener {
         this.buttonReset.setEnabled(true);
         this.buttonStart.setEnabled(false);
         
-        main.notify(new ControllerEvent(this.jComboBox1.getSelectedIndex()));     // Sending start event
+        int index = this.jComboBox1.getSelectedIndex();
+        main.notify(new ControllerEvent(AlgorithmType.getByIndex(index)));     // Sending start event
     }//GEN-LAST:event_buttonStartActionPerformed
 
     private void buttonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonResetActionPerformed
         main.notify(new ControllerEvent());    // Sending stop event
+        main.notify(new ModelEvent());
+        this.cloud.refresh();
         
         this.jComboBox1.setEnabled(true);
         this.spinnerN.setEnabled(true);
@@ -184,6 +188,16 @@ public class View extends javax.swing.JFrame implements EventListener {
         this.cloud.refresh();
     }//GEN-LAST:event_spinnerNStateChanged
 
+    // Auxiliar method used to complete comboBox with the representative costs for the algorithms
+    private String[] getCosts() {
+        String [] algorithmCosts = new String[AlgorithmType.values().length];
+        int i = 0;
+        for (AlgorithmType t : AlgorithmType.values()) {
+            algorithmCosts[i] = t.getCost();
+            i++;
+        }
+        return algorithmCosts;
+    }
 
     @Override
     public void notify(Event e) {

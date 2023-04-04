@@ -18,7 +18,15 @@ public class ModelEvent extends Event {
         this.type = ModelEventType.CHANGE_N_POINTS;
     }
     
+    // Event to reset the cloud of points
+    public ModelEvent() {
+        super(EventType.Model);
+        
+        this.type = ModelEventType.RESET;
+    }
+    
     enum ModelEventType {
-        CHANGE_N_POINTS
+        CHANGE_N_POINTS,
+        RESET
     }
 }

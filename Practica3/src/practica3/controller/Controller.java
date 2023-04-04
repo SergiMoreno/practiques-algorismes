@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import practica3.AlgorithmType;
 import practica3.Event;
 import practica3.EventListener;
 import practica3.Main;
@@ -18,30 +19,34 @@ public class Controller extends Thread implements EventListener {
     private Main main;
 
     // Represents the algorithm to be executed
-    private int algorithm;
+    private AlgorithmType algorithm;
     // Thread to do the execution of the algorithm, being able to interrupt it
     private Thread executionThread;
 
     public Controller(Main main) {
         this.main = main;
-        this.executionThread = new Thread(this);
     }
     
     @Override
     public void run () {
+        // IGUAL ES MILLOR TENIR-HO A CADA ALGORISME
         Model model = this.main.getModel();
         
-        if (this.algorithm == 0) exponentialSearch();
-        if (this.algorithm == 1) {
-            // Ordering the elements with mergesort
-            Arrays.sort(model.getPointsRef());
-            // Executing D&C approach
-            logarithmicSearch(
-                    0,
-                    0,
-                    model.RANGE, 
-                   model.RANGE
-            );
+        switch (this.algorithm) {
+            case BRUTE -> {
+                exponentialSearch();
+            }
+            case DIVIDE_AND_CONQUER -> {
+                // Ordering the elements with mergesort
+                Arrays.sort(model.getPointsRef());
+                // Executing D&C approach
+                logarithmicSearch(
+                        0,
+                        0,
+                        model.RANGE, 
+                       model.RANGE
+                );
+            }
         }
     }
     
@@ -70,8 +75,9 @@ public class Controller extends Thread implements EventListener {
         switch (event.type) {
             case START:
                 this.algorithm = event.algorithm;
-                if (!this.executionThread.isAlive())
-                    this.executionThread.start();
+                // When start event notified, new Thread is initialized
+                this.executionThread = new Thread(this);
+                this.executionThread.start();
                 break;
             case STOP:
                 this.executionThread.interrupt();

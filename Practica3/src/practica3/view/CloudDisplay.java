@@ -46,9 +46,7 @@ public class CloudDisplay extends JPanel {
                     3, 
                     3
             );
-            //g.drawOval(locationX, locationY, 2, 2);
         }
-        
         gr.drawImage(bima,0,0,this);
     }
     
