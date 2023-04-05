@@ -36,14 +36,16 @@ public class Point implements Comparable<Point> {
         // Order by X
         if (this.x > o.x) {
             return 1;
-        } else if (this.x < o.x) {
+        }
+        if (this.x < o.x) {
             return -1;
         }
         
         // Equal X, order by Y
         if (this.y > o.y) {
             return 1;
-        } else if (this.y < o.y) {
+        }
+        if (this.y < o.y) {
             return -1;
         }
         
