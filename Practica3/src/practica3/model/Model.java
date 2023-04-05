@@ -72,10 +72,20 @@ public class Model implements EventListener {
         return this.points;
     }
     
-    /*public int[] getNearPointsRef(int index, int d) {
+    public List<Integer> getNearPointsRef(int mid, int d) {
         List<Integer> l = new ArrayList<Integer>();
-        return l.
-    }*/
+        
+        int left = this.points[mid].x - d;
+        int right = this.points[mid].x + d;
+        
+        for (int i = 0; i < this.nPoints; i++) {
+            if (this.points[i].x >= left && this.points[i].x <= right) {
+                l.add(i);
+            }
+        }
+        
+        return l;
+    }
 
     @Override
     public void notify(Event e) {

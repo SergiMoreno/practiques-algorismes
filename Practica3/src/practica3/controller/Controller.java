@@ -2,6 +2,7 @@ package practica3.controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.PriorityQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -116,57 +117,67 @@ public class Controller extends Thread implements EventListener {
     }
 
     // nlogn algorithm, D&C solution
-    public void logarithmicSearch() {
+    public void logarithmicSearch () {
         //Model model = this.main.getModel();
-
+        
         // Ordering the elements with mergesort
         Arrays.sort(model.getPointsRef());
-
-        PointsDistance val = closestPairs(0, model.getNumberOfPoints() - 1, 3);
+        
+        PointsDistance p = closestPairs(0, model.getNumberOfPoints()-1, 3);
+        
+        System.out.println("Closest Pair -> (" + p.refPoint1 + ", " + p.refPoint2 + "), dist = " + p.dist);
     }
-
+    
     private PointsDistance closestPairs(int left, int right, int k) {
         // Base case 1, 2 points
-        if (left == right - 1) {
+        if (left == right-1) {
             return new PointsDistance(left, right, model.getDistance(left, right));
         }
         // Base case 2, 3 points
-        if (left == right - 2) {
+        if (left == right-2) {
             int dist13 = model.getDistance(left, right);
-            int dist12 = model.getDistance(left, right - 1);
-            int dist23 = model.getDistance(left + 1, right);
-
+            int dist12 = model.getDistance(left, right-1);
+            int dist23 = model.getDistance(left+1, right);
+            
             // Return min distance points
             if (dist13 < dist12 && dist13 < dist23) {
                 return new PointsDistance(left, right, dist13);
             }
-
+            
             if (dist12 < dist13 && dist12 < dist23) {
-                return new PointsDistance(left, right - 1, dist12);
+                return new PointsDistance(left, right-1, dist12);
             }
-
+            
             if (dist23 < dist13 && dist23 < dist12) {
-                return new PointsDistance(left + 1, right, dist23);
+                return new PointsDistance(left+1, right, dist23);
             }
         }
-
+        
         // Divide
         int mid = (left + right) / 2;
         PointsDistance dl = closestPairs(left, mid, 3);
-        PointsDistance dr = closestPairs(mid + 1, right, 3);
+        PointsDistance dr = closestPairs(mid+1, right, 3);
         PointsDistance d;
         if (dl.dist < dr.dist) {
             d = dl;
         } else {
             d = dr;
         }
-
+        
         // Combine
-        /*int [] nearPoints;
+        List<Integer> nearPoints = model.getNearPointsRef(mid, d.dist);
         // for i = 1 to S.length
-        for (int i = 0; i < nearPoints.length; i++) {
-            
-        }*/
+        for (int i = 0; i < nearPoints.size(); i++) {
+            int ind1 = nearPoints.get(i);
+            for (int j = 1; j <= 7 && (i+j) < nearPoints.size(); j++) {
+            //for (int j = i+1; (i+j) < nearPoints.size(); j++) {
+                int ind2 = nearPoints.get(i+j);
+                int val = model.getDistance(ind1, ind2);
+                if (val < d.dist) {
+                    d = new PointsDistance(ind1, ind2, val);
+                }
+            }
+        }
         return d;
     }
 
