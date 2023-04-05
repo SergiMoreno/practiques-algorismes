@@ -170,7 +170,7 @@ public class View extends javax.swing.JFrame implements EventListener {
         
         main.notify(new ControllerEvent());    // Sending stop event
         main.notify(new ModelEvent());
-        this.cloud.refresh();
+        this.cloud.reset();
     }//GEN-LAST:event_buttonResetActionPerformed
 
     private void spinnerNStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spinnerNStateChanged
@@ -199,6 +199,8 @@ public class View extends javax.swing.JFrame implements EventListener {
     @Override
     public void notify(Event e) {
         ViewEvent event = (ViewEvent) e;
+        
+        this.cloud.getResult(event.index);
         
     }
 

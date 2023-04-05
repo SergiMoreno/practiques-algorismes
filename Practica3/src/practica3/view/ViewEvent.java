@@ -1,5 +1,7 @@
 package practica3.view;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import practica3.Event;
 
 
@@ -9,10 +11,12 @@ import practica3.Event;
  */
 public class ViewEvent extends Event {
     public ViewEventType type;
+    public ArrayList<Integer> index;
     
-    public ViewEvent() {
+    public ViewEvent(ArrayList<Integer> index) {
         super(EventType.View);
         this.type = ViewEventType.REFRESH;
+        this.index = index;
     }
     
     enum ViewEventType {
