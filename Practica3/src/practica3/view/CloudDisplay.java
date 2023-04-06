@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.Arrays;
 import javax.swing.JPanel;
 import practica3.model.Model;
 
@@ -15,11 +14,11 @@ import practica3.model.Model;
 public class CloudDisplay extends JPanel {
 
     final private Model model;
-    private ArrayList<Integer> result;
+    private ArrayList<Integer> resultIndex;
 
     public CloudDisplay(Model model) {
         this.model = model;
-        this.result = new ArrayList<Integer>();
+        this.resultIndex = new ArrayList<Integer>();
     }
 
     @Override
@@ -44,21 +43,19 @@ public class CloudDisplay extends JPanel {
         // Draw Points
         g.setColor(new Color(0, 0, 0));
         for (int i = 0; i < n; i++) {
-            // There is solution
-            boolean isResult = result.contains(i);
-
-            //
+            // Check if the point is one of the possible result
+            boolean isResult = this.resultIndex.contains(i);
             if (isResult) {
                 g.setColor(Color.RED);
             }
 
             g.fillOval(
-                    centerX + model.getPointX(i) - 10,
-                    centerY + model.getPointY(i) - 10,
+                    centerX + (int)model.getPointX(i) - 10,
+                    centerY + (int)model.getPointY(i) - 10,
                     10,
                     10
             );
-            //
+            
             if (isResult) {
                 g.setColor(new Color(0, 0, 0));
             }
@@ -66,15 +63,13 @@ public class CloudDisplay extends JPanel {
         gr.drawImage(bima, 0, 0, this);
     }
 
-    public void getResult(ArrayList<Integer> a) {
-
-        result = a;
-
+    public void showResult(ArrayList<Integer> indexs) {
+        this.resultIndex = indexs;
         this.repaint();
     }
     
     public void reset(){
-        result = new ArrayList<Integer>();
+        this.resultIndex = new ArrayList<Integer>();
         this.repaint();
     }
 

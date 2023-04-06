@@ -200,10 +200,8 @@ public class View extends javax.swing.JFrame implements EventListener {
     public void notify(Event e) {
         ViewEvent event = (ViewEvent) e;
         
-        this.cloud.getResult(event.index);
-        
+        this.cloud.showResult(event.indexs);
     }
-
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonReset;

@@ -3,15 +3,11 @@ package practica3.controller;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.PriorityQueue;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import practica3.AlgorithmType;
 import practica3.Event;
 import practica3.EventListener;
 import practica3.Main;
 import practica3.model.Model;
-import practica3.model.Point;
 import practica3.view.ViewEvent;
 
 /**
@@ -19,24 +15,28 @@ import practica3.view.ViewEvent;
  * @author usuario
  */
 // Class to keep the index references to the points and the distance between them
-class PointsDistance implements Comparable<PointsDistance> {
+class PointsPair implements Comparable<PointsPair> {
 
     final public int refPoint1, refPoint2;
-    final public int dist;
+    final public double dist;
 
-    public PointsDistance(int r1, int r2, int dist) {
+    public PointsPair(int r1, int r2, double dist) {
         this.refPoint1 = r1;
         this.refPoint2 = r2;
         this.dist = dist;
     }
-
-    @Override
-    public String toString() {
-        return "PointsDistance{" + "refPoint1=" + refPoint1 + ", refPoint2=" + refPoint2 + ", dist=" + dist + '}';
+    
+    static public PointsPair maxDistance() {
+        return new PointsPair(-1, -1, Double.MAX_VALUE);
     }
 
     @Override
-    public int compareTo(PointsDistance o) {
+    public String toString() {
+        return "PointsPair{" + "refPoint1=" + refPoint1 + ", refPoint2=" + refPoint2 + ", dist=" + dist + "}";
+    }
+    
+    @Override
+    public int compareTo(PointsPair o) {
         if (this.dist > o.dist) {
             return -1;
         }
@@ -48,8 +48,57 @@ class PointsDistance implements Comparable<PointsDistance> {
     }
 }
 
-public class Controller extends Thread implements EventListener {
+class MinPairs {
+    PointsPair [] list;
+    int n;
+    
+    public MinPairs(int k) {
+        list = new PointsPair[k];
+        n = 0;
+    }
+    
+    public MinPairs(PointsPair a, PointsPair b, PointsPair c) {
+        list = new PointsPair[3];
+        n = 3;
+        list[0] = a;
+        list[1] = b;
+        list[2] = c;
+        Arrays.sort(list);
+    }
+    
+    public void checkPoint(PointsPair p) {
+        if (n < list.length) {
+            list[n] = p;
+            n++;
+            if (n == list.length) Arrays.sort(list);
+        } else if (list[0].dist > p.dist) {
+            list[0] = p;
+            Arrays.sort(list);
+        }
+    }
+    
+    public ArrayList<Integer> getIndexs() {
+        ArrayList<Integer> solution = new ArrayList<Integer>();
+        for(int i = 0; i < n; i++) {
+            PointsPair p = list[i];
+            solution.add(p.refPoint1);
+            solution.add(p.refPoint2);
+        }
+        
+        return solution;
+    }
+    
+    @Override
+    public String toString() {
+        String result = "";
+        for (int i = 0; i < n; i++) {
+            result += "\nPair " + i + " : " + list[i].toString();
+        }
+        return result;
+    }
+}
 
+public class Controller extends Thread implements EventListener {
     private Main main;
 
     // Represents the algorithm to be executed
@@ -68,114 +117,97 @@ public class Controller extends Thread implements EventListener {
     public void run() {
         model = this.main.getModel();
 
-        switch (this.algorithm) {
-            case BRUTE -> {
-                exponentialSearch();
+        try {
+            MinPairs result = null;
+            switch (this.algorithm) {
+                case BRUTE -> {
+                    result = exponentialSearch();
+                }
+                case DIVIDE_AND_CONQUER -> {
+                    // Executing D&C approach
+                    logarithmicSearch();
+                }
             }
-            case DIVIDE_AND_CONQUER -> {
-                // Executing D&C approach
-                logarithmicSearch();
+            
+            if (result != null) {
+                System.out.println(result);
+                this.main.notify(new ViewEvent(result.getIndexs()));
             }
+        } catch (InterruptedException ex) {
+            System.out.println(this.algorithm.toString() + ": EXECUTION INTERRUPTED");
         }
     }
 
     // n^2 algorithm
-    public void exponentialSearch() {
-        Model model = this.main.getModel();
-        
-        try {
-            int d;
-            PriorityQueue<PointsDistance> pq = new PriorityQueue<PointsDistance>(3);
-            for (int i = 0; i < model.getNumberOfPoints(); i++) {
-                for (int j = i+1; j < model.getNumberOfPoints(); j++) {
-                    d = model.getDistance(i, j);
-                    PointsDistance e = new PointsDistance(i, j, d);
-                    //System.out.println(e);
-                    if (pq.size() < 3) {
-                        pq.add(e);
-                    }else{
-                        if (pq.peek().dist > e.dist){
-                            pq.poll();
-                            pq.add(e);
-                        }
-                    }
-                    Thread.sleep(1);
-                }
+    public MinPairs exponentialSearch() throws InterruptedException {        
+        MinPairs list = new MinPairs(3);
+        for (int i = 0; i < model.getNumberOfPoints(); i++) {
+            for (int j = i+1; j < model.getNumberOfPoints(); j++) {
+                PointsPair p = new PointsPair(i, j, model.getDistance(i, j));
+                //System.out.println(p);
+                list.checkPoint(p);
+                Thread.sleep(1);
             }
-            System.out.println(pq);
-            ArrayList<Integer> solution = new ArrayList<Integer>();
-            while(!pq.isEmpty()){
-                PointsDistance p = pq.poll();
-                solution.add(p.refPoint1);
-                solution.add(p.refPoint2);
-            }
-            this.main.notify(new ViewEvent(solution));
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        return list;
     }
 
     // nlogn algorithm, D&C solution
-    public void logarithmicSearch () {
-        //Model model = this.main.getModel();
-        
+    public MinPairs logarithmicSearch () throws InterruptedException {            
         // Ordering the elements with mergesort
         Arrays.sort(model.getPointsRef());
-        
-        PointsDistance p = closestPairs(0, model.getNumberOfPoints()-1, 3);
-        
-        System.out.println("Closest Pair -> (" + p.refPoint1 + ", " + p.refPoint2 + "), dist = " + p.dist);
+            
+        return closestPairs(0, model.getNumberOfPoints()-1, 3);
     }
     
-    private PointsDistance closestPairs(int left, int right, int k) {
-        // Base case 1, 2 points
-        if (left == right-1) {
-            return new PointsDistance(left, right, model.getDistance(left, right));
+    private MinPairs closestPairs(int left, int right, int k) throws InterruptedException {
+        // Base case 1, 1 point
+        if (left == right) {
+            return new MinPairs(PointsPair.maxDistance(),
+            PointsPair.maxDistance(),
+            PointsPair.maxDistance());
         }
-        // Base case 2, 3 points
+        // Base case 2, 2 points
+        if (left == right-1) {
+            return new MinPairs(new PointsPair(left, right, model.getDistance(left, right)),
+            PointsPair.maxDistance(),
+            PointsPair.maxDistance());
+        }
+        // Base case 3, 3 points
         if (left == right-2) {
-            int dist13 = model.getDistance(left, right);
-            int dist12 = model.getDistance(left, right-1);
-            int dist23 = model.getDistance(left+1, right);
-            
-            // Return min distance points
-            if (dist13 < dist12 && dist13 < dist23) {
-                return new PointsDistance(left, right, dist13);
-            }
-            
-            if (dist12 < dist13 && dist12 < dist23) {
-                return new PointsDistance(left, right-1, dist12);
-            }
-            
-            if (dist23 < dist13 && dist23 < dist12) {
-                return new PointsDistance(left+1, right, dist23);
-            }
+            double dist13 = model.getDistance(left, right);
+            double dist12 = model.getDistance(left, right-1);
+            double dist23 = model.getDistance(left+1, right);
+
+            return new MinPairs(new PointsPair(left, right, dist13),
+            new PointsPair(left, right-1, dist12),
+            new PointsPair(left+1, right, dist23));
         }
         
         // Divide
         int mid = (left + right) / 2;
-        PointsDistance dl = closestPairs(left, mid, 3);
-        PointsDistance dr = closestPairs(mid+1, right, 3);
-        PointsDistance d;
-        if (dl.dist < dr.dist) {
-            d = dl;
-        } else {
-            d = dr;
+        MinPairs dl = closestPairs(left, mid, 3);
+        MinPairs dr = closestPairs(mid+1, right, 3);
+        MinPairs d;
+        PointsPair [] combine = new PointsPair[6];
+        for (int i = 0; i < 3; i++) {
+            combine[i] = dl.list[i];
+            combine[i+3] = dr.list[i];
         }
+        Arrays.sort(combine);
+        d = new MinPairs(combine[3], combine[4], combine[5]);
         
         // Combine
-        List<Integer> nearPoints = model.getNearPointsRef(mid, d.dist);
+        List<Integer> nearPoints = model.getNearPointsRef(mid, d.list[0].dist);
         // for i = 1 to S.length
         for (int i = 0; i < nearPoints.size(); i++) {
             int ind1 = nearPoints.get(i);
-            for (int j = 1; j <= 7 && (i+j) < nearPoints.size(); j++) {
-            //for (int j = i+1; (i+j) < nearPoints.size(); j++) {
+            //for (int j = 1; j <= 7 && (i+j) < nearPoints.size(); j++) {
+            for (int j = 1; (i+j) < nearPoints.size(); j++) {
                 int ind2 = nearPoints.get(i+j);
-                int val = model.getDistance(ind1, ind2);
-                if (val < d.dist) {
-                    d = new PointsDistance(ind1, ind2, val);
-                }
+                Thread.sleep(1);
+                double val = model.getDistance(ind1, ind2);
+                d.checkPoint(new PointsPair(ind1, ind2, val));
             }
         }
         return d;

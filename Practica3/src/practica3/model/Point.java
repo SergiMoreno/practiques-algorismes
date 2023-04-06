@@ -5,29 +5,27 @@ package practica3.model;
  * @author usuario
  */
 public class Point implements Comparable<Point> {
-    public final int x, y;
+    public final double x, y;
     
-    public Point(int x, int y) {
+    public Point(double x, double y) {
         this.x = x;
         this.y = y;
     }
     
     // Return the euclidean distance between this point and the one passed by parameter
-    public int distanceTo(Point o) {
+    public double distanceTo(Point o) {
         // X
-        int difX = o.x - this.x;
-        int powerX = difX * difX;
+        double difX = o.x - this.x;
+        double powerX = difX * difX;
         // Y
-        int difY = o.y - this.y;
-        int powerY = difY * difY;
+        double difY = o.y - this.y;
+        double powerY = difY * difY;
         
-        int sum = powerX + powerY;
+        double sum = powerX + powerY;
         
-        long aux = Math.round(Math.sqrt((double) sum));
-
-        int dis = (int) aux;
+        long aux = Math.round(Math.sqrt(sum));
         
-        return dis;
+        return (double) aux;
     }
 
     // Override method to compare Point objects
