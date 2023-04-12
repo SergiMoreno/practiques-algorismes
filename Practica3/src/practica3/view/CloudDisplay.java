@@ -48,7 +48,7 @@ public class CloudDisplay extends JPanel {
             if (isResult) {
                 g.setColor(Color.RED);
             }
-
+            
             g.fillOval(
                     centerX + (int)model.getPointX(i) - 5,
                     centerY + (int)model.getPointY(i) - 5,

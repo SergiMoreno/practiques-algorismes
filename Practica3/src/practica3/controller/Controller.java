@@ -1,6 +1,5 @@
 package practica3.controller;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import practica3.AlgorithmType;
@@ -14,101 +13,6 @@ import practica3.view.ViewEvent;
  *
  * @author usuario
  */
-// Class to keep the index references to the points and the distance between them
-class PointsPair implements Comparable<PointsPair> {
-
-    final public int refPoint1, refPoint2;
-    final public double dist;
-
-    public PointsPair(int r1, int r2, double dist) {
-        this.refPoint1 = r1;
-        this.refPoint2 = r2;
-        this.dist = dist;
-    }
-    
-    static public PointsPair maxDistance() {
-        return new PointsPair(-1, -1, Double.MAX_VALUE);
-    }
-
-    @Override
-    public String toString() {
-        return "PointsPair{" + "refPoint1=" + refPoint1 + ", refPoint2=" + refPoint2 + ", dist=" + dist + "}";
-    }
-    
-    @Override
-    public int compareTo(PointsPair o) {
-        if (this.dist > o.dist) {
-            return -1;
-        }
-        if (this.dist < o.dist) {
-            return 1;
-        }
-
-        return 0;
-    }
-    
-    public boolean equals(PointsPair p) {
-        if ((this.refPoint1 == p.refPoint1 && this.refPoint2 == p.refPoint2) ||
-            (this.refPoint1 == p.refPoint2 && this.refPoint2 == p.refPoint1)) {
-            return true;
-        }
-        return false;
-    }
-}
-
-class MinPairs {
-    PointsPair [] list;
-    int n;
-    
-    public MinPairs(int k) {
-        list = new PointsPair[k];
-        n = 0;
-    }
-    
-    public MinPairs(PointsPair a, PointsPair b, PointsPair c) {
-        list = new PointsPair[3];
-        n = 3;
-        list[0] = a;
-        list[1] = b;
-        list[2] = c;
-        Arrays.sort(list);
-    }
-    
-    public void checkPoint(PointsPair p) {
-        for (int i = 0; i < list.length; i++) {
-            if (p.equals(list[i])) return;
-        }
-        if (n < list.length) {
-            list[n] = p;
-            n++;
-            if (n == list.length) Arrays.sort(list);
-        } else if (list[0].dist > p.dist) {
-            list[0] = p;
-            Arrays.sort(list);
-        }
-    }
-    
-    public ArrayList<Integer> getIndexs() {
-        ArrayList<Integer> solution = new ArrayList<Integer>();
-        for(int i = 0; i < n; i++) {
-            PointsPair p = list[i];
-            solution.add(p.refPoint1);
-            solution.add(p.refPoint2);
-        }
-        
-        return solution;
-    }
-    
-    @Override
-    public String toString() {
-        String result = "";
-        for (int i = 0; i < n; i++) {
-            result += "\nPair " + i + " : " + list[i].toString();
-        }
-        return result;
-    }
-}
-
 public class Controller extends Thread implements EventListener {
     private Main main;
 
@@ -155,7 +59,6 @@ public class Controller extends Thread implements EventListener {
         for (int i = 0; i < model.getNumberOfPoints(); i++) {
             for (int j = i+1; j < model.getNumberOfPoints(); j++) {
                 PointsPair p = new PointsPair(i, j, model.getDistance(i, j));
-                //System.out.println(p);
                 list.checkPoint(p);
                 Thread.sleep(1);
             }
@@ -202,15 +105,14 @@ public class Controller extends Thread implements EventListener {
         MinPairs d;
         PointsPair [] combine = new PointsPair[6];
         for (int i = 0; i < 3; i++) {
-            combine[i] = dl.list[i];
-            combine[i+3] = dr.list[i];
+            combine[i] = dl.getPointPair(i);
+            combine[i+3] = dr.getPointPair(i);
         }
         Arrays.sort(combine);
         d = new MinPairs(combine[3], combine[4], combine[5]);
         
         // Combine
-        List<Integer> nearPoints = model.getNearPointsRef(mid, d.list[0].dist, left, right);
-        // for i = 1 to S.length
+        List<Integer> nearPoints = model.getNearPointsRef(mid, d.getPointPair(0).getDistance(), left, right);
         for (int i = 0; i < nearPoints.size(); i++) {
             int ind1 = nearPoints.get(i);
             //for (int j = 1; j <= 7 && (i+j) < nearPoints.size(); j++) {

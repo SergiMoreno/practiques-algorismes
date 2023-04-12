@@ -1,7 +1,6 @@
 package practica3.view;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import practica3.Event;
 
 
