@@ -50,10 +50,10 @@ public class CloudDisplay extends JPanel {
             }
 
             g.fillOval(
-                    centerX + (int)model.getPointX(i) - 10,
-                    centerY + (int)model.getPointY(i) - 10,
-                    10,
-                    10
+                    centerX + (int)model.getPointX(i) - 5,
+                    centerY + (int)model.getPointY(i) - 5,
+                    5,
+                    5
             );
             
             if (isResult) {

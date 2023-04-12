@@ -23,9 +23,7 @@ public class Point implements Comparable<Point> {
         
         double sum = powerX + powerY;
         
-        long aux = Math.round(Math.sqrt(sum));
-        
-        return (double) aux;
+        return Math.sqrt(sum);
     }
 
     // Override method to compare Point objects

@@ -40,9 +40,9 @@ public class Model implements EventListener {
         for (int i = 0; i < points.length; i++) {
             points[i] = new Point(
                     // Generating x coord
-                    Math.round(rnd.nextDouble(lowerBound, upperBound)), 
+                    rnd.nextDouble(lowerBound, upperBound), 
                     // Generating y coord
-                    Math.round(rnd.nextDouble(lowerBound, upperBound))
+                    rnd.nextDouble(lowerBound, upperBound)
             );
         }
     }
@@ -72,14 +72,14 @@ public class Model implements EventListener {
         return this.points;
     }
     
-    public List<Integer> getNearPointsRef(int mid, double d) {
+    public List<Integer> getNearPointsRef(int mid, double d, int left, int right) {
         List<Integer> l = new ArrayList<Integer>();
         
-        double left = this.points[mid].x - d;
-        double right = this.points[mid].x + d;
+        double xleft = this.points[mid].x - d;
+        double xright = this.points[mid].x + d;
         
-        for (int i = 0; i < this.nPoints; i++) {
-            if (this.points[i].x >= left && this.points[i].x <= right) {
+        for (int i = left; i <= right; i++) {
+            if (this.points[i].x >= xleft && this.points[i].x <= xright) {
                 l.add(i);
             }
         }

@@ -46,6 +46,14 @@ class PointsPair implements Comparable<PointsPair> {
 
         return 0;
     }
+    
+    public boolean equals(PointsPair p) {
+        if ((this.refPoint1 == p.refPoint1 && this.refPoint2 == p.refPoint2) ||
+            (this.refPoint1 == p.refPoint2 && this.refPoint2 == p.refPoint1)) {
+            return true;
+        }
+        return false;
+    }
 }
 
 class MinPairs {
@@ -67,6 +75,9 @@ class MinPairs {
     }
     
     public void checkPoint(PointsPair p) {
+        for (int i = 0; i < list.length; i++) {
+            if (p.equals(list[i])) return;
+        }
         if (n < list.length) {
             list[n] = p;
             n++;
@@ -125,7 +136,7 @@ public class Controller extends Thread implements EventListener {
                 }
                 case DIVIDE_AND_CONQUER -> {
                     // Executing D&C approach
-                    logarithmicSearch();
+                    result = logarithmicSearch();
                 }
             }
             
@@ -198,13 +209,13 @@ public class Controller extends Thread implements EventListener {
         d = new MinPairs(combine[3], combine[4], combine[5]);
         
         // Combine
-        List<Integer> nearPoints = model.getNearPointsRef(mid, d.list[0].dist);
+        List<Integer> nearPoints = model.getNearPointsRef(mid, d.list[0].dist, left, right);
         // for i = 1 to S.length
         for (int i = 0; i < nearPoints.size(); i++) {
             int ind1 = nearPoints.get(i);
             //for (int j = 1; j <= 7 && (i+j) < nearPoints.size(); j++) {
-            for (int j = 1; (i+j) < nearPoints.size(); j++) {
-                int ind2 = nearPoints.get(i+j);
+            for (int j = i+1; j < nearPoints.size(); j++) {
+                int ind2 = nearPoints.get(j);
                 Thread.sleep(1);
                 double val = model.getDistance(ind1, ind2);
                 d.checkPoint(new PointsPair(ind1, ind2, val));
