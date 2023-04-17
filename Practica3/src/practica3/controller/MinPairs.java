@@ -26,9 +26,11 @@ public class MinPairs {
     }
     
     public void checkPoint(PointsPair p) {
-        for (int i = 0; i < list.length; i++) {
+        // check if the point is not already in the object
+        for (int i = 0; i < n; i++) {
             if (p.equals(list[i])) return;
         }
+        
         if (n < list.length) {
             list[n] = p;
             n++;

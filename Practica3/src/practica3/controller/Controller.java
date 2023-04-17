@@ -1,5 +1,6 @@
 package practica3.controller;
 
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 import practica3.AlgorithmType;
@@ -49,7 +50,7 @@ public class Controller extends Thread implements EventListener {
                 this.main.notify(new ViewEvent(result.getIndexs()));
             }
         } catch (InterruptedException ex) {
-            System.out.println(this.algorithm.toString() + ": EXECUTION INTERRUPTED");
+            System.out.println(this.algorithm.toString() + " ALGORITHM: EXECUTION INTERRUPTED");
         }
     }
 
@@ -60,7 +61,7 @@ public class Controller extends Thread implements EventListener {
             for (int j = i+1; j < model.getNumberOfPoints(); j++) {
                 PointsPair p = new PointsPair(i, j, model.getDistance(i, j));
                 list.checkPoint(p);
-                Thread.sleep(1);
+                Thread.sleep(Duration.ZERO);
             }
         }
         return list;
@@ -75,6 +76,7 @@ public class Controller extends Thread implements EventListener {
     }
     
     private MinPairs closestPairs(int left, int right, int k) throws InterruptedException {
+        Thread.sleep(Duration.ZERO);
         // Base case 1, 1 point
         if (left == right) {
             return new MinPairs(PointsPair.maxDistance(),
@@ -92,7 +94,7 @@ public class Controller extends Thread implements EventListener {
             double dist13 = model.getDistance(left, right);
             double dist12 = model.getDistance(left, right-1);
             double dist23 = model.getDistance(left+1, right);
-
+            
             return new MinPairs(new PointsPair(left, right, dist13),
             new PointsPair(left, right-1, dist12),
             new PointsPair(left+1, right, dist23));
@@ -118,7 +120,6 @@ public class Controller extends Thread implements EventListener {
             //for (int j = 1; j <= 7 && (i+j) < nearPoints.size(); j++) {
             for (int j = i+1; j < nearPoints.size(); j++) {
                 int ind2 = nearPoints.get(j);
-                Thread.sleep(1);
                 double val = model.getDistance(ind1, ind2);
                 d.checkPoint(new PointsPair(ind1, ind2, val));
             }
