@@ -1,5 +1,6 @@
 package practica3.view;
 
+import javax.swing.JOptionPane;
 import practica3.AlgorithmType;
 import practica3.Event;
 import practica3.EventListener;
@@ -45,6 +46,7 @@ public class View extends javax.swing.JFrame implements EventListener {
         spinnerN = new javax.swing.JSpinner();
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
+        progressBar = new javax.swing.JProgressBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -54,7 +56,7 @@ public class View extends javax.swing.JFrame implements EventListener {
         cloud.setLayout(cloudLayout);
         cloudLayout.setHorizontalGroup(
             cloudLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 463, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         cloudLayout.setVerticalGroup(
             cloudLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -136,19 +138,27 @@ public class View extends javax.swing.JFrame implements EventListener {
                 .addContainerGap())
         );
 
+        progressBar.setForeground(new java.awt.Color(0, 102, 102));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(cloud, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cloud, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(cloud, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(cloud, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, 0)
+                .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -161,12 +171,14 @@ public class View extends javax.swing.JFrame implements EventListener {
         
         int index = this.jComboBox1.getSelectedIndex();
         main.notify(new ControllerEvent(AlgorithmType.getByIndex(index)));     // Sending start event
+        this.progressBar.setIndeterminate(true);
     }//GEN-LAST:event_buttonStartActionPerformed
 
     private void buttonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonResetActionPerformed
         this.jComboBox1.setEnabled(true);
         this.spinnerN.setEnabled(true);
         this.buttonStart.setEnabled(true);
+        this.progressBar.setIndeterminate(false);
         
         main.notify(new ControllerEvent());    // Sending stop event
         main.notify(new ModelEvent());
@@ -199,8 +211,9 @@ public class View extends javax.swing.JFrame implements EventListener {
     @Override
     public void notify(Event e) {
         ViewEvent event = (ViewEvent) e;
-        
+        this.progressBar.setIndeterminate(false);
         this.cloud.showResult(event.indexs);
+        JOptionPane.showMessageDialog(this, "Result has been reached", "SUCCESS!", JOptionPane.INFORMATION_MESSAGE);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -213,6 +226,7 @@ public class View extends javax.swing.JFrame implements EventListener {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JProgressBar progressBar;
     private javax.swing.JSpinner spinnerN;
     // End of variables declaration//GEN-END:variables
 }

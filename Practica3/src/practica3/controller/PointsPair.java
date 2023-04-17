@@ -19,6 +19,7 @@ public class PointsPair implements Comparable<PointsPair> {
         return this.dist;
     }
     
+    // Method to create a centinel instance
     static public PointsPair maxDistance() {
         return new PointsPair(-1, -1, Double.MAX_VALUE);
     }
