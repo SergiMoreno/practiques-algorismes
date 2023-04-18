@@ -47,6 +47,7 @@ public class Controller extends Thread implements EventListener {
             
             if (result != null) {
                 System.out.println(result);
+                model.printMeans();
                 this.main.notify(new ViewEvent(result.getIndexs()));
             }
         } catch (InterruptedException ex) {

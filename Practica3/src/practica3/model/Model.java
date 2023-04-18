@@ -23,6 +23,8 @@ public class Model implements EventListener {
     // Constant to keep the coordinates range
     public final int RANGE = 200;
     
+    ArrayList<Integer> meanList;
+    
     public Model(Main main, int nPoints) {
         this.main = main;
         this.nPoints = nPoints;
@@ -33,6 +35,7 @@ public class Model implements EventListener {
     private void initializeCloud() {
         points = new Point[this.nPoints];
         Random rnd = new Random();
+        this.meanList = new ArrayList<Integer>();
         
         int upperBound = this.RANGE+1;
         int lowerBound = -this.RANGE;
@@ -74,17 +77,36 @@ public class Model implements EventListener {
     
     public List<Integer> getNearPointsRef(int mid, double d, int left, int right) {
         List<Integer> l = new ArrayList<Integer>();
+        ArrayList<Integer> mean = new ArrayList<Integer>();
         
         double xleft = this.points[mid].x - d;
         double xright = this.points[mid].x + d;
-        
+
         for (int i = left; i <= right; i++) {
             if (this.points[i].x >= xleft && this.points[i].x <= xright) {
                 l.add(i);
+                //mean.add(i - left);
             }
         }
         
+        /*int result = 0;
+        for (int i = 0; i < mean.size(); i++) {
+            result += mean.get(i);
+        }
+        result /= mean.size();
+        System.out.println("Mean points : " + result);*/
+        
+        this.meanList.add(l.size());
         return l;
+    }
+    
+    public void printMeans() {
+        int result = 0;
+        for (int i = 0; i < this.meanList.size(); i++) {
+            result += this.meanList.get(i);
+        }
+        result /= this.meanList.size();
+        System.out.println("Mean points TOTAL : " + result);
     }
 
     @Override
