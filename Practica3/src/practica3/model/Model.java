@@ -20,10 +20,10 @@ public class Model implements EventListener {
     // Number of points
     private int nPoints;
     
-    // Constant to keep the coordinates range
-    public final int RANGE = 200;
     
-    ArrayList<Integer> meanList;
+    // Constant to keep the coordinates range
+    public final int xRANGE = 300;
+    public final int yRANGE = 200;
     
     public Model(Main main, int nPoints) {
         this.main = main;
@@ -35,17 +35,19 @@ public class Model implements EventListener {
     private void initializeCloud() {
         points = new Point[this.nPoints];
         Random rnd = new Random();
-        this.meanList = new ArrayList<Integer>();
         
-        int upperBound = this.RANGE+1;
-        int lowerBound = -this.RANGE;
+        int xupperBound = this.xRANGE+1;
+        int xlowerBound = -this.xRANGE;
+        
+        int yupperBound = this.yRANGE+1;
+        int ylowerBound = -this.yRANGE;
         
         for (int i = 0; i < points.length; i++) {
             points[i] = new Point(
                     // Generating x coord
-                    rnd.nextDouble(lowerBound, upperBound), 
+                    rnd.nextDouble(xlowerBound, xupperBound), 
                     // Generating y coord
-                    rnd.nextDouble(lowerBound, upperBound)
+                    rnd.nextDouble(ylowerBound, yupperBound)
             );
         }
     }
@@ -77,36 +79,21 @@ public class Model implements EventListener {
     
     public List<Integer> getNearPointsRef(int mid, double d, int left, int right) {
         List<Integer> l = new ArrayList<Integer>();
-        ArrayList<Integer> mean = new ArrayList<Integer>();
         
         double xleft = this.points[mid].x - d;
         double xright = this.points[mid].x + d;
+        
+        double yleft = this.points[mid].y - d;
+        double yright = this.points[mid].y + d;
 
         for (int i = left; i <= right; i++) {
-            if (this.points[i].x >= xleft && this.points[i].x <= xright) {
+            if (this.points[i].x >= xleft && this.points[i].x <= xright
+                && this.points[i].y >= yleft && this.points[i].y <= yright) {
                 l.add(i);
-                //mean.add(i - left);
             }
         }
         
-        /*int result = 0;
-        for (int i = 0; i < mean.size(); i++) {
-            result += mean.get(i);
-        }
-        result /= mean.size();
-        System.out.println("Mean points : " + result);*/
-        
-        this.meanList.add(l.size());
         return l;
-    }
-    
-    public void printMeans() {
-        int result = 0;
-        for (int i = 0; i < this.meanList.size(); i++) {
-            result += this.meanList.get(i);
-        }
-        result /= this.meanList.size();
-        System.out.println("Mean points TOTAL : " + result);
     }
 
     @Override

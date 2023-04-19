@@ -46,6 +46,9 @@ public class View extends javax.swing.JFrame implements EventListener {
         spinnerN = new javax.swing.JSpinner();
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
+        slider = new javax.swing.JSlider();
+        jLabel3 = new javax.swing.JLabel();
+        labelPoints = new javax.swing.JLabel();
         progressBar = new javax.swing.JProgressBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -56,7 +59,7 @@ public class View extends javax.swing.JFrame implements EventListener {
         cloud.setLayout(cloudLayout);
         cloudLayout.setHorizontalGroup(
             cloudLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 694, Short.MAX_VALUE)
         );
         cloudLayout.setVerticalGroup(
             cloudLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -103,6 +106,22 @@ public class View extends javax.swing.JFrame implements EventListener {
         jLabel2.setText("Algorithm to apply");
         jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
+        slider.setBackground(new java.awt.Color(0, 51, 51));
+        slider.setMaximum(10);
+        slider.setMinimum(3);
+        slider.setValue(3);
+        slider.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                numPointsChanged(evt);
+            }
+        });
+
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("N Pairs :");
+
+        labelPoints.setForeground(new java.awt.Color(255, 255, 255));
+        labelPoints.setText(Integer.toString(this.slider.getValue()));
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -112,12 +131,18 @@ public class View extends javax.swing.JFrame implements EventListener {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(slider, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(spinnerN))
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(labelPoints)
+                        .addGap(8, 8, 8)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -131,7 +156,13 @@ public class View extends javax.swing.JFrame implements EventListener {
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(246, 246, 246)
+                .addGap(104, 104, 104)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(labelPoints))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(slider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(100, 100, 100)
                 .addComponent(buttonStart)
                 .addGap(12, 12, 12)
                 .addComponent(buttonReset)
@@ -149,8 +180,8 @@ public class View extends javax.swing.JFrame implements EventListener {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(cloud, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 0, 0)
+                        .addComponent(progressBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -170,7 +201,8 @@ public class View extends javax.swing.JFrame implements EventListener {
         this.buttonStart.setEnabled(false);
         
         int index = this.jComboBox1.getSelectedIndex();
-        main.notify(new ControllerEvent(AlgorithmType.getByIndex(index)));     // Sending start event
+        int nPairs = this.slider.getValue();
+        main.notify(new ControllerEvent(AlgorithmType.getByIndex(index), nPairs));     // Sending start event
         this.progressBar.setIndeterminate(true);
     }//GEN-LAST:event_buttonStartActionPerformed
 
@@ -187,15 +219,21 @@ public class View extends javax.swing.JFrame implements EventListener {
 
     private void spinnerNStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spinnerNStateChanged
         int number = (int) spinnerN.getValue();
-        if (number < 2) {
-            this.nPoints = 2;
-            spinnerN.setValue(2);
+        if (number < 6) {
+            this.nPoints = 6;
+            spinnerN.setValue(6);
         } else {
             this.nPoints = number;
         }
-        main.notify(new ModelEvent(number));
+        main.notify(new ModelEvent(this.nPoints));
         this.cloud.refresh();
     }//GEN-LAST:event_spinnerNStateChanged
+
+    private void numPointsChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_numPointsChanged
+        // TODO add your handling code here:
+        int nPairs = this.slider.getValue();
+        this.labelPoints.setText(Integer.toString(nPairs));
+    }//GEN-LAST:event_numPointsChanged
 
     // Auxiliar method used to complete comboBox with the representative costs for the algorithms
     private String[] getCosts() {
@@ -225,8 +263,11 @@ public class View extends javax.swing.JFrame implements EventListener {
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel labelPoints;
     private javax.swing.JProgressBar progressBar;
+    private javax.swing.JSlider slider;
     private javax.swing.JSpinner spinnerN;
     // End of variables declaration//GEN-END:variables
 }

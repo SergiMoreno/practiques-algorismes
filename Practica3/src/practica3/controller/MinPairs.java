@@ -16,15 +16,15 @@ public class MinPairs {
         n = 0;
     }
     
-    public MinPairs(PointsPair a, PointsPair b, PointsPair c) {
-        list = new PointsPair[3];
-        n = 3;
-        list[0] = a;
-        list[1] = b;
-        list[2] = c;
-        Arrays.sort(list);
+    // Method to fill the list with max distances
+    public void fill() {
+        for (int i = n; i < list.length; i++) {
+            list[i] = PointsPair.maxDistance();
+        }
+        n = list.length;
     }
     
+    // Method to check if a point must be inserted
     public void checkPoint(PointsPair p) {
         // check if the point is not already in the object
         for (int i = 0; i < n; i++) {

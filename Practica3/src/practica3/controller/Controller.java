@@ -16,14 +16,14 @@ import practica3.view.ViewEvent;
  */
 public class Controller extends Thread implements EventListener {
     private Main main;
+    private Model model;
 
     // Represents the algorithm to be executed
     private AlgorithmType algorithm;
+    // Number of pairs of points to be calculated
+    private int nPairs;
     // Thread to do the execution of the algorithm, being able to interrupt it
     private Thread executionThread;
-
-    // DEMANAR A NES PROFE
-    Model model;
 
     public Controller(Main main) {
         this.main = main;
@@ -47,7 +47,6 @@ public class Controller extends Thread implements EventListener {
             
             if (result != null) {
                 System.out.println(result);
-                model.printMeans();
                 this.main.notify(new ViewEvent(result.getIndexs()));
             }
         } catch (InterruptedException ex) {
@@ -57,7 +56,7 @@ public class Controller extends Thread implements EventListener {
 
     // n^2 algorithm
     public MinPairs exponentialSearch() throws InterruptedException {        
-        MinPairs list = new MinPairs(3);
+        MinPairs list = new MinPairs(nPairs);
         for (int i = 0; i < model.getNumberOfPoints(); i++) {
             for (int j = i+1; j < model.getNumberOfPoints(); j++) {
                 PointsPair p = new PointsPair(i, j, model.getDistance(i, j));
@@ -73,52 +72,62 @@ public class Controller extends Thread implements EventListener {
         // Ordering the elements with mergesort
         Arrays.sort(model.getPointsRef());
             
-        return closestPairs(0, model.getNumberOfPoints()-1, 3);
+        return closestPairs(0, model.getNumberOfPoints()-1, nPairs);
     }
     
     private MinPairs closestPairs(int left, int right, int k) throws InterruptedException {
         Thread.sleep(Duration.ZERO);
+        
         // Base case 1, 1 point
         if (left == right) {
-            return new MinPairs(PointsPair.maxDistance(),
-            PointsPair.maxDistance(),
-            PointsPair.maxDistance());
+            MinPairs p = new MinPairs(k);
+            p.fill();
+            
+            return p;
         }
         // Base case 2, 2 points
         if (left == right-1) {
-            return new MinPairs(new PointsPair(left, right, model.getDistance(left, right)),
-            PointsPair.maxDistance(),
-            PointsPair.maxDistance());
+            MinPairs p = new MinPairs(k);
+            p.checkPoint(new PointsPair(left, right, model.getDistance(left, right)));
+            
+            p.fill();
+            return p;
         }
         // Base case 3, 3 points
         if (left == right-2) {
+            MinPairs p = new MinPairs(k);
             double dist13 = model.getDistance(left, right);
             double dist12 = model.getDistance(left, right-1);
             double dist23 = model.getDistance(left+1, right);
             
-            return new MinPairs(new PointsPair(left, right, dist13),
-            new PointsPair(left, right-1, dist12),
-            new PointsPair(left+1, right, dist23));
+            p.checkPoint(new PointsPair(left, right, dist13));
+            p.checkPoint(new PointsPair(left, right-1, dist12));
+            p.checkPoint(new PointsPair(left+1, right, dist23));
+            p.fill();
+            
+            return p;
         }
         
         // Divide
         int mid = (left + right) / 2;
-        MinPairs dl = closestPairs(left, mid, 3);
-        MinPairs dr = closestPairs(mid+1, right, 3);
-        MinPairs d;
-        PointsPair [] combine = new PointsPair[6];
-        for (int i = 0; i < 3; i++) {
+        MinPairs dl = closestPairs(left, mid, k);
+        MinPairs dr = closestPairs(mid+1, right, k);
+        MinPairs d = new MinPairs(k);
+        PointsPair [] combine = new PointsPair[k*2];
+        for (int i = 0; i < k; i++) {
             combine[i] = dl.getPointPair(i);
-            combine[i+3] = dr.getPointPair(i);
+            combine[i+k] = dr.getPointPair(i);
         }
         Arrays.sort(combine);
-        d = new MinPairs(combine[3], combine[4], combine[5]);
+        
+        for (int i = k; i < combine.length; i++) {
+            d.checkPoint(combine[i]);
+        }
         
         // Combine
         List<Integer> nearPoints = model.getNearPointsRef(mid, d.getPointPair(0).getDistance(), left, right);
         for (int i = 0; i < nearPoints.size(); i++) {
             int ind1 = nearPoints.get(i);
-            //for (int j = 1; j <= 7 && (i+j) < nearPoints.size(); j++) {
             for (int j = i+1; j < nearPoints.size(); j++) {
                 int ind2 = nearPoints.get(j);
                 double val = model.getDistance(ind1, ind2);
@@ -135,6 +144,7 @@ public class Controller extends Thread implements EventListener {
         switch (event.type) {
             case START:
                 this.algorithm = event.algorithm;
+                this.nPairs = event.nPairs;
                 // When start event notified, new Thread is initialized
                 this.executionThread = new Thread(this);
                 this.executionThread.start();
