@@ -24,7 +24,6 @@ public class ControllerEvent extends Event {
     
     enum ControlEventType {
         START,
-        N_PAIRS,
         STOP
     }
 }
