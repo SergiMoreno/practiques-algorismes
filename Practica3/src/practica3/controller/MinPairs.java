@@ -16,7 +16,7 @@ public class MinPairs {
         n = 0;
     }
     
-    // Method to fill the list with max distances
+    // Method to fill the list emtpy spots with max distances
     public void fill() {
         for (int i = n; i < list.length; i++) {
             list[i] = PointsPair.maxDistance();
@@ -45,6 +45,7 @@ public class MinPairs {
         return this.list[index];
     }
     
+    // Method to return de list of points indexes
     public ArrayList<Integer> getIndexs() {
         ArrayList<Integer> solution = new ArrayList<Integer>();
         for(int i = 0; i < n; i++) {

@@ -77,6 +77,7 @@ public class Model implements EventListener {
         return this.points;
     }
     
+    // Method to get the references to the nearest points inside the minimum distance
     public List<Integer> getNearPointsRef(int mid, double d, int left, int right) {
         List<Integer> l = new ArrayList<Integer>();
         

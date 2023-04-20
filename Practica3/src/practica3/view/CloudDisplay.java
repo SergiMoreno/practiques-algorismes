@@ -42,6 +42,7 @@ public class CloudDisplay extends JPanel {
         int n = model.getNumberOfPoints();
         // Draw Points
         g.setColor(new Color(0, 0, 0));
+        int pointDim = 5;
         for (int i = 0; i < n; i++) {
             // Check if the point is one of the possible result
             boolean isResult = this.resultIndex.contains(i);
@@ -50,10 +51,10 @@ public class CloudDisplay extends JPanel {
             }
             
             g.fillOval(
-                    centerX + (int)model.getPointX(i) - 5,
-                    centerY + (int)model.getPointY(i) - 5,
-                    5,
-                    5
+                    centerX + (int)model.getPointX(i) - pointDim,
+                    centerY + (int)model.getPointY(i) - pointDim,
+                    pointDim,
+                    pointDim
             );
             
             if (isResult) {

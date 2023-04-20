@@ -251,7 +251,14 @@ public class View extends javax.swing.JFrame implements EventListener {
         ViewEvent event = (ViewEvent) e;
         this.progressBar.setIndeterminate(false);
         this.cloud.showResult(event.indexs);
-        JOptionPane.showMessageDialog(this, "Result has been reached", "SUCCESS!", JOptionPane.INFORMATION_MESSAGE);
+        String message = "Points references :\n";
+        for (int i = 0; i < event.indexs.size(); i+=2) {
+            message += " >> Point " + event.indexs.get(i) + " - Point " + event.indexs.get(i+1) + "\n";
+        }
+        JOptionPane.showMessageDialog(this, 
+                message, 
+                "SUCCESS!! A result has been reached!",
+                JOptionPane.INFORMATION_MESSAGE);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

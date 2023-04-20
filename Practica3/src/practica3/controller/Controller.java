@@ -72,30 +72,25 @@ public class Controller extends Thread implements EventListener {
         // Ordering the elements with mergesort
         Arrays.sort(model.getPointsRef());
             
-        return closestPairs(0, model.getNumberOfPoints()-1, nPairs);
+        return closestPairs(0, model.getNumberOfPoints()-1, this.nPairs);
     }
     
     private MinPairs closestPairs(int left, int right, int k) throws InterruptedException {
         Thread.sleep(Duration.ZERO);
-        
+        MinPairs p = new MinPairs(k);
         // Base case 1, 1 point
         if (left == right) {
-            MinPairs p = new MinPairs(k);
             p.fill();
-            
             return p;
         }
         // Base case 2, 2 points
         if (left == right-1) {
-            MinPairs p = new MinPairs(k);
             p.checkPoint(new PointsPair(left, right, model.getDistance(left, right)));
-            
             p.fill();
             return p;
         }
         // Base case 3, 3 points
         if (left == right-2) {
-            MinPairs p = new MinPairs(k);
             double dist13 = model.getDistance(left, right);
             double dist12 = model.getDistance(left, right-1);
             double dist23 = model.getDistance(left+1, right);
@@ -104,7 +99,6 @@ public class Controller extends Thread implements EventListener {
             p.checkPoint(new PointsPair(left, right-1, dist12));
             p.checkPoint(new PointsPair(left+1, right, dist23));
             p.fill();
-            
             return p;
         }
         
@@ -119,7 +113,6 @@ public class Controller extends Thread implements EventListener {
             combine[i+k] = dr.getPointPair(i);
         }
         Arrays.sort(combine);
-        
         for (int i = k; i < combine.length; i++) {
             d.checkPoint(combine[i]);
         }
@@ -134,6 +127,7 @@ public class Controller extends Thread implements EventListener {
                 d.checkPoint(new PointsPair(ind1, ind2, val));
             }
         }
+        d.fill();
         return d;
     }
 
