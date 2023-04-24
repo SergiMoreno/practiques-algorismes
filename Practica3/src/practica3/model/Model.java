@@ -18,12 +18,10 @@ public class Model implements EventListener {
     // Array to represent the cloud of points
     private Point [] points;
     // Number of points
-    private int nPoints;
-    
-    
+    private int nPoints;    
     // Constant to keep the coordinates range
-    public final int xRANGE = 300;
-    public final int yRANGE = 200;
+    private final int xRANGE = 300;
+    private final int yRANGE = 200;
     
     public Model(Main main, int nPoints) {
         this.main = main;
@@ -102,13 +100,11 @@ public class Model implements EventListener {
         ModelEvent event = (ModelEvent) e;
         
         switch (event.type) {
-            case CHANGE_N_POINTS -> {
+            case CHANGE_N_POINTS:
                 this.nPoints = event.nPoints;
-                this.initializeCloud();
-            }
-            case RESET -> {
+            case RESET:
                 this.reset();
-            }
+                break;
         }
     }
 }
