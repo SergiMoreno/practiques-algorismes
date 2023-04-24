@@ -1,25 +1,19 @@
-package practica3;
+package practica4;
 
 import mesurament.Mesurament;
-import practica3.controller.Controller;
-import practica3.model.Model;
-import practica3.view.View;
+import practica4.controller.Controller;
+import practica4.model.Model;
+import practica4.view.View;
 
 /**
  *
  * @author usuario
  */
-/*
-* Video : https://youtu.be/xSB57Oy3RSg
-*/
 public class Main implements EventListener {
     // components MVC centralitzat
     private Model model;
-    private View vista;
-    private Controller control;
-    
-    // Default number of points
-    static final int DEFAULT_N_POINTS = 100;
+    private View view;
+    private Controller controller;
 
     /**
      * @param args the command line arguments
@@ -30,11 +24,11 @@ public class Main implements EventListener {
     }
     
     private void init() {
-        model = new Model(this, DEFAULT_N_POINTS);
-        control = new Controller(this);
-        vista = new View(this, DEFAULT_N_POINTS);
+        this.model = new Model(this);
+        this.controller = new Controller(this);
+        this.view = new View(this);
     }
-    
+
     @Override
     public void notify(Event e) {
         switch (e.getEventType()){
@@ -42,15 +36,12 @@ public class Main implements EventListener {
                 model.notify(e);
             }
             case View -> {
-                vista.notify(e);
+                view.notify(e);
             }
             case Controller -> {
-                control.notify(e);
+                controller.notify(e);
             }
         }
     }
     
-    public Model getModel() {
-        return this.model;
-    }
 }
