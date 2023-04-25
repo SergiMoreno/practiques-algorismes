@@ -44,4 +44,7 @@ public class Main implements EventListener {
         }
     }
     
+    public Model getModel() {
+        return this.model;
+    }
 }
