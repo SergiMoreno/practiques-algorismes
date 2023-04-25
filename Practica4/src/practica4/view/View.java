@@ -1,5 +1,7 @@
 package practica4.view;
 
+import java.io.File;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import practica4.Event;
 import practica4.EventListener;
@@ -22,8 +24,7 @@ public class View extends javax.swing.JFrame implements EventListener {
         initComponents();
         this.setVisible(true);
         this.setLocationRelativeTo(null);
-        this.setResizable(false);
-        this.setTitle("Cloud");
+        this.setTitle("Map");
     }
 
     /**
@@ -37,16 +38,15 @@ public class View extends javax.swing.JFrame implements EventListener {
 
         jPanel2 = new javax.swing.JPanel();
         buttonStart = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
         buttonReset = new javax.swing.JButton();
-        spinnerN = new javax.swing.JSpinner();
-        jLabel2 = new javax.swing.JLabel();
-        slider = new javax.swing.JSlider();
-        jLabel3 = new javax.swing.JLabel();
-        labelPoints = new javax.swing.JLabel();
+        openFile = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
         progressBar = new javax.swing.JProgressBar();
+        map = new MapDisplay(this.main.getModel());
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
+        setSize(new java.awt.Dimension(700, 700));
 
         jPanel2.setBackground(new java.awt.Color(0, 51, 51));
 
@@ -61,9 +61,6 @@ public class View extends javax.swing.JFrame implements EventListener {
             }
         });
 
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Points:");
-
         buttonReset.setBackground(new java.awt.Color(0, 102, 102));
         buttonReset.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         buttonReset.setForeground(new java.awt.Color(255, 255, 255));
@@ -75,32 +72,21 @@ public class View extends javax.swing.JFrame implements EventListener {
             }
         });
 
-        spinnerN.setValue(this.nPoints);
-        spinnerN.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                spinnerNStateChanged(evt);
+        openFile.setBackground(new java.awt.Color(0, 102, 102));
+        openFile.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        openFile.setForeground(new java.awt.Color(255, 255, 255));
+        openFile.setText("OPEN FILE");
+        openFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                openFileActionPerformed(evt);
             }
         });
 
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Algorithm to apply");
-        jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-
-        slider.setBackground(new java.awt.Color(0, 51, 51));
-        slider.setMaximum(10);
-        slider.setMinimum(3);
-        slider.setValue(3);
-        slider.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                numPointsChanged(evt);
-            }
-        });
-
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("N Pairs :");
-
-        labelPoints.setForeground(new java.awt.Color(255, 255, 255));
-        labelPoints.setText(Integer.toString(this.slider.getValue()));
+        jTextField1.setBackground(new java.awt.Color(0, 51, 51));
+        jTextField1.setForeground(new java.awt.Color(255, 255, 255));
+        jTextField1.setText("Mapa");
+        jTextField1.setBorder(null);
+        jTextField1.setOpaque(true);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -108,45 +94,34 @@ public class View extends javax.swing.JFrame implements EventListener {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(buttonReset, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(buttonStart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(slider, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(spinnerN))
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(labelPoints)
-                        .addGap(8, 8, 8)))
-                .addContainerGap())
+            .addComponent(openFile, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+            .addComponent(jTextField1)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(spinnerN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(132, 132, 132)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(labelPoints))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(slider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(100, 100, 100)
+                .addGap(209, 209, 209)
+                .addComponent(openFile)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 326, Short.MAX_VALUE)
                 .addComponent(buttonStart)
-                .addGap(12, 12, 12)
-                .addComponent(buttonReset)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(buttonReset))
         );
 
         progressBar.setForeground(new java.awt.Color(0, 102, 102));
+
+        javax.swing.GroupLayout mapLayout = new javax.swing.GroupLayout(map);
+        map.setLayout(mapLayout);
+        mapLayout.setHorizontalGroup(
+            mapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        mapLayout.setVerticalGroup(
+            mapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -154,13 +129,21 @@ public class View extends javax.swing.JFrame implements EventListener {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(progressBar, javax.swing.GroupLayout.DEFAULT_SIZE, 694, Short.MAX_VALUE))
+                .addGap(0, 0, 0)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(progressBar, javax.swing.GroupLayout.DEFAULT_SIZE, 794, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, 0)
+                        .addComponent(map, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(0, 0, 0))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(0, 0, 0)
+                .addComponent(map, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, 0)
                 .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -168,35 +151,25 @@ public class View extends javax.swing.JFrame implements EventListener {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonStartActionPerformed
-        this.spinnerN.setEnabled(false);
         this.buttonStart.setEnabled(false);
         
-        int nPairs = this.slider.getValue();
         this.progressBar.setIndeterminate(true);
     }//GEN-LAST:event_buttonStartActionPerformed
 
     private void buttonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonResetActionPerformed
-        this.spinnerN.setEnabled(true);
         this.buttonStart.setEnabled(true);
         this.progressBar.setIndeterminate(false);
 
     }//GEN-LAST:event_buttonResetActionPerformed
 
-    private void spinnerNStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spinnerNStateChanged
-        int number = (int) spinnerN.getValue();
-        if (number < 6) {
-            this.nPoints = 6;
-            spinnerN.setValue(6);
-        } else {
-            this.nPoints = number;
-        }
-    }//GEN-LAST:event_spinnerNStateChanged
-
-    private void numPointsChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_numPointsChanged
+    private void openFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openFileActionPerformed
         // TODO add your handling code here:
-        int nPairs = this.slider.getValue();
-        this.labelPoints.setText(Integer.toString(nPairs));
-    }//GEN-LAST:event_numPointsChanged
+        JFileChooser fileChooser = new JFileChooser(".");
+        int returnValue = fileChooser.showOpenDialog(null);
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+        }
+    }//GEN-LAST:event_openFileActionPerformed
 
 
     @Override
@@ -213,13 +186,12 @@ public class View extends javax.swing.JFrame implements EventListener {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonReset;
     private javax.swing.JButton buttonStart;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JLabel labelPoints;
+    private javax.swing.JTextField jTextField1;
+    /*
+    private javax.swing.JPanel map;
+    */MapDisplay map;
+    private javax.swing.JButton openFile;
     private javax.swing.JProgressBar progressBar;
-    private javax.swing.JSlider slider;
-    private javax.swing.JSpinner spinnerN;
     // End of variables declaration//GEN-END:variables
 }
