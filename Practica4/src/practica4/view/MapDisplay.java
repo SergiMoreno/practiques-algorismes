@@ -13,9 +13,11 @@ import practica4.model.Model;
  */
 public class MapDisplay extends JPanel {
     private Model model;
+    private String image;
     
     public MapDisplay(Model model) {
         this.model = model;
+        this.image = "pitiuses.png";
     }
     
     @Override
@@ -30,9 +32,13 @@ public class MapDisplay extends JPanel {
         BufferedImage bima = new BufferedImage(this.getWidth(),
                 this.getHeight(), BufferedImage.TYPE_INT_ARGB);
         Graphics g = bima.getGraphics();
-        URL imageURL = getClass().getResource("../../resources/pitiuses.png");
+        URL imageURL = getClass().getResource("../../resources/" + image);
         g.drawImage((new ImageIcon(imageURL)).getImage(), 0, 0, this.getWidth(), this.getHeight(), this);
 
         gr.drawImage(bima, 0, 0, this);
+    }
+    
+    public void updateImage(String image) {
+        this.image = image;
     }
 }

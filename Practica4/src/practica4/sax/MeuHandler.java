@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package practica4.sax;
 
 import practica4.Main;
@@ -18,61 +13,62 @@ import practica4.model.Model;
 public class MeuHandler extends DefaultHandler {
 
     private Main prog;
-    private boolean enTipo;
-    private boolean enGrafo;
-    private boolean enNodo;
-    private boolean enArista;
+    private boolean inType;
+    private boolean inMap;
+    private boolean inPoblation;
+    private boolean inRoute;
 
     public MeuHandler(Main p) {
         super();
         prog = p;
-        enTipo = enGrafo = enNodo = enArista = false;
+        inType = inMap = inPoblation = inRoute = false;
     }
 
     public void startElement(String uri, String localName,
             String qName, Attributes attributes) throws SAXException {
-        if (qName.equalsIgnoreCase(Tags.grafo)) {
-            enGrafo = true;
-        } else if (qName.equalsIgnoreCase(Tags.nodo)) {
-            enNodo = true;
-        } else if (qName.equalsIgnoreCase(Tags.arista)) {
-            enArista = true;
-        } else if (qName.equalsIgnoreCase(Tags.tipo)) {
-            enTipo = true;
+        if (qName.equalsIgnoreCase(Tags.map)) {
+            inMap = true;
+        } else if (qName.equalsIgnoreCase(Tags.poblation)) {
+            inPoblation = true;
+        } else if (qName.equalsIgnoreCase(Tags.route)) {
+            inRoute = true;
+        } else if (qName.equalsIgnoreCase(Tags.type)) {
+            inType = true;
         }
     }
 
     @Override
     public void endElement(String uri, String localName,
             String qName) throws SAXException {
-        if (qName.equalsIgnoreCase(Tags.grafo)) {
-            enGrafo = false;
-        } else if (qName.equalsIgnoreCase(Tags.nodo)) {
-            enNodo = false;
-        } else if (qName.equalsIgnoreCase(Tags.arista)) {
-            enArista = false;
-        } else if (qName.equalsIgnoreCase(Tags.tipo)) {
-            enTipo = false;
+        if (qName.equalsIgnoreCase(Tags.map)) {
+            inMap = false;
+        } else if (qName.equalsIgnoreCase(Tags.poblation)) {
+            inPoblation = false;
+        } else if (qName.equalsIgnoreCase(Tags.route)) {
+            inRoute = false;
+        } else if (qName.equalsIgnoreCase(Tags.type)) {
+            inType = false;
         }
     }
 
     @Override
     public void characters(char ch[], int start, int length)
             throws SAXException {
-        Model dat = prog.getModel();
+        Model model = prog.getModel();
         String s[];
         String value = new String(ch, start, length).trim();
-        if (enNodo) {
+        if (inPoblation) {
             s = value.split(":");
-            //dat.ponNodo(s[0], Integer.parseInt(s[1]), Integer.parseInt(s[2]));
-        } else if (enArista) {
+            model.addPoblation(s[0]);
+        } else if (inRoute) {
             s = value.split(":");
+            model.addRoute(Double.parseDouble(s[0]));
             //dat.ponArista(s[0], s[1], Double.parseDouble(s[2]));
-        } else if (enTipo) {
+        } else if (inType) {
             if (value.equalsIgnoreCase("dirigido")) {
-                //dat.ponTipo("dirigido");
+                model.setType("dirigido");
             } else if (value.equalsIgnoreCase("nodirigido")) {
-                //dat.ponTipo("nodirigido");
+                model.setType("nodirigido");
             }
         }
     }

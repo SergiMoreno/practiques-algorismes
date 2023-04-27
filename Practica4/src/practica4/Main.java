@@ -3,6 +3,7 @@ package practica4;
 import mesurament.Mesurament;
 import practica4.controller.Controller;
 import practica4.model.Model;
+import practica4.sax.MeuSax;
 import practica4.view.View;
 
 /**
@@ -28,6 +29,8 @@ public class Main implements EventListener {
     
     private void init() {
         this.model = new Model(this);
+        MeuSax sax = new MeuSax("pitiuses.ltim", this);
+        sax.llegir();
         this.controller = new Controller(this);
         this.view = new View(this);
     }
