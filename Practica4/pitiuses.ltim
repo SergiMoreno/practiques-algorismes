@@ -1,51 +1,9 @@
-<grafo>
+<mapa>
 	<tipo>nodirigido</tipo>
-	<nodo>
-		0001:0:0
-	</nodo>
-	<nodo>
-		0002:2:0
-	</nodo>
-	<nodo>
-		0003:1:1
-	</nodo>
-	<nodo>
-		0004:3:1
-	</nodo>
-	<nodo>
-		0005:4:1
-	</nodo>
-	<nodo>
-		0006:5:1
-	</nodo>
-	<nodo>
-		0007:3:3
-	</nodo>
-	<arista>
-		0001:0002:1.2
-	</arista>
-	<arista>
-		0001:0003:2.2
-	</arista>
-	<arista>
-		0002:0003:3.2
-	</arista>
-	<arista>
-		0002:0004:1.8
-	</arista>
-	<arista>
-		0004:0003:1.2
-	</arista>
-	<arista>
-		0004:0005:2.8
-	</arista>
-	<arista>
-		0006:0005:0.8
-	</arista>
-	<arista>
-		0006:0007:3.5
-	</arista>
-	<arista>
-		0003:0007:4.5
-	</arista>
-</grafo>
+	<poblacion>
+		Ibiza
+	</poblacion>
+	<ruta>
+		1.2
+	</ruta>
+</mapa>

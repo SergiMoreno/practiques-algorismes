@@ -1,7 +1,5 @@
 package practica4.view;
 
-import java.io.File;
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import practica4.Event;
 import practica4.EventListener;
@@ -13,14 +11,13 @@ import practica4.Main;
  */
 public class View extends javax.swing.JFrame implements EventListener {
     private Main main;
-    private int nPoints;
+    //private String image;
 
     /**
      * Creates new form Vista
      */
     public View(Main main) {
         this.main = main;
-        this.nPoints = nPoints;
         initComponents();
         this.setVisible(true);
         this.setLocationRelativeTo(null);
@@ -179,16 +176,12 @@ public class View extends javax.swing.JFrame implements EventListener {
                 .addGap(0, 0, 0)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(progressBar, javax.swing.GroupLayout.DEFAULT_SIZE, 766, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, 0)
-                        .addComponent(map, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(0, 0, 0))))
+                    .addComponent(map, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, 0)
                 .addComponent(map, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
                 .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -212,7 +205,7 @@ public class View extends javax.swing.JFrame implements EventListener {
 
     @Override
     public void notify(Event e) {
-        //ViewEvent event = (ViewEvent) e;
+        ViewEvent event = (ViewEvent) e;
         this.progressBar.setIndeterminate(false);
         String message = "";
         JOptionPane.showMessageDialog(this, 
