@@ -5,9 +5,11 @@ package practica4.model;
  * @author usuario
  */
 public class Route {
+    private Poblation poblationf;
     private double value;
     
-    public Route(double v) {
+    public Route(Poblation p, double v) {
+        this.poblationf = p;
         this.value = v;
     }
     
@@ -16,9 +18,9 @@ public class Route {
         valor = 0.0;
     }*/
     
-    /*public Nodo apunta() {
-        return apunta;
-    }*/
+    public Poblation goesTo() {
+        return poblationf;
+    }
     
     public double getValue() {
         return this.value;

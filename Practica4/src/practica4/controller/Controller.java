@@ -24,7 +24,13 @@ public class Controller extends Thread implements EventListener {
     public void run() {
         model = this.main.getModel();
         
-        // Dijkstra algorithm
+        // Recursive Dijkstra algorithm
+        
+        // ArrayList permanentes
+        // arrayList int
+        
+        // HashMap para guardar las etiquetas de las poblaciones (keys del hash mediante su índice)
+        // hashmap (int index, double pesoRuta)
     }
 
     @Override

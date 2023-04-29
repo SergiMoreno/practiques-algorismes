@@ -1,9 +1,189 @@
 <mapa>
 	<tipo>nodirigido</tipo>
 	<poblacion>
+		Pilar de la Mola
+	</poblacion>
+	<poblacion>
+		Es Caló
+	</poblacion>
+	<poblacion>
+		San Francisco Javier
+	</poblacion>
+	<poblacion>
+		Es Pujols
+	</poblacion>
+	<poblacion>
+		La Savina
+	</poblacion>
+	<poblacion>
+		San Francesc de s'Estany
+	</poblacion>
+	<poblacion>
+		San Jorge de ses Salines
+	</poblacion>
+	<poblacion>
+		Es Cubells
+	</poblacion>
+	<poblacion>
 		Ibiza
 	</poblacion>
+	<poblacion>
+		Puig d'en Valls
+	</poblacion>
+	<poblacion>
+		San José
+	</poblacion>
+	<poblacion>
+		Sant Agustí des Vedrà
+	</poblacion>
+	<poblacion>
+		Sant Rafel de Sa Creu
+	</poblacion>
+	<poblacion>
+		San Antonio Abad
+	</poblacion>
+	<poblacion>
+		Santa Eulalia del Rio
+	</poblacion>
+	<poblacion>
+		Santa Gertrudis de Frutera
+	</poblacion>
+	<poblacion>
+		San Carlos
+	</poblacion>
+	<poblacion>
+		Sant Llorenç de Balàfia
+	</poblacion>
+	<poblacion>
+		San Mateo de Albarca
+	</poblacion>
+	<poblacion>
+		Santa Agnés de Corona
+	</poblacion>
+	<poblacion>
+		Playa es Figueral
+	</poblacion>
+	<poblacion>
+		San Miguel de Balansat
+	</poblacion>
+	<poblacion>
+		Cala San Vicente
+	</poblacion>
+	<poblacion>
+		San Juan Bautista
+	</poblacion>
+	<poblacion>
+		Puerto de San Miguel
+	</poblacion>
+	<poblacion>
+		Portinatx
+	</poblacion>
 	<ruta>
-		1.2
+		Pilar de la Mola:Es Caló:1.2
+	</ruta>
+	<ruta>
+		Es Caló:San Francisco Javier:2.2
+	</ruta>
+	<ruta>
+		San Francisco Javier:Es Pujols:0.5
+	</ruta>
+	<ruta>
+		San Francisco Javier:La Savina:1.0
+	</ruta>
+	<ruta>
+		La Savina:Ibiza:10.2
+	</ruta>
+	<ruta>
+		Ibiza:San Jorge de ses Salines:1.6
+	</ruta>
+	<ruta>
+		San Jorge de ses Salines:San Francesc de s'Estany:0.8
+	</ruta>
+	<ruta>
+		San Jorge de ses Salines:San José:1.8
+	</ruta>
+	<ruta>
+		Ibiza:San José:3.5
+	</ruta>
+	<ruta>
+		San José:Es Cubells:0.6
+	</ruta>
+	<ruta>
+		San José:Sant Agustí des Vedrà:0.7
+	</ruta>
+	<ruta>
+		Es Cubells:Sant Agustí des Vedrà:1.8
+	</ruta>
+	<ruta>
+		Sant Agustí des Vedrà:San Antonio Abad:1.2
+	</ruta>
+	<ruta>
+		San Antonio Abad:Sant Rafel de Sa Creu:2.9
+	</ruta>
+	<ruta>
+		Sant Rafel de Sa Creu:Puig d'en Valls:0.7
+	</ruta>
+	<ruta>
+		San Antonio Abad:Santa Agnés de Corona:1.8
+	</ruta>
+	<ruta>
+		Ibiza:Puig d'en Valls:0.7
+	</ruta>
+	<ruta>
+		Santa Agnés de Corona:Sant Rafel de Sa Creu:1.7
+	</ruta>
+	<ruta>
+		Santa Agnés de Corona:Santa Gertrudis de Frutera:1.8
+	</ruta>
+	<ruta>
+		Santa Agnés de Corona:San Mateo de Albarca:0.2
+	</ruta>
+	<ruta>
+		Sant Rafel de Sa Creu:Santa Gertrudis de Frutera:1.4
+	</ruta>
+	<ruta>
+		Puig d'en Valls:Santa Gertrudis de Frutera:1.5
+	</ruta>
+	<ruta>
+		Puig d'en Valls:Sant Llorenç de Balàfia:3.4
+	</ruta>
+	<ruta>
+		Puig d'en Valls:Santa Eulalia del Rio:1.7
+	</ruta>
+	<ruta>
+		San Mateo de Albarca:San Miguel de Balansat:1.0
+	</ruta>
+	<ruta>
+		San Mateo de Albarca:Santa Gertrudis de Frutera:1.5
+	</ruta>
+	<ruta>
+		San Miguel de Balansat:Santa Gertrudis de Frutera:0.9
+	</ruta>
+	<ruta>
+		Sant Llorenç de Balàfia:San Juan Bautista:1.7
+	</ruta>
+	<ruta>
+		Sant Llorenç de Balàfia:San Carlos:1.0
+	</ruta>
+	<ruta>
+		Santa Eulalia del Rio:San Carlos:1.5
+	</ruta>
+	<ruta>
+		San Carlos:Playa es Figueral:1.2
+	</ruta>
+	<ruta>
+		San Miguel de Balansat:Puerto de San Miguel:0.6
+	</ruta>
+	<ruta>
+		Puerto de San Miguel:San Juan Bautista:1.4
+	</ruta>
+	<ruta>
+		San Juan Bautista:Portinatx:0.6
+	</ruta>
+	<ruta>
+		San Juan Bautista:Cala San Vicente:0.8
+	</ruta>
+	<ruta>
+		Cala San Vicente:Playa es Figueral:0.7
 	</ruta>
 </mapa>
