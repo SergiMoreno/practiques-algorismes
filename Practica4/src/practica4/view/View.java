@@ -4,6 +4,7 @@ import javax.swing.JOptionPane;
 import practica4.Event;
 import practica4.EventListener;
 import practica4.Main;
+import practica4.controller.ControllerEvent;
 
 /**
  *
@@ -194,6 +195,7 @@ public class View extends javax.swing.JFrame implements EventListener {
         this.buttonStart.setEnabled(false);
         
         this.progressBar.setIndeterminate(true);
+        this.main.notify(new ControllerEvent());
     }//GEN-LAST:event_buttonStartActionPerformed
 
     private void buttonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonResetActionPerformed
