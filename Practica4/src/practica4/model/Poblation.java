@@ -8,14 +8,14 @@ import java.util.ArrayList;
  */
 public class Poblation {
     private String name;
-    private ArrayList<Route> routes;
+    private ArrayList<Integer> routes;
     
     public Poblation(String n) {
         this.name = n;
-        this.routes = new ArrayList<Route>();
+        this.routes = new ArrayList<Integer>();
     }
     
-    protected void addRoute(Route r) {
+    protected void addRoute(Integer r) {
         this.routes.add(r);
     }
     
@@ -27,7 +27,7 @@ public class Poblation {
         return this.routes.size();
     }
 
-    protected Route getRoute(int i) {
+    protected int getRoute(int i) {
         return this.routes.get(i);
     }
 }
