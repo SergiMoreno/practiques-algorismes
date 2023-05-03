@@ -1,6 +1,7 @@
 package practica4.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import practica4.Event;
 import practica4.EventListener;
 import practica4.Main;
@@ -15,7 +16,7 @@ public class Model implements EventListener {
     private ArrayList <Route> routes;
     //private double[][] solucion;
     private String type = "";
-    private int origin, mid, dest;
+    private HashMap<PoblationType, Integer> pobSelected;
     
     
     
@@ -25,13 +26,17 @@ public class Model implements EventListener {
         this.routes = new ArrayList<>();
         //solucion = null;
         this.type = "nodirigido";
-        origin = 0;
+        /*origin = 0;
         mid = 7;
-        dest = 11;
+        dest = 11;*/
+        this.pobSelected = new HashMap<PoblationType, Integer>();
+        this.pobSelected.put(PoblationType.ORIGIN, -1);
+        this.pobSelected.put(PoblationType.MIDDLE, -1);
+        this.pobSelected.put(PoblationType.DESTINATION, -1);
     }
     
-    public void addPoblation(String n) {
-        this.poblations.add(new Poblation(n));
+    public void addPoblation(String n, int coordx, int coordy) {
+        this.poblations.add(new Poblation(n, coordx, coordy));
     }
     
     public void addRoute(String namei, String namef, double v) {
@@ -82,24 +87,56 @@ public class Model implements EventListener {
     }
     
     public int getOrigin() {
-        return this.origin;
+        return this.pobSelected.get(PoblationType.ORIGIN);
     }
     
     public int getDest() {
-        return this.dest;
+        return this.pobSelected.get(PoblationType.DESTINATION);
     }
     
-    public int getMid() {
-        return this.mid;
+    public int getMiddle() {
+        return this.pobSelected.get(PoblationType.MIDDLE);
+    }
+    
+    public void updateOrigin(int index) {
+        this.pobSelected.replace(PoblationType.ORIGIN, index);
+    }
+    
+    public void updateDest(int index) {
+        this.pobSelected.replace(PoblationType.DESTINATION, index);
+    }
+    
+    public void updateMiddle(int index) {
+        this.pobSelected.replace(PoblationType.MIDDLE, index);
     }
     
     public String getPobName(int index) {
         return this.poblations.get(index).getName();
     }
+    
+    public int getPoblationX(int index) {
+        return this.poblations.get(index).getCoordx();
+    }
 
+    public int getPoblationY(int index) {
+        return this.poblations.get(index).getCoordy();
+    }
+     
     @Override
     public void notify(Event e) {
-
+        ModelEvent event = (ModelEvent) e;
+        
+        switch (event.type) {
+            case UPDATE_ORIGIN -> {
+                updateOrigin(event.pobIndex);
+            }
+            case UPDATE_MIDDLE -> {
+                updateMiddle(event.pobIndex);
+            }
+            case UPDATE_DESTINATION -> {
+                updateDest(event.pobIndex);
+            }
+        }
     }
     
 }

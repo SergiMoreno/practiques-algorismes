@@ -8,10 +8,13 @@ import java.util.ArrayList;
  */
 public class Poblation {
     private String name;
+    private int coordx, coordy;
     private ArrayList<Integer> routes;
     
-    public Poblation(String n) {
+    public Poblation(String n, int x, int y) {
         this.name = n;
+        this.coordx = x;
+        this.coordy = y;
         this.routes = new ArrayList<Integer>();
     }
     
@@ -29,5 +32,13 @@ public class Poblation {
 
     protected int getRoute(int i) {
         return this.routes.get(i);
+    }
+    
+    protected int getCoordx() {
+        return this.coordx;
+    }
+    
+    protected int getCoordy() {
+        return this.coordy;
     }
 }

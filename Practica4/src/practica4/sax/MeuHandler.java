@@ -59,7 +59,7 @@ public class MeuHandler extends DefaultHandler {
         String value = new String(ch, start, length).trim();
         if (inPoblation) {
             s = value.split(":");
-            model.addPoblation(s[0]);
+            model.addPoblation(s[0], Integer.parseInt(s[1]), Integer.parseInt(s[2]));
         } else if (inRoute) {
             s = value.split(":");
             model.addRoute(s[0], s[1],Double.parseDouble(s[2]));

@@ -29,7 +29,7 @@ public class Main implements EventListener {
     
     private void init() {
         this.model = new Model(this);
-        MeuSax sax = new MeuSax("pitiuses.ltim", this);
+        MeuSax sax = new MeuSax(Map.getFile(Map.PITIUSES), this);
         sax.llegir();
         this.controller = new Controller(this);
         this.view = new View(this);

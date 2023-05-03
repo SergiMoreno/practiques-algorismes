@@ -19,7 +19,6 @@ public class Controller extends Thread implements EventListener {
     // Thread to do the execution of the algorithm, being able to interrupt it
     private Thread executionThread;
     
-    Queue<Integer> visited;
     HashMap<Integer, Double> minimumDistance;
     
     public Controller(Main main) {
@@ -30,25 +29,24 @@ public class Controller extends Thread implements EventListener {
     public void run() {
         model = this.main.getModel();
         
-        tagGraph(model.getOrigin());
-
         // Recursive Dijkstra algorithm
-        calculate(model.getDest(), model.getOrigin());
         
-        // Per passar per mid
-        /*
-        tagGraph(model.getMid());
+        // Tag the graph by the mid node
+        tagGraph(model.getMiddle());
+        // Calculate the minimum route from dest node to mid node
+        calculate(model.getDest(), model.getMiddle());
         
-        // Recursive Dijkstra algorithm
-        calculate(model.getDest(), model.getMid());
-        
+        // Tag the graph by the origin node
         tagGraph(model.getOrigin());
-        calculate(model.getMid(), model.getOrigin());*/
+        // Calculate the minimum route from mid node to origin node
+        calculate(model.getMiddle(), model.getOrigin());
     }
     
+    // Method to tag the graph nodes with the distance by the index of the one passed as parameter
     private void tagGraph(int origin) {
-        visited = new LinkedList<>();
         minimumDistance = new HashMap<Integer, Double>();
+        // 
+        Queue<Integer> visited = new LinkedList<>();
         
         visited.add(origin);
         minimumDistance.put(origin, 0.0);
@@ -78,14 +76,6 @@ public class Controller extends Thread implements EventListener {
     }
     
     private void calculate(int indexp, int dir) {
-        // ArrayList permanentes
-        // arrayList int
-        //ArrayList<Integer> visited;
-        
-        // HashMap para guardar las etiquetas de las poblaciones (keys del hash mediante su índice)
-        // hashmap (int index, double pesoRuta)
-        
-        // Array
         System.out.println(model.getPobName(indexp));
         if (indexp == dir) {
             return;
@@ -106,6 +96,7 @@ public class Controller extends Thread implements EventListener {
         }
     }
     
+    // Auxiliar method to round doubles by the number of decimals defined by 'places'
     private Double roundDouble(double vb, int places) {
         long factor = (long) Math.pow(10, places);
         vb = vb * factor;
