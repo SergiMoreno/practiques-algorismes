@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.net.URL;
-import java.util.HashMap;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import practica4.model.Model;
@@ -16,12 +15,12 @@ import practica4.model.Model;
 public class MapDisplay extends JPanel {
     private Model model;
     private String image;
-    private HashMap<Integer, Boolean> pobSelected;
+    private int pobDimension;
     
-    public MapDisplay(Model model, String img) {
+    public MapDisplay(Model model, String img, int pobDim) {
         this.model = model;
         this.image = img;
-        this.pobSelected = new HashMap<Integer, Boolean>();
+        this.pobDimension = pobDim;
     }
     
     @Override
@@ -41,11 +40,10 @@ public class MapDisplay extends JPanel {
         
         g.setColor(Color.BLACK);
         
-        int pobDimension = 16;
         int n = model.getNPoblations();
 
         for (int i = 0; i < n; i++) {
-            if (this.pobSelected.containsKey(i)) {
+            if (model.isSelected(i)) {
                 g.fillOval(
                     model.getPoblationX(i) - pobDimension,
                     model.getPoblationY(i) - pobDimension,
@@ -63,14 +61,6 @@ public class MapDisplay extends JPanel {
         }
 
         gr.drawImage(bima, 0, 0, this);
-    }
-    
-    public void addPoblationSelected(int index) {
-        this.pobSelected.put(index, Boolean.TRUE);
-    }
-    
-    public void removePoblationSelected(int index) {
-        this.pobSelected.remove(index);
     }
     
     public void updateImage(String img) {

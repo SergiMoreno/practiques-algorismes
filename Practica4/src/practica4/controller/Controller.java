@@ -1,5 +1,7 @@
 package practica4.controller;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -7,6 +9,7 @@ import practica4.Event;
 import practica4.EventListener;
 import practica4.Main;
 import practica4.model.Model;
+import practica4.view.ViewEvent;
 
 /**
  *
@@ -18,8 +21,10 @@ public class Controller extends Thread implements EventListener {
     
     // Thread to do the execution of the algorithm, being able to interrupt it
     private Thread executionThread;
-    
-    HashMap<Integer, Double> minimumDistance;
+    // Structure to keep the poblations indexs and their minimum distance
+    private HashMap<Integer, Double> minimumDistance;
+    // Structure to keep the solution indexs
+    private ArrayList<Integer> solution;
     
     public Controller(Main main) {
         this.main = main;
@@ -31,37 +36,45 @@ public class Controller extends Thread implements EventListener {
         
         // Recursive Dijkstra algorithm
         
+        this.solution = new ArrayList<Integer>();
+        /* from destination to middle */
         // Tag the graph by the mid node
         tagGraph(model.getMiddle());
         // Calculate the minimum route from dest node to mid node
         calculate(model.getDest(), model.getMiddle());
         
+        /* from middle to origin */
         // Tag the graph by the origin node
         tagGraph(model.getOrigin());
         // Calculate the minimum route from mid node to origin node
         calculate(model.getMiddle(), model.getOrigin());
+        
+        // Reverse the route flow to be from origin to destination and notify result to view
+        Collections.reverse(solution);
+        this.main.notify(new ViewEvent(this.solution));
     }
     
-    // Method to tag the graph nodes with the distance by the index of the one passed as parameter
+    // Method to tag the graph nodes with the minimum distance by the index of the one passed as parameter
     private void tagGraph(int origin) {
+        // Visited poblations will be putted in this structure
         minimumDistance = new HashMap<Integer, Double>();
-        // 
-        Queue<Integer> visited = new LinkedList<>();
+        // Queue to keep the poblations to be visited
+        Queue<Integer> visit = new LinkedList<>();
         
-        visited.add(origin);
+        visit.add(origin);
         minimumDistance.put(origin, 0.0);
         
-        while (!visited.isEmpty()) {
-            // get & remove from queue
-            int i = visited.remove();
-            // get routes de i
+        while (!visit.isEmpty()) {
+            // Get & remove from queue
+            int i = visit.remove();
+            // Get routes de i
             double acc = minimumDistance.get(i);
             int nroutes = model.getNRoutes(i);
             for (int j = 0; j < nroutes; j++) {
                 int dest = model.getDestPoblation(i, j);
                 double v = roundDouble(model.getRouteValue(i, j) + acc, 2);
   
-                // las routes, si no están, las añadimos en la cola y en el hash
+                // If poblation is already visited, check if the current distance is less than the stored value
                 if (minimumDistance.containsKey(dest)) {
                     double hashV = minimumDistance.get(dest);
                     if (hashV > v) {
@@ -69,14 +82,21 @@ public class Controller extends Thread implements EventListener {
                     }
                 } else {
                     minimumDistance.put(dest, v);
-                    visited.add(dest);
+                    visit.add(dest);
                 }
             }
+        }
+        
+        // TO REMOVE
+        for (Integer i : minimumDistance.keySet()) {
+            System.out.println(model.getPobName(i) + " : " + minimumDistance.get(i));
         }
     }
     
     private void calculate(int indexp, int dir) {
         System.out.println(model.getPobName(indexp));
+        this.solution.add(indexp);
+
         if (indexp == dir) {
             return;
         }

@@ -30,9 +30,17 @@ public class ModelEvent extends Event {
         this.type = ModelEventType.UPDATE_MIDDLE;
     }
     
+    // Event to reset the poblations selected
+    public ModelEvent() {
+        super(EventType.Model);
+        
+        this.type = ModelEventType.RESET;
+    }
+    
     enum ModelEventType {
         UPDATE_ORIGIN,
         UPDATE_MIDDLE,
-        UPDATE_DESTINATION
+        UPDATE_DESTINATION,
+        RESET
     }
 }
