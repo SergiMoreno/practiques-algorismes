@@ -8,18 +8,19 @@ import practica4.Event;
  */
 public class ControllerEvent extends Event {
     public ControllerEventType type;
+    public boolean isStart;
  
-    // Event to start execution thread
-    public ControllerEvent() {
+    // Event to start or stop execution thread based on parameter
+    public ControllerEvent(boolean isStart) {
         super(EventType.Controller);
-        this.type = ControllerEventType.START;
+        
+        this.isStart = isStart;
+        if (isStart) {
+            this.type = ControllerEventType.START;
+        } else {
+            this.type = ControllerEventType.STOP;
+        }
     }
-    
-    // Event to stop controller thread
-    /*public ControllerEvent() {
-        super(EventType.Controller);
-        this.type = ControllerEventType.STOP;
-    }*/
     
     enum ControllerEventType {
         START,

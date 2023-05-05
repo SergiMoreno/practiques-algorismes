@@ -1,13 +1,9 @@
-package practica4.view;
+package practica5.view;
 
 import javax.swing.JOptionPane;
-import practica4.Event;
-import practica4.EventListener;
-import practica4.Main;
-import practica4.Map;
-import practica4.controller.ControllerEvent;
-import practica4.model.Model;
-import practica4.model.ModelEvent;
+import practica5.Event;
+import practica5.EventListener;
+import practica5.Main;
 
 /**
  *
@@ -15,20 +11,16 @@ import practica4.model.ModelEvent;
  */
 public class View extends javax.swing.JFrame implements EventListener {
     private Main main;
-    private Model model;
-    private int pobDimension;
 
     /**
      * Creates new form Vista
      */
     public View(Main main) {
         this.main = main;
-        this.model = main.getModel();
-        this.pobDimension = 16;
         initComponents();
         this.setVisible(true);
         this.setLocationRelativeTo(null);
-        this.setTitle("Map");
+        this.setTitle("Languages");
     }
 
     /**
@@ -47,7 +39,6 @@ public class View extends javax.swing.JFrame implements EventListener {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         labelOriginSelected = new javax.swing.JLabel();
@@ -60,7 +51,6 @@ public class View extends javax.swing.JFrame implements EventListener {
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         progressBar = new javax.swing.JProgressBar();
-        map = new MapDisplay(this.main.getModel(), Map.getImage(Map.PITIUSES), this.pobDimension);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -101,8 +91,6 @@ public class View extends javax.swing.JFrame implements EventListener {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Destination");
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(this.showFiles()));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
@@ -158,7 +146,6 @@ public class View extends javax.swing.JFrame implements EventListener {
                     .addComponent(jSeparator2)
                     .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -189,9 +176,7 @@ public class View extends javax.swing.JFrame implements EventListener {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50)
+                .addGap(78, 78, 78)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(originRadio)
@@ -221,23 +206,6 @@ public class View extends javax.swing.JFrame implements EventListener {
 
         progressBar.setForeground(new java.awt.Color(0, 102, 102));
 
-        map.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                MapMouseClicked(evt);
-            }
-        });
-
-        javax.swing.GroupLayout mapLayout = new javax.swing.GroupLayout(map);
-        map.setLayout(mapLayout);
-        mapLayout.setHorizontalGroup(
-            mapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        mapLayout.setVerticalGroup(
-            mapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -245,16 +213,13 @@ public class View extends javax.swing.JFrame implements EventListener {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(progressBar, javax.swing.GroupLayout.DEFAULT_SIZE, 766, Short.MAX_VALUE)
-                    .addComponent(map, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addComponent(progressBar, javax.swing.GroupLayout.DEFAULT_SIZE, 766, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(map, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -262,12 +227,12 @@ public class View extends javax.swing.JFrame implements EventListener {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonStartActionPerformed
-        if (this.model.selectionCompleted()) {
+        //if (this.model.selectionCompleted()) {
             this.buttonStart.setEnabled(false);
         
             this.progressBar.setIndeterminate(true);
-            this.main.notify(new ControllerEvent(true));
-        }
+            //this.main.notify(new ControllerEvent(true));
+        //}
     }//GEN-LAST:event_buttonStartActionPerformed
 
     private void buttonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonResetActionPerformed
@@ -279,100 +244,13 @@ public class View extends javax.swing.JFrame implements EventListener {
         this.labelOriginSelected.setText(emptyPoblation);
         this.labelPassingSelected.setText(emptyPoblation);
         this.labelDestSelected.setText(emptyPoblation);
-        
-        this.main.notify(new ControllerEvent(false));
-        this.main.notify(new ModelEvent());
-        this.map.repaint();
     }//GEN-LAST:event_buttonResetActionPerformed
-
-    private void MapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MapMouseClicked
-        System.out.println("Coordx : " + evt.getX() + " Coordy : " + evt.getY());
-        
-        if (this.buttonGroup1.getSelection() == null) {
-            System.out.println("Poblation not selected");
-            return;
-        }
-        
-        int n = model.getNPoblations();
-
-        int posX = evt.getX();
-        int posY = evt.getY();
-        
-        for (int i = 0; i < n; i++) {
-            int centerX = model.getPoblationX(i);
-            int centerY = model.getPoblationY(i);
-            
-            if (poblationClicked(centerX, centerY, posX, posY)) {
-                String pobName = model.getPobName(i);
-                System.out.println("Poblation clicked : " + pobName);
-                int currentIndex = -1;
-                
-                if (this.buttonGroup1.isSelected(this.originRadio.getModel())) {
-                    currentIndex = model.getOrigin();
-                    if (currentIndex != i) {
-                        this.labelOriginSelected.setText(pobName);
-                        this.main.notify(new ModelEvent(true, i));
-                    }
-                }
-                
-                if (this.buttonGroup1.isSelected(this.passingRadio.getModel())) {
-                    currentIndex = model.getMiddle();
-                    if (currentIndex != i) {
-                        this.labelPassingSelected.setText(pobName);
-                        this.main.notify(new ModelEvent(i));
-                    }
-                }
-                
-                if (this.buttonGroup1.isSelected(this.destRadio.getModel())) {
-                        currentIndex = model.getDest();
-                        if (currentIndex != i) {
-                            this.labelDestSelected.setText(pobName);
-                            this.main.notify(new ModelEvent(false, i));
-                        }
-                }
-                this.map.repaint();
-                break;
-            }
-        }
-    }//GEN-LAST:event_MapMouseClicked
-
-     // Return the euclidean distance between the points passed by parameter
-    private boolean poblationClicked(int x, int y, int mousex, int mousey) {
-        // X
-        int difX = x - mousex;
-        int powerX = difX * difX;
-        // Y
-        int difY = y - mousey;
-        int powerY = difY * difY;
-        
-        int sum = powerX + powerY;
-        int result = (int) Math.sqrt(sum);
-        
-        return result <= this.pobDimension;
-    }
-    
-    private String [] showFiles() {
-        String [] files = new String[Map.values().length];
-        
-        int i = 0;
-        for (Map m : Map.values()) {
-            files[i] = m.toString();
-            i++;
-        }
-        return files;
-    }
 
     @Override
     public void notify(Event e) {
-        ViewEvent event = (ViewEvent) e;
+        //ViewEvent event = (ViewEvent) e;
         this.progressBar.setIndeterminate(false);
         String message = "Solution route :\n";
-        
-        message += "Origin >> " + model.getPobName(event.indexs.get(0)) + "\n";
-        for (int i = 1; i < event.indexs.size()-1; i++){
-            message += " >> " + model.getPobName(event.indexs.get(i)) + "\n";
-        }
-        message += "Destination >> " + model.getPobName(event.indexs.get(0)) + "\n";
         
         JOptionPane.showMessageDialog(this, 
                 message, 
@@ -385,7 +263,6 @@ public class View extends javax.swing.JFrame implements EventListener {
     private javax.swing.JButton buttonReset;
     private javax.swing.JButton buttonStart;
     private javax.swing.JRadioButton destRadio;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -398,9 +275,6 @@ public class View extends javax.swing.JFrame implements EventListener {
     private javax.swing.JLabel labelDestSelected;
     private javax.swing.JLabel labelOriginSelected;
     private javax.swing.JLabel labelPassingSelected;
-    /*
-    private javax.swing.JPanel map;
-    */MapDisplay map;
     private javax.swing.JRadioButton originRadio;
     private javax.swing.JRadioButton passingRadio;
     private javax.swing.JProgressBar progressBar;

@@ -14,21 +14,19 @@ public class Model implements EventListener {
     private Main main;
     private ArrayList <Poblation> poblations;
     private ArrayList <Route> routes;
-    //private double[][] solucion;
     private String type = "";
     private HashMap<PoblationType, Integer> pobSelected;
-    
-    
     
     public Model(Main main) {
         this.main = main;
         this.poblations = new ArrayList<>();
         this.routes = new ArrayList<>();
-        //solucion = null;
         this.type = "nodirigido";
-        /*origin = 0;
-        mid = 7;
-        dest = 11;*/
+        
+        initializePobSelected();
+    }
+    
+    public void initializePobSelected() {
         this.pobSelected = new HashMap<PoblationType, Integer>();
         this.pobSelected.put(PoblationType.ORIGIN, -1);
         this.pobSelected.put(PoblationType.MIDDLE, -1);
@@ -121,6 +119,18 @@ public class Model implements EventListener {
     public int getPoblationY(int index) {
         return this.poblations.get(index).getCoordy();
     }
+    
+    public boolean isSelected(int index) {
+        return this.pobSelected.get(PoblationType.ORIGIN) == index ||
+               this.pobSelected.get(PoblationType.MIDDLE) == index ||
+               this.pobSelected.get(PoblationType.DESTINATION) == index;
+    }
+    
+    public boolean selectionCompleted() {
+        return this.pobSelected.get(PoblationType.ORIGIN) != -1 &&
+               this.pobSelected.get(PoblationType.MIDDLE) != -1 &&
+               this.pobSelected.get(PoblationType.DESTINATION) != -1;
+    }
      
     @Override
     public void notify(Event e) {
@@ -135,6 +145,9 @@ public class Model implements EventListener {
             }
             case UPDATE_DESTINATION -> {
                 updateDest(event.pobIndex);
+            }
+            case RESET -> {
+                initializePobSelected();
             }
         }
     }
