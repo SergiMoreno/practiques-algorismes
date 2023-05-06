@@ -37,11 +37,14 @@ public class Controller extends Thread implements EventListener {
         // Recursive Dijkstra algorithm
         
         this.solution = new ArrayList<Integer>();
+        
         /* from destination to middle */
         // Tag the graph by the mid node
         tagGraph(model.getMiddle());
         // Calculate the minimum route from dest node to mid node
         calculate(model.getDest(), model.getMiddle());
+        
+        this.solution.remove(this.solution.size()-1);
         
         /* from middle to origin */
         // Tag the graph by the origin node
@@ -67,6 +70,7 @@ public class Controller extends Thread implements EventListener {
         while (!visit.isEmpty()) {
             // Get & remove from queue
             int i = visit.remove();
+
             // Get routes de i
             double acc = minimumDistance.get(i);
             int nroutes = model.getNRoutes(i);
@@ -79,17 +83,13 @@ public class Controller extends Thread implements EventListener {
                     double hashV = minimumDistance.get(dest);
                     if (hashV > v) {
                         minimumDistance.replace(dest, v);
+                        visit.add(dest);
                     }
                 } else {
                     minimumDistance.put(dest, v);
                     visit.add(dest);
                 }
             }
-        }
-        
-        // TO REMOVE
-        for (Integer i : minimumDistance.keySet()) {
-            System.out.println(model.getPobName(i) + " : " + minimumDistance.get(i));
         }
     }
     

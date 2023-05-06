@@ -1,82 +1,82 @@
 <mapa>
 	<tipo>nodirigido</tipo>
 	<poblacion>
-		Pilar de la Mola:492:594
+		Pilar de la Mola:510:600
 	</poblacion>
 	<poblacion>
-		Es Calo:456:586
+		Es Calo:466:590
 	</poblacion>
 	<poblacion>
-		San Francisco Javier:352:551
+		San Francisco Javier:360:551
 	</poblacion>
 	<poblacion>
-		Es Pujols:386:527
+		Es Pujols:400:520
 	</poblacion>
 	<poblacion>
-		La Savina:344:515
+		La Savina:350:514
 	</poblacion>
 	<poblacion>
-		San Francesc de s'Estany:308:335
+		Sant Francesc de s'Estany:300:335
 	</poblacion>
 	<poblacion>
-		San Jorge de ses Salines:315:301
+		Sant Jordi de ses Salines:310:301
 	</poblacion>
 	<poblacion>
-		Es Cubells:170:318
+		Es Cubells:170:313
 	</poblacion>
 	<poblacion>
-		Ibiza:340:285
+		Eivissa:335:285
 	</poblacion>
 	<poblacion>
-		Puig d'en Valls:355:255
+		Puig d'en Valls:365:250
 	</poblacion>
 	<poblacion>
-		San Jose:205:285
+		Sant Josep de sa Talaia:205:285
 	</poblacion>
 	<poblacion>
-		Sant Agusti des Vedra:193:231
+		Sant Agusti des Vedra:183:231
 	</poblacion>
 	<poblacion>
-		Sant Rafel de Sa Creu:316:205
+		Sant Rafel:326:200
 	</poblacion>
 	<poblacion>
-		San Antonio Abad:208:177
+		Sant Antoni de Portmany:215:170
 	</poblacion>
 	<poblacion>
-		Santa Eulalia del Rio:474:181
+		Santa Eulalia des Riu:464:181
 	</poblacion>
 	<poblacion>
-		Santa Gertrudis de Frutera:355:160
+		Santa Gertrudis de Fruitera:345:160
 	</poblacion>
 	<poblacion>
-		San Carlos:506:107
+		Sant Carles de Peralta:500:107
 	</poblacion>
 	<poblacion>
-		Sant Llorenç de Balafia:423:114
+		Sant Llorenç:433:125
 	</poblacion>
 	<poblacion>
-		San Mateo de Albarca:296:99
+		Sant Mateu:305:94
 	</poblacion>
 	<poblacion>
-		Santa Agnes de Corona:242:132
+		Santa Agnes de Corona:250:128
 	</poblacion>
 	<poblacion>
-		Playa es Figueral:539:90
+		Platja es Figueral:546:90
 	</poblacion>
 	<poblacion>
-		San Miguel de Balansat:357:101
+		Sant Miquel:370:101
 	</poblacion>
 	<poblacion>
-		Cala San Vicente:516:60
+		Cala de Sant Vicent:530:60
 	</poblacion>
 	<poblacion>
-		San Juan Bautista:429:76
+		San Juan Bautista:432:76
 	</poblacion>
 	<poblacion>
-		Puerto de San Miguel:395:51
+		Port de Sant Miquel:400:55
 	</poblacion>
 	<poblacion>
-		Portinatx:457:22
+		Portinatx:465:25
 	</poblacion>
 	<ruta>
 		Pilar de la Mola:Es Calo:1.2
@@ -91,99 +91,99 @@
 		San Francisco Javier:La Savina:1.0
 	</ruta>
 	<ruta>
-		La Savina:Ibiza:10.2
+		La Savina:Eivissa:10.2
 	</ruta>
 	<ruta>
-		Ibiza:San Jorge de ses Salines:1.6
+		Eivissa:Sant Jordi de ses Salines:1.6
 	</ruta>
 	<ruta>
-		San Jorge de ses Salines:San Francesc de s'Estany:0.8
+		Sant Jordi de ses Salines:Sant Francesc de s'Estany:0.8
 	</ruta>
 	<ruta>
-		San Jorge de ses Salines:San Jose:1.8
+		Sant Jordi de ses Salines:Sant Josep de sa Talaia:1.8
 	</ruta>
 	<ruta>
-		Ibiza:San Jose:3.5
+		Eivissa:Sant Josep de sa Talaia:3.5
 	</ruta>
 	<ruta>
-		San Jose:Es Cubells:0.6
+		Sant Josep de sa Talaia:Es Cubells:0.6
 	</ruta>
 	<ruta>
-		San Jose:Sant Agusti des Vedra:0.7
+		Sant Josep de sa Talaia:Sant Agusti des Vedra:0.7
 	</ruta>
 	<ruta>
 		Es Cubells:Sant Agusti des Vedra:1.8
 	</ruta>
 	<ruta>
-		Sant Agusti des Vedra:San Antonio Abad:1.2
+		Sant Agusti des Vedra:Sant Antoni de Portmany:1.2
 	</ruta>
 	<ruta>
-		San Antonio Abad:Sant Rafel de Sa Creu:2.9
+		Sant Antoni de Portmany:Sant Rafel:2.9
 	</ruta>
 	<ruta>
-		Sant Rafel de Sa Creu:Puig d'en Valls:0.7
+		Sant Rafel:Puig d'en Valls:0.7
 	</ruta>
 	<ruta>
-		San Antonio Abad:Santa Agnes de Corona:1.8
+		Sant Antoni de Portmany:Santa Agnes de Corona:1.8
 	</ruta>
 	<ruta>
-		Ibiza:Puig d'en Valls:0.7
+		Eivissa:Puig d'en Valls:0.7
 	</ruta>
 	<ruta>
-		Santa Agnes de Corona:Sant Rafel de Sa Creu:1.7
+		Santa Agnes de Corona:Sant Rafel:1.7
 	</ruta>
 	<ruta>
-		Santa Agnes de Corona:Santa Gertrudis de Frutera:1.8
+		Santa Agnes de Corona:Santa Gertrudis de Fruitera:1.8
 	</ruta>
 	<ruta>
-		Santa Agnes de Corona:San Mateo de Albarca:0.2
+		Santa Agnes de Corona:Sant Mateu:0.2
 	</ruta>
 	<ruta>
-		Sant Rafel de Sa Creu:Santa Gertrudis de Frutera:1.4
+		Sant Rafel:Santa Gertrudis de Fruitera:1.4
 	</ruta>
 	<ruta>
-		Puig d'en Valls:Santa Gertrudis de Frutera:1.5
+		Puig d'en Valls:Santa Gertrudis de Fruitera:1.5
 	</ruta>
 	<ruta>
-		Puig d'en Valls:Sant Llorenç de Balafia:3.4
+		Puig d'en Valls:Sant Llorenç:3.4
 	</ruta>
 	<ruta>
-		Puig d'en Valls:Santa Eulalia del Rio:1.7
+		Puig d'en Valls:Santa Eulalia des Riu:1.7
 	</ruta>
 	<ruta>
-		San Mateo de Albarca:San Miguel de Balansat:1.0
+		Sant Mateu:Sant Miquel:1.0
 	</ruta>
 	<ruta>
-		San Mateo de Albarca:Santa Gertrudis de Frutera:1.5
+		Sant Mateu:Santa Gertrudis de Fruitera:1.5
 	</ruta>
 	<ruta>
-		San Miguel de Balansat:Santa Gertrudis de Frutera:0.9
+		Sant Miquel:Santa Gertrudis de Fruitera:0.9
 	</ruta>
 	<ruta>
-		Sant Llorenç de Balafia:San Juan Bautista:1.7
+		Sant Llorenç:San Juan Bautista:1.7
 	</ruta>
 	<ruta>
-		Sant Llorenç de Balafia:San Carlos:1.0
+		Sant Llorenç:Sant Carles de Peralta:1.0
 	</ruta>
 	<ruta>
-		Santa Eulalia del Rio:San Carlos:1.5
+		Santa Eulalia des Riu:Sant Carles de Peralta:1.5
 	</ruta>
 	<ruta>
-		San Carlos:Playa es Figueral:1.2
+		Sant Carles de Peralta:Platja es Figueral:1.2
 	</ruta>
 	<ruta>
-		San Miguel de Balansat:Puerto de San Miguel:0.6
+		Sant Miquel:Port de Sant Miquel:0.6
 	</ruta>
 	<ruta>
-		Puerto de San Miguel:San Juan Bautista:1.4
+		Port de Sant Miquel:San Juan Bautista:1.4
 	</ruta>
 	<ruta>
 		San Juan Bautista:Portinatx:0.6
 	</ruta>
 	<ruta>
-		San Juan Bautista:Cala San Vicente:0.8
+		San Juan Bautista:Cala de Sant Vicent:0.8
 	</ruta>
 	<ruta>
-		Cala San Vicente:Playa es Figueral:0.7
+		Cala de Sant Vicent:Platja es Figueral:0.7
 	</ruta>
 </mapa>
