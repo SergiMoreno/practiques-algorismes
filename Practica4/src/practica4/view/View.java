@@ -24,7 +24,7 @@ public class View extends javax.swing.JFrame implements EventListener {
     public View(Main main) {
         this.main = main;
         this.model = main.getModel();
-        this.pobDimension = 16;
+        this.pobDimension = 8;
         initComponents();
         this.setVisible(true);
         this.setLocationRelativeTo(null);
@@ -370,9 +370,10 @@ public class View extends javax.swing.JFrame implements EventListener {
         
         message += "Origin >> " + model.getPobName(event.indexs.get(0)) + "\n";
         for (int i = 1; i < event.indexs.size()-1; i++){
+            this.map.pobSolution(event.indexs);
             message += " >> " + model.getPobName(event.indexs.get(i)) + "\n";
         }
-        message += "Destination >> " + model.getPobName(event.indexs.get(0)) + "\n";
+        message += "Destination >> " + model.getPobName(event.indexs.get(event.indexs.size()-1)) + "\n";
         
         JOptionPane.showMessageDialog(this, 
                 message, 
