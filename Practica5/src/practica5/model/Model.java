@@ -10,9 +10,20 @@ import practica5.Main;
  */
 public class Model implements EventListener {
     private Main main;
+    private Language [] dictionaries;
+    private double [][] distanceMatrix;
     
     public Model(Main main) {
         this.main = main;
+        
+        /* Iterate though the number of languages, initializing one by one */
+        Language s = new Language("spanish.dic");
+        Language it = new Language("italian.dic");
+        /* Distance matrix */
+        this.distanceMatrix = new double[10][10];
+        for (int i = 0; i < this.distanceMatrix.length;i++) {
+            this.distanceMatrix[i][i] = 0.0;
+        }
     }
 
     @Override
