@@ -79,9 +79,9 @@ public class Model implements EventListener {
         return r.getPoblationFrom(indexp);
     }
     
-    public double getRouteValue(int indexp, int indexr) {
+    public double getRouteDistance(int indexp, int indexr) {
         Route r =  this.routes.get(this.poblations.get(indexp).getRoute(indexr));
-         return r.getValue();
+        return r.getDistance();
     }
     
     public int getOrigin() {

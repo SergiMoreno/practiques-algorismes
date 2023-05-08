@@ -43,9 +43,7 @@ public class Controller extends Thread implements EventListener {
         tagGraph(model.getMiddle());
         // Calculate the minimum route from dest node to mid node
         calculate(model.getDest(), model.getMiddle());
-        
-        this.solution.remove(this.solution.size()-1);
-        
+                
         /* from middle to origin */
         // Tag the graph by the origin node
         tagGraph(model.getOrigin());
@@ -76,7 +74,7 @@ public class Controller extends Thread implements EventListener {
             int nroutes = model.getNRoutes(i);
             for (int j = 0; j < nroutes; j++) {
                 int dest = model.getDestPoblation(i, j);
-                double v = roundDouble(model.getRouteValue(i, j) + acc, 2);
+                double v = roundDouble(model.getRouteDistance(i, j) + acc, 2);
   
                 // If poblation is already visited, check if the current distance is less than the stored value
                 if (minimumDistance.containsKey(dest)) {
@@ -93,6 +91,52 @@ public class Controller extends Thread implements EventListener {
         }
     }
     
+    /*private void tag(int origin, int destination) {
+        minimumDistance = new HashMap<Integer, Double>();
+        PriorityQueue<Min> minHeap = new PriorityQueue<>();
+        
+        minHeap.add(new Min(origin, 0.0));
+        minimumDistance.put(origin, 0.0);
+        
+        while (!minHeap.isEmpty()) {
+            // Get & remove from queue
+            Min i = minHeap.poll();
+            
+            if (minimumDistance.containsKey(i.i)) {
+                continue;
+            }
+            
+            minimumDistance.put(i.i, i.v);
+
+            // Get routes de i
+            double acc = i.v;
+            int nroutes = model.getNRoutes(i.i);
+            for (int j = 0; j < nroutes; j++) {
+                int dest = model.getDestPoblation(i.i, j);
+                double v = roundDouble(model.getRouteDistance(i.i, j) + acc, 2);
+  
+                // If poblation is already visited, check if the current distance is less than the stored value
+                if (minimumDistance.containsKey(dest)) {
+                    double hashV = minimumDistance.get(dest);
+                    if (hashV > v) {
+                        minimumDistance.replace(dest, v);
+                        
+                        Min m = new Min(dest, v);
+                        if (minHeap.contains(m)) {
+                            minHeap.remove(m);
+                            minHeap.add(m);
+                        } else {
+                            minHeap.add(m);
+                        }
+                    }
+                } else {
+                    minimumDistance.put(dest, v);
+                    minHeap.add(new Min(dest, v));
+                }
+            }
+        }
+    }*/
+    
     private void calculate(int indexp, int dir) {
         System.out.println(model.getPobName(indexp));
         this.solution.add(indexp);
@@ -105,7 +149,7 @@ public class Controller extends Thread implements EventListener {
         int nroutes = model.getNRoutes(indexp);
         for (int i = 0; i < nroutes; i++) {
             int dest = model.getDestPoblation(indexp, i);
-            double routeV = model.getRouteValue(indexp, i);
+            double routeV = model.getRouteDistance(indexp, i);
             double pobV = minimumDistance.get(dest);
             
             double v = roundDouble(currentV - routeV, 2);

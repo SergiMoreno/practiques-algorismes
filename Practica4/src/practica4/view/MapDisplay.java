@@ -70,12 +70,19 @@ public class MapDisplay extends JPanel {
             g.setFont(new Font("Arial", Font.BOLD, 12));
             g.setColor(Color.red); 
             int i = 0;
+            int prevIndex = -1;
+            int relocX = -17;
             while (iter.hasNext()) {
                 int index = iter.next();
-                int x = model.getPoblationX(index) - 5;
+                if (index == prevIndex) {
+                    relocX += 30;
+                    continue;
+                }
+                int x = model.getPoblationX(index) + relocX;
                 int y = model.getPoblationY(index) + 5;
 
                 g.drawString(Integer.toString(i), x, y);
+                prevIndex = index;
                 i++;
             }
         }

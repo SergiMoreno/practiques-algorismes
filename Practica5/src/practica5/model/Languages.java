@@ -1,4 +1,4 @@
-package practica5;
+package practica5.model;
 
 /**
  *
