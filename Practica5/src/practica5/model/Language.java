@@ -1,21 +1,27 @@
 package practica5.model;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  *
  * @author usuario
  */
 public class Language {
     private String dicFile;
-    private ArrayList<String> words;
+    //private ArrayList<String> words;
+    private String currentWord;
     
     public Language(String fileName) {
+        this.dicFile = "src/resources/" + fileName;
+        this.currentWord = null;
+    }
+    
+    public void setWord(String w) {
+        this.currentWord = w;
+    }
+    
+    public String getCurrentWord() {
+        return this.currentWord;
+    }
+    /*public Language(String fileName) {
         this.dicFile = "src/resources/" + fileName;
         this.words = new ArrayList<String>();
         
@@ -30,5 +36,5 @@ public class Language {
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Language.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
+    }*/
 }

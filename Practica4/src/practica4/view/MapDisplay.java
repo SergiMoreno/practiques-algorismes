@@ -66,24 +66,28 @@ public class MapDisplay extends JPanel {
         }
         
         if (!this.solution.isEmpty()) {
-            Iterator<Integer> iter = this.solution.iterator();
             g.setFont(new Font("Arial", Font.BOLD, 12));
-            g.setColor(Color.red); 
-            int i = 0;
-            int prevIndex = -1;
+            g.setColor(Color.red);
+            int prevIndex = -1, prevX = -1, prevY = -1;
             int relocX = -17;
-            while (iter.hasNext()) {
-                int index = iter.next();
+            int adding = 1;
+            int index;
+            for (int i = 0; i < this.solution.size(); i++) {
+                index = this.solution.get(i);
                 if (index == prevIndex) {
                     relocX += 30;
+                    adding = 0;
                     continue;
                 }
-                int x = model.getPoblationX(index) + relocX;
-                int y = model.getPoblationY(index) + 5;
-
-                g.drawString(Integer.toString(i), x, y);
+                int x = model.getPoblationX(index);
+                int y = model.getPoblationY(index);
+                if (i > 0) {
+                    g.drawLine(prevX, prevY, x, y);
+                }
+                g.drawString(Integer.toString(i+adding), x + relocX, y + 5);
                 prevIndex = index;
-                i++;
+                prevX = x;
+                prevY = y;
             }
         }
 
@@ -97,5 +101,10 @@ public class MapDisplay extends JPanel {
     
     public void updateImage(String img) {
         this.image = img;
+    }
+    
+    public void reset() {
+        this.solution = new ArrayList<Integer>();
+        this.repaint();
     }
 }

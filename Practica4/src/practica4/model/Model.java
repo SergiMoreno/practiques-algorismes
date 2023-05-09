@@ -16,12 +16,13 @@ public class Model implements EventListener {
     private ArrayList <Route> routes;
     private String type = "";
     private HashMap<PoblationType, Integer> pobSelected;
+    private double [] weights = {0.6, 0.3, 0.1};
     
     public Model(Main main) {
         this.main = main;
         this.poblations = new ArrayList<>();
         this.routes = new ArrayList<>();
-        this.type = "nodirigido";
+        this.type = "dirigido";
         
         initializePobSelected();
     }
@@ -37,10 +38,9 @@ public class Model implements EventListener {
         this.poblations.add(new Poblation(n, coordx, coordy));
     }
     
-    public void addRoute(String namei, String namef, double v) {
-        Route r = new Route(getPoblation(namef), getPoblation(namei), v);
+    public void addRoute(String namei, String namef, double v1, double v2, double v3) {
+        Route r = new Route(getPoblation(namef), v1, v2, v3);
         this.poblations.get(getPoblation(namei)).addRoute(this.routes.size());
-        this.poblations.get(getPoblation(namef)).addRoute(this.routes.size());
         this.routes.add(r);
     }
     
@@ -76,12 +76,12 @@ public class Model implements EventListener {
     
     public int getDestPoblation(int indexp, int indexr) {
         Route r =  this.routes.get(this.poblations.get(indexp).getRoute(indexr));
-        return r.getPoblationFrom(indexp);
+        return r.getDestination();
     }
     
-    public double getRouteDistance(int indexp, int indexr) {
+    public double getRouteValue(int indexp, int indexr) {
         Route r =  this.routes.get(this.poblations.get(indexp).getRoute(indexr));
-        return r.getDistance();
+        return r.getValue();
     }
     
     public int getOrigin() {
@@ -94,18 +94,6 @@ public class Model implements EventListener {
     
     public int getMiddle() {
         return this.pobSelected.get(PoblationType.MIDDLE);
-    }
-    
-    public void updateOrigin(int index) {
-        this.pobSelected.replace(PoblationType.ORIGIN, index);
-    }
-    
-    public void updateDest(int index) {
-        this.pobSelected.replace(PoblationType.DESTINATION, index);
-    }
-    
-    public void updateMiddle(int index) {
-        this.pobSelected.replace(PoblationType.MIDDLE, index);
     }
     
     public String getPobName(int index) {
@@ -138,16 +126,22 @@ public class Model implements EventListener {
         
         switch (event.type) {
             case UPDATE_ORIGIN -> {
-                updateOrigin(event.pobIndex);
+                this.pobSelected.replace(PoblationType.ORIGIN, event.pobIndex);
             }
             case UPDATE_MIDDLE -> {
-                updateMiddle(event.pobIndex);
+                this.pobSelected.replace(PoblationType.MIDDLE, event.pobIndex);
             }
             case UPDATE_DESTINATION -> {
-                updateDest(event.pobIndex);
+                this.pobSelected.replace(PoblationType.DESTINATION, event.pobIndex);
             }
             case RESET -> {
                 initializePobSelected();
+            }
+            case START -> {
+                for (int i = 0; i < this.routes.size(); i++) {
+                    Route r = this.routes.get(i);
+                    r.setWeight(event.criterias, this.weights);
+                }
             }
         }
     }

@@ -9,6 +9,7 @@ import practica4.Event;
 public class ModelEvent extends Event {
     public ModelEventType type;
     public int pobIndex;
+    public boolean [] criterias;
 
     // Event to update origin if isOrigin is true, else update destination
     public ModelEvent(boolean isOrigin, int index) {
@@ -37,10 +38,19 @@ public class ModelEvent extends Event {
         this.type = ModelEventType.RESET;
     }
     
+    // Event to start the calculation of the routes weight
+    public ModelEvent(boolean [] c) {
+        super(EventType.Model);
+        
+        this.criterias = c.clone();
+        this.type = ModelEventType.START;
+    }
+    
     enum ModelEventType {
         UPDATE_ORIGIN,
         UPDATE_MIDDLE,
         UPDATE_DESTINATION,
+        START,
         RESET
     }
 }

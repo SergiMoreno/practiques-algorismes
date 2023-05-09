@@ -4,33 +4,48 @@ package practica4.model;
  *
  * @author usuario
  */
-public class Route {
-    private int [] poblations;
-    private double distance, time, money;
-    private boolean quality;
+public class Route implements Comparable<Route> {
+    private int destination;
+    private double [] criterias;
+    private double weight;
     
-    public Route(int p1, int p2, double d) {
-        this.distance = d;
-        this.time = 0.0;
-        this.money = 0.0;
-        this.poblations = new int[2];
-        this.poblations[0] = p1;
-        this.poblations[1] = p2;
+    public Route(int p, double d, double t, double m) {
+        this.criterias = new double[3];
+        this.criterias[0] = d;
+        this.criterias[1] = t;
+        this.criterias[2] = m;
+        
+        this.destination = p;
+        
+        this.weight = 0.0;
     }
     
-    public int getPoblationFrom(int indexp) {
-        return this.poblations[0] == indexp ? this.poblations[1] : this.poblations[0];
+    public int getDestination() {
+        return this.destination;
     }
     
-    public double getDistance() {
-        return this.distance;
+    public double getValue() {
+        return this.weight;
     }
     
-    public double getTime() {
-        return this.time;
+    public void setWeight(boolean [] c, double [] p) {
+        for (int i = 0; i < this.criterias.length; i++) {
+            if (c[i]) {
+                this.weight += this.criterias[i] * p[i];
+            }
+        }
     }
-    
-    public double getMoney() {
-        return this.money;
+
+    @Override
+    public int compareTo(Route o) {
+        if (this.weight > o.weight) {
+            return -1;
+        }
+        
+        if (this.weight < o.weight) {
+            return 1;
+        }
+        
+        return 0;
     }
 }

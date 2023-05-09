@@ -1,8 +1,6 @@
 package practica4.view;
 
-import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import javax.swing.ListModel;
 import practica4.Event;
 import practica4.EventListener;
 import practica4.Main;
@@ -19,6 +17,7 @@ public class View extends javax.swing.JFrame implements EventListener {
     private Main main;
     private Model model;
     private int pobDimension;
+    private boolean [] criterias;
 
     /**
      * Creates new form Vista
@@ -27,6 +26,7 @@ public class View extends javax.swing.JFrame implements EventListener {
         this.main = main;
         this.model = main.getModel();
         this.pobDimension = 8;
+        this.criterias = new boolean[3];
         initComponents();
         this.setVisible(true);
         this.setLocationRelativeTo(null);
@@ -43,6 +43,7 @@ public class View extends javax.swing.JFrame implements EventListener {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -61,9 +62,9 @@ public class View extends javax.swing.JFrame implements EventListener {
         jSeparator2 = new javax.swing.JSeparator();
         jLabel6 = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
-        jCheckBox3 = new javax.swing.JCheckBox();
+        distanceBox = new javax.swing.JCheckBox();
+        timeBox = new javax.swing.JCheckBox();
+        moneyBox = new javax.swing.JCheckBox();
         jLabel8 = new javax.swing.JLabel();
         jComboBox4 = new javax.swing.JComboBox<>();
         progressBar = new javax.swing.JProgressBar();
@@ -72,7 +73,7 @@ public class View extends javax.swing.JFrame implements EventListener {
         jLabel9 = new javax.swing.JLabel();
         jSeparator4 = new javax.swing.JSeparator();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        solutionList = new javax.swing.JList<>();
         buttonStart = new javax.swing.JButton();
         buttonReset = new javax.swing.JButton();
 
@@ -140,16 +141,37 @@ public class View extends javax.swing.JFrame implements EventListener {
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("Select Minimum");
+        jLabel6.setText("Select Criteria");
 
         jSeparator3.setForeground(new java.awt.Color(255, 255, 255));
         jSeparator3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
-        jCheckBox1.setText("jCheckBox1");
+        distanceBox.setBackground(new java.awt.Color(0, 51, 51));
+        distanceBox.setForeground(new java.awt.Color(255, 255, 255));
+        distanceBox.setText("Distance");
+        distanceBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                distanceBoxActionPerformed(evt);
+            }
+        });
 
-        jCheckBox2.setText("jCheckBox2");
+        timeBox.setBackground(new java.awt.Color(0, 51, 51));
+        timeBox.setForeground(new java.awt.Color(255, 255, 255));
+        timeBox.setText("Time");
+        timeBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                timeBoxActionPerformed(evt);
+            }
+        });
 
-        jCheckBox3.setText("jCheckBox3");
+        moneyBox.setBackground(new java.awt.Color(0, 51, 51));
+        moneyBox.setForeground(new java.awt.Color(255, 255, 255));
+        moneyBox.setText("Money");
+        moneyBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                moneyBoxActionPerformed(evt);
+            }
+        });
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
@@ -185,9 +207,9 @@ public class View extends javax.swing.JFrame implements EventListener {
                             .addComponent(labelOriginSelected)
                             .addComponent(labelPassingSelected)
                             .addComponent(labelDestSelected)
-                            .addComponent(jCheckBox1)
-                            .addComponent(jCheckBox2)
-                            .addComponent(jCheckBox3)
+                            .addComponent(distanceBox)
+                            .addComponent(timeBox)
+                            .addComponent(moneyBox)
                             .addComponent(jLabel8)
                             .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -234,11 +256,11 @@ public class View extends javax.swing.JFrame implements EventListener {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox1)
+                .addComponent(distanceBox)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox2)
+                .addComponent(timeBox)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox3)
+                .addComponent(moneyBox)
                 .addGap(14, 14, 14))
         );
 
@@ -270,7 +292,7 @@ public class View extends javax.swing.JFrame implements EventListener {
         jSeparator4.setForeground(new java.awt.Color(255, 255, 255));
         jSeparator4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
-        jScrollPane2.setViewportView(jList1);
+        jScrollPane2.setViewportView(solutionList);
 
         buttonStart.setBackground(new java.awt.Color(0, 102, 102));
         buttonStart.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -298,17 +320,18 @@ public class View extends javax.swing.JFrame implements EventListener {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator4)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addGap(0, 18, Short.MAX_VALUE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap())
             .addComponent(buttonStart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(buttonReset, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jSeparator4, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 22, Short.MAX_VALUE)
+                        .addComponent(jLabel9)
+                        .addGap(19, 19, 19)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -318,8 +341,8 @@ public class View extends javax.swing.JFrame implements EventListener {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane2)
+                .addGap(18, 18, 18)
                 .addComponent(buttonStart)
                 .addGap(8, 8, 8)
                 .addComponent(buttonReset))
@@ -336,8 +359,7 @@ public class View extends javax.swing.JFrame implements EventListener {
                     .addComponent(map, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(progressBar, javax.swing.GroupLayout.DEFAULT_SIZE, 744, Short.MAX_VALUE))
                 .addGap(0, 0, 0)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -391,11 +413,11 @@ public class View extends javax.swing.JFrame implements EventListener {
                 }
                 
                 if (this.buttonGroup1.isSelected(this.destRadio.getModel())) {
-                        currentIndex = model.getDest();
-                        if (currentIndex != i) {
-                            this.labelDestSelected.setText(pobName);
-                            this.main.notify(new ModelEvent(false, i));
-                        }
+                    currentIndex = model.getDest();
+                    if (currentIndex != i) {
+                        this.labelDestSelected.setText(pobName);
+                        this.main.notify(new ModelEvent(false, i));
+                    }
                 }
                 this.map.repaint();
                 break;
@@ -412,10 +434,16 @@ public class View extends javax.swing.JFrame implements EventListener {
         this.labelOriginSelected.setText(emptyPoblation);
         this.labelPassingSelected.setText(emptyPoblation);
         this.labelDestSelected.setText(emptyPoblation);
+        
+        this.distanceBox.setSelected(false);
+        this.timeBox.setSelected(false);
+        this.moneyBox.setSelected(false);
+        
+        solutionList.setListData(new String[0]);
 
         this.main.notify(new ControllerEvent(false));
         this.main.notify(new ModelEvent());
-        this.map.repaint();
+        this.map.reset();
     }//GEN-LAST:event_buttonResetActionPerformed
 
     private void buttonStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonStartActionPerformed
@@ -423,9 +451,30 @@ public class View extends javax.swing.JFrame implements EventListener {
             this.buttonStart.setEnabled(false);
 
             this.progressBar.setIndeterminate(true);
+            
+            boolean anyTrue = false;
+            for (int i = 0; i < this.criterias.length; i++) {
+                if (this.criterias[i]) {
+                    anyTrue = true;
+                }
+            }
+            if (!anyTrue) this.criterias[0] = true;
+            this.main.notify(new ModelEvent(this.criterias));
             this.main.notify(new ControllerEvent(true));
         }
     }//GEN-LAST:event_buttonStartActionPerformed
+
+    private void distanceBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_distanceBoxActionPerformed
+        this.criterias[0] = this.distanceBox.isSelected();
+    }//GEN-LAST:event_distanceBoxActionPerformed
+
+    private void timeBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timeBoxActionPerformed
+        this.criterias[1] = this.timeBox.isSelected();
+    }//GEN-LAST:event_timeBoxActionPerformed
+
+    private void moneyBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moneyBoxActionPerformed
+        this.criterias[2] = this.moneyBox.isSelected();
+    }//GEN-LAST:event_moneyBoxActionPerformed
 
      // Return the euclidean distance between the points passed by parameter
     private boolean poblationClicked(int x, int y, int mousex, int mousey) {
@@ -460,46 +509,28 @@ public class View extends javax.swing.JFrame implements EventListener {
         
         this.map.pobSolution(event.indexs);
 
-        String message = "Solution route :\n";
         int index;
-        int prevIndex;
-        String part = model.getPobName(event.indexs.get(0));
         String [] solution = new String[event.indexs.size()];
-        solution[0] = part;
-        message += "Origin >> " + model.getPobName(event.indexs.get(0)) + "\n";
-        prevIndex = event.indexs.get(0);
+        solution[0] = model.getPobName(event.indexs.get(0));
+        int prevIndex = event.indexs.get(0);
         for (int i = 1; i < event.indexs.size()-1; i++){
             index = event.indexs.get(i);
             if (index == prevIndex) continue;
-            message += " >> " + model.getPobName(index) + "\n";
-            part = model.getPobName(index);
-            solution[i] = part;
+            solution[i] = model.getPobName(index);
             prevIndex = index;
         }
-        message += "Destination >> " + model.getPobName(event.indexs.get(event.indexs.size()-1)) + "\n";
-        part = model.getPobName(event.indexs.get(event.indexs.size()-1));
-        solution[event.indexs.size()-1] = part;
+        solution[event.indexs.size()-1] = model.getPobName(event.indexs.get(event.indexs.size()-1));
         
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = solution;
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        
-        JOptionPane.showMessageDialog(this, 
-                message, 
-                "SUCCESS!! A result has been reached!",
-                JOptionPane.INFORMATION_MESSAGE);
+        this.solutionList.setListData(solution);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JButton buttonReset;
     private javax.swing.JButton buttonStart;
     private javax.swing.JRadioButton destRadio;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JCheckBox jCheckBox3;
+    private javax.swing.JCheckBox distanceBox;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JLabel jLabel1;
@@ -511,7 +542,6 @@ public class View extends javax.swing.JFrame implements EventListener {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
@@ -525,8 +555,11 @@ public class View extends javax.swing.JFrame implements EventListener {
     /*
     private javax.swing.JPanel map;
     */MapDisplay map;
+    private javax.swing.JCheckBox moneyBox;
     private javax.swing.JRadioButton originRadio;
     private javax.swing.JRadioButton passingRadio;
     private javax.swing.JProgressBar progressBar;
+    private javax.swing.JList<String> solutionList;
+    private javax.swing.JCheckBox timeBox;
     // End of variables declaration//GEN-END:variables
 }

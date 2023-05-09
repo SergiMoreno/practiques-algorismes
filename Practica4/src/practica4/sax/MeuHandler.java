@@ -62,7 +62,7 @@ public class MeuHandler extends DefaultHandler {
             model.addPoblation(s[0], Integer.parseInt(s[1]), Integer.parseInt(s[2]));
         } else if (inRoute) {
             s = value.split(":");
-            model.addRoute(s[0], s[1],Double.parseDouble(s[2]));
+            model.addRoute(s[0], s[1],Double.parseDouble(s[2]),  Double.parseDouble(s[3]), Double.parseDouble(s[4]));
         } else if (inType) {
             if (value.equalsIgnoreCase("dirigido")) {
                 model.setType("dirigido");
