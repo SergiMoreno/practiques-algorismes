@@ -39,8 +39,9 @@ public class Model implements EventListener {
     }
     
     public void addRoute(String namei, String namef, double v1, double v2, double v3) {
-        Route r = new Route(getPoblation(namef), v1, v2, v3);
-        this.poblations.get(getPoblation(namei)).addRoute(this.routes.size());
+        Route r = new Route(getPoblation(namei), getPoblation(namef), v1, v2, v3);
+        this.poblations.get(getPoblation(namei)).addExitRoute(this.routes.size());
+        this.poblations.get(getPoblation(namef)).addEntryRoute(this.routes.size());
         this.routes.add(r);
     }
     
@@ -70,17 +71,31 @@ public class Model implements EventListener {
         return this.poblations.size();
     }
     
-    public int getNRoutes(int index) {
-        return this.poblations.get(index).getNRoutes();
+    public int getNExitRoutes(int index) {
+        return this.poblations.get(index).getNExitRoutes();
+    }
+    
+    public int getNEntryRoutes(int index) {
+        return this.poblations.get(index).getNEntryRoutes();
     }
     
     public int getDestPoblation(int indexp, int indexr) {
-        Route r =  this.routes.get(this.poblations.get(indexp).getRoute(indexr));
+        Route r =  this.routes.get(this.poblations.get(indexp).getExitRoute(indexr));
         return r.getDestination();
     }
     
-    public double getRouteValue(int indexp, int indexr) {
-        Route r =  this.routes.get(this.poblations.get(indexp).getRoute(indexr));
+    public double getExitRouteValue(int indexp, int indexr) {
+        Route r =  this.routes.get(this.poblations.get(indexp).getExitRoute(indexr));
+        return r.getValue();
+    }
+    
+    public int getOriginPoblation(int indexp, int indexr) {
+        Route r =  this.routes.get(this.poblations.get(indexp).getEntryRoute(indexr));
+        return r.getOrigin();
+    }
+    
+    public double getEntryRouteValue(int indexp, int indexr) {
+        Route r =  this.routes.get(this.poblations.get(indexp).getEntryRoute(indexr));
         return r.getValue();
     }
     

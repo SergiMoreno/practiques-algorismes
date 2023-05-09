@@ -9,29 +9,43 @@ import java.util.ArrayList;
 public class Poblation {
     private String name;
     private int coordx, coordy;
-    private ArrayList<Integer> routes;
+    private ArrayList<Integer> exitRoutes;
+    private ArrayList<Integer> entryRoutes;
     
     public Poblation(String n, int x, int y) {
         this.name = n;
         this.coordx = x;
         this.coordy = y;
-        this.routes = new ArrayList<Integer>();
+        this.exitRoutes = new ArrayList<Integer>();
+        this.entryRoutes = new ArrayList<Integer>();
     }
     
-    protected void addRoute(Integer r) {
-        this.routes.add(r);
+    protected void addExitRoute(Integer r) {
+        this.exitRoutes.add(r);
+    }
+    
+    protected void addEntryRoute(Integer r) {
+        this.entryRoutes.add(r);
     }
     
     protected String getName() {
         return this.name;
     }
 
-    protected int getNRoutes() {
-        return this.routes.size();
+    protected int getNExitRoutes() {
+        return this.exitRoutes.size();
     }
 
-    protected int getRoute(int i) {
-        return this.routes.get(i);
+    protected int getExitRoute(int i) {
+        return this.exitRoutes.get(i);
+    }
+    
+    protected int getNEntryRoutes() {
+        return this.entryRoutes.size();
+    }
+
+    protected int getEntryRoute(int i) {
+        return this.entryRoutes.get(i);
     }
     
     protected int getCoordx() {
