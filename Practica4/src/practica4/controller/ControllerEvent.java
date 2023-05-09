@@ -8,18 +8,21 @@ import practica4.Event;
  */
 public class ControllerEvent extends Event {
     public ControllerEventType type;
-    public boolean isStart;
+    public AlgorithmTechnique technique;
  
-    // Event to start or stop execution thread based on parameter
-    public ControllerEvent(boolean isStart) {
+    // Event to start the thread executing the specified algorithm
+    public ControllerEvent(int i) {
         super(EventType.Controller);
         
-        this.isStart = isStart;
-        if (isStart) {
-            this.type = ControllerEventType.START;
-        } else {
-            this.type = ControllerEventType.STOP;
-        }
+        this.technique = AlgorithmTechnique.getByIndex(i);
+        this.type = ControllerEventType.START;
+    }
+    
+    // Event to stop the current thread
+    public ControllerEvent() {
+        super(EventType.Controller);
+        
+        this.type = ControllerEventType.STOP;
     }
     
     enum ControllerEventType {

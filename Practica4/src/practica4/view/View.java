@@ -1,10 +1,10 @@
 package practica4.view;
 
-import javax.swing.JOptionPane;
 import practica4.Event;
 import practica4.EventListener;
 import practica4.Main;
 import practica4.Map;
+import practica4.controller.AlgorithmTechnique;
 import practica4.controller.ControllerEvent;
 import practica4.model.Model;
 import practica4.model.ModelEvent;
@@ -66,7 +66,7 @@ public class View extends javax.swing.JFrame implements EventListener {
         timeBox = new javax.swing.JCheckBox();
         moneyBox = new javax.swing.JCheckBox();
         jLabel8 = new javax.swing.JLabel();
-        jComboBox4 = new javax.swing.JComboBox<>();
+        comboBoxAlgorithms = new javax.swing.JComboBox<>();
         progressBar = new javax.swing.JProgressBar();
         map = new MapDisplay(this.main.getModel(), Map.getImage(Map.PITIUSES), this.pobDimension);
         jPanel1 = new javax.swing.JPanel();
@@ -177,7 +177,7 @@ public class View extends javax.swing.JFrame implements EventListener {
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Select Algorithm");
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboBoxAlgorithms.setModel(new javax.swing.DefaultComboBoxModel<>(this.showAlgTechniques()));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -210,9 +210,9 @@ public class View extends javax.swing.JFrame implements EventListener {
                             .addComponent(distanceBox)
                             .addComponent(timeBox)
                             .addComponent(moneyBox)
-                            .addComponent(jLabel8)
-                            .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                            .addComponent(jLabel8))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(comboBoxAlgorithms, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -252,7 +252,7 @@ public class View extends javax.swing.JFrame implements EventListener {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(comboBoxAlgorithms, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -440,8 +440,10 @@ public class View extends javax.swing.JFrame implements EventListener {
         this.moneyBox.setSelected(false);
         
         solutionList.setListData(new String[0]);
+        
+        this.criterias = new boolean[3];
 
-        this.main.notify(new ControllerEvent(false));
+        this.main.notify(new ControllerEvent());
         this.main.notify(new ModelEvent());
         this.map.reset();
     }//GEN-LAST:event_buttonResetActionPerformed
@@ -460,7 +462,7 @@ public class View extends javax.swing.JFrame implements EventListener {
             }
             if (!anyTrue) this.criterias[0] = true;
             this.main.notify(new ModelEvent(this.criterias));
-            this.main.notify(new ControllerEvent(true));
+            this.main.notify(new ControllerEvent(this.comboBoxAlgorithms.getSelectedIndex()));
         }
     }//GEN-LAST:event_buttonStartActionPerformed
 
@@ -501,6 +503,17 @@ public class View extends javax.swing.JFrame implements EventListener {
         }
         return files;
     }
+    
+    private String [] showAlgTechniques() {
+        String [] techniques = new String[AlgorithmTechnique.values().length];
+        
+        int i = 0;
+        for (AlgorithmTechnique t : AlgorithmTechnique.values()) {
+            techniques[i] = t.toString();
+            i++;
+        }
+        return techniques;
+    }
 
     @Override
     public void notify(Event e) {
@@ -529,10 +542,10 @@ public class View extends javax.swing.JFrame implements EventListener {
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JButton buttonReset;
     private javax.swing.JButton buttonStart;
+    private javax.swing.JComboBox<String> comboBoxAlgorithms;
     private javax.swing.JRadioButton destRadio;
     private javax.swing.JCheckBox distanceBox;
     private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
