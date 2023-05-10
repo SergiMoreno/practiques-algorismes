@@ -1,9 +1,7 @@
 package practica4.controller;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
 import java.util.Queue;
@@ -24,12 +22,12 @@ public class Controller extends Thread implements EventListener {
     
     // Thread to do the execution of the algorithm, being able to interrupt it
     private Thread executionThread;
-    // Structure to keep the poblations indexs and their minimum distance
-    private HashMap<Integer, Double> minimumDistance;
+    // Structure to keep minimum distance to the poblation represented by the position
+    private double [] minimumDistance;
     // Structure to keep the solution indexs
     private ArrayList<Integer> solution;
-    
-    private AlgorithmTechnique selectedTechnique;
+    // It allows to apply one structure technic or another to the algorithm
+    private StructureTechnique selectedTechnique;
     
     public Controller(Main main) {
         this.main = main;
@@ -43,45 +41,70 @@ public class Controller extends Thread implements EventListener {
         
         this.solution = new ArrayList<Integer>();
         
+        long time;
         switch (this.selectedTechnique) {
             case QUEUE -> {
                 /* from destination to middle */
                 // Tag the graph by the mid node
+                time = System.nanoTime();
                 tagGraph(model.getMiddle());
+                time = System.nanoTime() - time;
+                System.out.println("Queue 1 : " + time);
+                long oldTime = time;
                 // Calculate the minimum route from dest node to mid node
                 calculate(model.getDest(), model.getMiddle());
 
                 /* from middle to origin */
                 // Tag the graph by the origin node
+                time = System.nanoTime();
                 tagGraph(model.getOrigin());
+                time = System.nanoTime() - time;
+                System.out.println("Queue 2 : " + time);
                 // Calculate the minimum route from mid node to origin node
                 calculate(model.getMiddle(), model.getOrigin());
+                System.out.println("Queue TOTAL : " + (time + oldTime));
             }
             case BINARY_HEAP -> {
                 /* from destination to middle */
                 // Tag the graph by the mid node
+                time = System.nanoTime();
                 binaryTagging(model.getMiddle());
+                time = System.nanoTime() - time;
+                System.out.println("Binary 1 : " + time);
+                long oldTime = time;
                 // Calculate the minimum route from dest node to mid node
                 calculate(model.getDest(), model.getMiddle());
 
                 /* from middle to origin */
                 // Tag the graph by the origin node
+                time = System.nanoTime();
                 binaryTagging(model.getOrigin());
+                time = System.nanoTime() - time;
+                System.out.println("Binary 2 : " + time);
                 // Calculate the minimum route from mid node to origin node
                 calculate(model.getMiddle(), model.getOrigin());
+                System.out.println("Binary TOTAL : " + (time + oldTime));
             }
             case FIBONACCI_HEAP -> {
                 /* from destination to middle */
                 // Tag the graph by the mid node
+                time = System.nanoTime();
                 fibonacciTagging(model.getMiddle());
+                time = System.nanoTime() - time;
+                System.out.println("Fibonacci 1 : " + time);
+                long oldTime = time;
                 // Calculate the minimum route from dest node to mid node
                 calculate(model.getDest(), model.getMiddle());
 
                 /* from middle to origin */
                 // Tag the graph by the origin node
+                time = System.nanoTime();
                 fibonacciTagging(model.getOrigin());
+                time = System.nanoTime() - time;
+                System.out.println("Fibonacci 2 : " + time);
                 // Calculate the minimum route from mid node to origin node
                 calculate(model.getMiddle(), model.getOrigin());
+                System.out.println("Fibonacci TOTAL : " + (time + oldTime));
             }
         }
         
@@ -93,35 +116,33 @@ public class Controller extends Thread implements EventListener {
     // Method to tag the graph nodes with the minimum distance by the index of the one passed as parameter
     private void tagGraph(int origin) {
         // Visited poblations will be putted in this structure
-        minimumDistance = new HashMap<Integer, Double>();
+        initializeMinDistance();
         // Queue to keep the poblations to be visited
         Queue<Integer> visit = new LinkedList<>();
         
         visit.add(origin);
-        minimumDistance.put(origin, 0.0);
+        minimumDistance[origin] = 0.0;
         
         while (!visit.isEmpty()) {
             // Get & remove from queue
             int i = visit.remove();
 
             // Get routes de i
-            double acc = minimumDistance.get(i);
+            double acc = minimumDistance[i];
             int nroutes = model.getNExitRoutes(i);
             for (int j = 0; j < nroutes; j++) {
                 int dest = model.getDestPoblation(i, j);
                 double v = roundDouble(model.getExitRouteValue(i, j) + acc, 2);
-                //DecimalFormat df = new DecimalFormat("#.##");
-                //double v = Double.parseDouble(df.format(model.getRouteValue(i, j) + acc));
                 
                 // If poblation is already visited, check if the current distance is less than the stored value
-                if (minimumDistance.containsKey(dest)) {
-                    double hashV = minimumDistance.get(dest);
+                if (minimumDistance[dest] < Double.MAX_VALUE) {
+                    double hashV = minimumDistance[dest];
                     if (hashV > v) {
-                        minimumDistance.replace(dest, v);
+                        minimumDistance[dest] = v;
                         visit.add(dest);
                     }
                 } else {
-                    minimumDistance.put(dest, v);
+                    minimumDistance[dest] = v;
                     visit.add(dest);
                 }
             }
@@ -129,32 +150,32 @@ public class Controller extends Thread implements EventListener {
     }
     
     private void binaryTagging(int origin) {
-        minimumDistance = new HashMap<Integer, Double>();
+        initializeMinDistance();
         PriorityQueue<QueueElement> minHeap = new PriorityQueue<>();
         
         minHeap.add(new QueueElement(origin, 0.0));
-        minimumDistance.put(origin, 0.0);
+        minimumDistance[origin] = 0.0;
         
         while (!minHeap.isEmpty()) {
             // Get & remove from queue
             QueueElement i = minHeap.poll();
 
             // Get routes de i
-            double acc = minimumDistance.get(i.node);
+            double acc = minimumDistance[i.node];
             int nroutes = model.getNExitRoutes(i.node);
             for (int j = 0; j < nroutes; j++) {
                 int dest = model.getDestPoblation(i.node, j);
                 double v = roundDouble(model.getExitRouteValue(i.node, j) + acc, 2);
   
                 // If poblation is already visited, check if the current distance is less than the stored value
-                if (minimumDistance.containsKey(dest)) {
-                    double hashV = minimumDistance.get(dest);
+                if (minimumDistance[dest] < Double.MAX_VALUE) {
+                    double hashV = minimumDistance[dest];
                     if (hashV > v) {
-                        minimumDistance.replace(dest, v);
+                        minimumDistance[dest] = v;
                         minHeap.add(new QueueElement(dest, v));
                     }
                 } else {
-                    minimumDistance.put(dest, v);
+                    minimumDistance[dest] = v;
                     minHeap.add(new QueueElement(dest, v));
                 }
             }
@@ -162,32 +183,32 @@ public class Controller extends Thread implements EventListener {
     }
     
     private void fibonacciTagging(int origin) {
-        minimumDistance = new HashMap<Integer, Double>();
+        initializeMinDistance();
         FibonacciHeap<QueueElement> minHeap = new FibonacciHeap<>();
         
         minHeap.add(new QueueElement(origin, 0.0));
-        minimumDistance.put(origin, 0.0);
+        minimumDistance[origin] = 0.0;
         
         while (!minHeap.isEmpty()) {
             // Get & remove from queue
             QueueElement i = minHeap.poll();
 
             // Get routes de i
-            double acc = minimumDistance.get(i.node);
+            double acc = minimumDistance[i.node];
             int nroutes = model.getNExitRoutes(i.node);
             for (int j = 0; j < nroutes; j++) {
                 int dest = model.getDestPoblation(i.node, j);
                 double v = roundDouble(model.getExitRouteValue(i.node, j) + acc, 2);
   
                 // If poblation is already visited, check if the current distance is less than the stored value
-                if (minimumDistance.containsKey(dest)) {
-                    double hashV = minimumDistance.get(dest);
+                if (minimumDistance[dest] < Double.MAX_VALUE) {
+                    double hashV = minimumDistance[dest];
                     if (hashV > v) {
-                        minimumDistance.replace(dest, v);
+                        minimumDistance[dest] = v;
                         minHeap.add(new QueueElement(dest, v));
                     }
                 } else {
-                    minimumDistance.put(dest, v);
+                    minimumDistance[dest] = v;
                     minHeap.add(new QueueElement(dest, v));
                 }
             }
@@ -195,36 +216,16 @@ public class Controller extends Thread implements EventListener {
     }
     
     private void calculate(int indexp, int dir) {
-        /*System.out.println(model.getPobName(indexp));
-        this.solution.add(indexp);
-
-        if (indexp == dir) {
-            return;
-        }
-        
-        double currentV = minimumDistance.get(indexp);
-        int nroutes = model.getNEntryRoutes(indexp);
-        for (int i = 0; i < nroutes; i++) {
-            int dest = model.getOriginPoblation(indexp, i);
-            double routeV = model.getEntryRouteValue(indexp, i);
-            double pobV = minimumDistance.get(dest);
-            
-            double v = roundDouble(currentV - routeV, 2);
-            if (Double.compare(v, pobV) == 0) {
-                calculate(dest, dir);
-                break;
-            }
-        }*/
         while (indexp != dir) {
             System.out.println(model.getPobName(indexp));
             this.solution.add(indexp);
             
-            double currentV = minimumDistance.get(indexp);
+            double currentV = minimumDistance[indexp];
             int nroutes = model.getNEntryRoutes(indexp);
             for (int i = 0; i < nroutes; i++) {
                 int dest = model.getOriginPoblation(indexp, i);
                 double routeV = model.getEntryRouteValue(indexp, i);
-                double pobV = minimumDistance.get(dest);
+                double pobV = minimumDistance[dest];
 
                 double v = roundDouble(currentV - routeV, 2);
                 if (Double.compare(v, pobV) == 0) {
@@ -243,6 +244,15 @@ public class Controller extends Thread implements EventListener {
         vb = vb * factor;
         long tmp = Math.round(vb);
         return (double) tmp / factor;
+    }
+    
+    // Initialize node structure to their maximum values, it will be usefull to
+    // keep track of which ones are visited
+    private void initializeMinDistance() {
+        this.minimumDistance = new double[model.getNPoblations()];
+        for (int i = 0; i < this.minimumDistance.length; i++) {
+            this.minimumDistance[i] = Double.MAX_VALUE;
+        }
     }
 
     @Override

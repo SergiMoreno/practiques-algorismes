@@ -8,13 +8,13 @@ import practica4.Event;
  */
 public class ControllerEvent extends Event {
     public ControllerEventType type;
-    public AlgorithmTechnique technique;
+    public StructureTechnique technique;
  
     // Event to start the thread executing the specified algorithm
     public ControllerEvent(int i) {
         super(EventType.Controller);
         
-        this.technique = AlgorithmTechnique.getByIndex(i);
+        this.technique = StructureTechnique.getByIndex(i);
         this.type = ControllerEventType.START;
     }
     

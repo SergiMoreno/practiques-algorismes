@@ -4,13 +4,13 @@ package practica4.controller;
  *
  * @author usuario
  */
-public enum AlgorithmTechnique {
+public enum StructureTechnique {
     QUEUE,
     BINARY_HEAP,
     FIBONACCI_HEAP;
     
     // Method used to get the algorithm type based on the index selected
-    public static AlgorithmTechnique getByIndex(int index) {
-        return AlgorithmTechnique.values()[index];
+    public static StructureTechnique getByIndex(int index) {
+        return StructureTechnique.values()[index];
     }
 }

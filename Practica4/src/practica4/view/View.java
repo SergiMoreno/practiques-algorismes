@@ -4,7 +4,7 @@ import practica4.Event;
 import practica4.EventListener;
 import practica4.Main;
 import practica4.Map;
-import practica4.controller.AlgorithmTechnique;
+import practica4.controller.StructureTechnique;
 import practica4.controller.ControllerEvent;
 import practica4.model.Model;
 import practica4.model.ModelEvent;
@@ -175,7 +175,7 @@ public class View extends javax.swing.JFrame implements EventListener {
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Select Algorithm");
+        jLabel8.setText("Select Technique");
 
         comboBoxAlgorithms.setModel(new javax.swing.DefaultComboBoxModel<>(this.showAlgTechniques()));
 
@@ -505,10 +505,10 @@ public class View extends javax.swing.JFrame implements EventListener {
     }
     
     private String [] showAlgTechniques() {
-        String [] techniques = new String[AlgorithmTechnique.values().length];
+        String [] techniques = new String[StructureTechnique.values().length];
         
         int i = 0;
-        for (AlgorithmTechnique t : AlgorithmTechnique.values()) {
+        for (StructureTechnique t : StructureTechnique.values()) {
             techniques[i] = t.toString();
             i++;
         }
