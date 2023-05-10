@@ -1,7 +1,6 @@
 package practica4.model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import practica4.Event;
 import practica4.EventListener;
 import practica4.Main;
@@ -15,8 +14,9 @@ public class Model implements EventListener {
     private ArrayList <Poblation> poblations;
     private ArrayList <Route> routes;
     private String type = "";
-    private HashMap<PoblationType, Integer> pobSelected;
-    private double [] weights = {0.6, 0.3, 0.1};
+    private int [] pobSelected;
+    private final double [] WEIGHTS = {0.6, 0.3, 0.1};
+    private final int TO_SELECT = 3;
     
     public Model(Main main) {
         this.main = main;
@@ -28,10 +28,10 @@ public class Model implements EventListener {
     }
     
     public void initializePobSelected() {
-        this.pobSelected = new HashMap<PoblationType, Integer>();
-        this.pobSelected.put(PoblationType.ORIGIN, -1);
-        this.pobSelected.put(PoblationType.MIDDLE, -1);
-        this.pobSelected.put(PoblationType.DESTINATION, -1);
+        this.pobSelected = new int[3];
+        for (int i = 0; i < TO_SELECT; i++) {
+            this.pobSelected[i] = -1;
+        }
     }
     
     public void addPoblation(String n, int coordx, int coordy) {
@@ -49,7 +49,7 @@ public class Model implements EventListener {
         this.type = t;
     }
     
-    public int getPoblation(String name) {
+    private int getPoblation(String name) {
         boolean res = false;
         Poblation p = null;
         int i = 0;
@@ -100,15 +100,15 @@ public class Model implements EventListener {
     }
     
     public int getOrigin() {
-        return this.pobSelected.get(PoblationType.ORIGIN);
+        return this.pobSelected[0];
     }
     
     public int getDest() {
-        return this.pobSelected.get(PoblationType.DESTINATION);
+        return this.pobSelected[2];
     }
     
     public int getMiddle() {
-        return this.pobSelected.get(PoblationType.MIDDLE);
+        return this.pobSelected[1];
     }
     
     public String getPobName(int index) {
@@ -124,15 +124,15 @@ public class Model implements EventListener {
     }
     
     public boolean isSelected(int index) {
-        return this.pobSelected.get(PoblationType.ORIGIN) == index ||
-               this.pobSelected.get(PoblationType.MIDDLE) == index ||
-               this.pobSelected.get(PoblationType.DESTINATION) == index;
+        return this.pobSelected[0] == index ||
+               this.pobSelected[1] == index ||
+               this.pobSelected[2] == index;
     }
     
     public boolean selectionCompleted() {
-        return this.pobSelected.get(PoblationType.ORIGIN) != -1 &&
-               this.pobSelected.get(PoblationType.MIDDLE) != -1 &&
-               this.pobSelected.get(PoblationType.DESTINATION) != -1;
+        return this.pobSelected[0] != -1 &&
+               this.pobSelected[1] != -1 &&
+               this.pobSelected[2] != -1;
     }
      
     @Override
@@ -141,13 +141,13 @@ public class Model implements EventListener {
         
         switch (event.type) {
             case UPDATE_ORIGIN -> {
-                this.pobSelected.replace(PoblationType.ORIGIN, event.pobIndex);
+                this.pobSelected[0] = event.pobIndex;
             }
             case UPDATE_MIDDLE -> {
-                this.pobSelected.replace(PoblationType.MIDDLE, event.pobIndex);
+                this.pobSelected[1] = event.pobIndex;
             }
             case UPDATE_DESTINATION -> {
-                this.pobSelected.replace(PoblationType.DESTINATION, event.pobIndex);
+                this.pobSelected[2] = event.pobIndex;
             }
             case RESET -> {
                 initializePobSelected();
@@ -155,7 +155,7 @@ public class Model implements EventListener {
             case START -> {
                 for (int i = 0; i < this.routes.size(); i++) {
                     Route r = this.routes.get(i);
-                    r.setWeight(event.criterias, this.weights);
+                    r.setWeight(event.criterias, this.WEIGHTS);
                 }
             }
         }

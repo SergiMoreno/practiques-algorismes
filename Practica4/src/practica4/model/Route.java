@@ -10,14 +10,14 @@ public class Route {
     private double weight;
     
     public Route(int p1, int p2, double d, double t, double m) {
+        this.poblations = new int[2];
+        this.poblations[0] = p1;
+        this.poblations[1] = p2;
+        
         this.criterias = new double[3];
         this.criterias[0] = d;
         this.criterias[1] = t;
         this.criterias[2] = m;
-        
-        this.poblations = new int[2];
-        this.poblations[0] = p1;
-        this.poblations[1] = p2;
     }
     
     public int getOrigin() {
