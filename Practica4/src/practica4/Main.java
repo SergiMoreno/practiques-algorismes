@@ -50,6 +50,12 @@ public class Main implements EventListener {
         }
     }
     
+    public void updateMap(String m) {
+        this.model.resetMap();
+        MeuSax sax = new MeuSax(m, this);
+        sax.llegir();
+    }
+    
     public Model getModel() {
         return this.model;
     }

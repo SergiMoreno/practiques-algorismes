@@ -48,7 +48,7 @@ public class View extends javax.swing.JFrame implements EventListener {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        mapComboBox = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         labelOriginSelected = new javax.swing.JLabel();
@@ -95,7 +95,12 @@ public class View extends javax.swing.JFrame implements EventListener {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Destination");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(this.showFiles()));
+        mapComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(this.showFiles()));
+        mapComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mapComboBoxActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
@@ -188,7 +193,7 @@ public class View extends javax.swing.JFrame implements EventListener {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparator2)
                     .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(mapComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jSeparator3)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -224,7 +229,7 @@ public class View extends javax.swing.JFrame implements EventListener {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(mapComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -478,6 +483,32 @@ public class View extends javax.swing.JFrame implements EventListener {
         this.criterias[2] = this.moneyBox.isSelected();
     }//GEN-LAST:event_moneyBoxActionPerformed
 
+    private void mapComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mapComboBoxActionPerformed
+        if (this.buttonStart.isEnabled()) {
+            this.buttonGroup1.clearSelection();
+
+            String emptyPoblation = "<none>";
+            this.labelOriginSelected.setText(emptyPoblation);
+            this.labelPassingSelected.setText(emptyPoblation);
+            this.labelDestSelected.setText(emptyPoblation);
+
+            this.distanceBox.setSelected(false);
+            this.timeBox.setSelected(false);
+            this.moneyBox.setSelected(false);
+
+            solutionList.setListData(new String[0]);
+
+            this.criterias = new boolean[3];
+            
+            int i = this.mapComboBox.getSelectedIndex();
+            //this.main.notify(new ModelEvent());
+            this.main.updateMap(Map.getFile(Map.getByIndex(i)));
+            //this.model = main.getModel();
+            this.map.updateImage(Map.getImage(Map.getByIndex(i)));
+            //
+        }
+    }//GEN-LAST:event_mapComboBoxActionPerformed
+
      // Return the euclidean distance between the points passed by parameter
     private boolean poblationClicked(int x, int y, int mousex, int mousey) {
         // X
@@ -545,7 +576,6 @@ public class View extends javax.swing.JFrame implements EventListener {
     private javax.swing.JComboBox<String> comboBoxAlgorithms;
     private javax.swing.JRadioButton destRadio;
     private javax.swing.JCheckBox distanceBox;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -568,6 +598,7 @@ public class View extends javax.swing.JFrame implements EventListener {
     /*
     private javax.swing.JPanel map;
     */MapDisplay map;
+    private javax.swing.JComboBox<String> mapComboBox;
     private javax.swing.JCheckBox moneyBox;
     private javax.swing.JRadioButton originRadio;
     private javax.swing.JRadioButton passingRadio;
