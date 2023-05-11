@@ -100,6 +100,7 @@ public class MapDisplay extends JPanel {
     
     public void updateImage(String img) {
         this.image = img;
+        this.reset();
     }
     
     public void reset() {

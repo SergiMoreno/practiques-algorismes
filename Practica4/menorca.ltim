@@ -1,0 +1,186 @@
+<mapa>
+	<tipo>dirigido</tipo>
+	<poblacion>
+		Cala Morell:193:143
+	</poblacion>
+	<poblacion>
+		Ciutadella de Menorca:125:234
+	</poblacion>
+	<poblacion>
+		Cala Blanca:139:291
+	</poblacion>
+	<poblacion>
+		Cala en Bosc:129:357
+	</poblacion>
+	<poblacion>
+		Cala Galdana:278:335
+	</poblacion>
+	<poblacion>
+		Ferrerias:327:258
+	</poblacion>
+	<poblacion>
+		Santo Tomas:356:379
+	</poblacion>
+	<poblacion>
+		Es Migjorn Gran:368:315
+	</poblacion>
+	<poblacion>
+		Es Mercadal:424:259
+	</poblacion>
+	<poblacion>
+		Fornells:459:143
+	</poblacion>
+	<poblacion>
+		Son Bou:409:414
+	</poblacion>
+	<poblacion>
+		Alayor:475:353
+	</poblacion>
+	<poblacion>
+		Arenal d'en Castell:524:192
+	</poblacion>
+	<poblacion>
+		Poblat talaiotic de Sa Torreta:566:309
+	</poblacion>
+	<poblacion>
+		Mao:610:428
+	</poblacion>
+	<poblacion>
+		Cala en Porter:469:457
+	</poblacion>
+	<poblacion>
+		San Luis:606:495
+	</poblacion>
+	<poblacion>
+		Binibeca:586:540
+	</poblacion>
+	<ruta>
+		Binibeca:San Luis:1.2:1.0:0.5
+	</ruta>
+	<ruta>
+		San Luis:Binibeca:1.2:1.5:0.8
+	</ruta>
+	<ruta>
+		Mao:San Luis:1.5:1:0.8
+	</ruta>
+	<ruta>
+		San Luis:Mao:1.6:0.9:1.0
+	</ruta>
+	<ruta>
+		Mao:Cala en Porter:2:2.1:1.8
+	</ruta>
+	<ruta>
+		Cala en Porter:Mao:2.1:1.8:1.9
+	</ruta>
+	<ruta>
+		Mao:Cala en Porter:2.2:1.6:2
+	</ruta>
+	<ruta>
+		Poblat talaiotic de Sa Torreta:Mao:1.6:1.4:1.3
+	</ruta>
+	<ruta>
+		Mao:Poblat talaiotic de Sa Torreta:1.9:1.2:1.1
+	</ruta>
+	<ruta>
+		Arenal d'en Castell:Mao:4.0:2.3:3.0
+	</ruta>
+	<ruta>
+		Mao:Arenal d'en Castell:3.8:2.5:2.5
+	</ruta>
+	<ruta>
+		Fornells:Mao:5.0:4.5:3.0
+	</ruta>
+	<ruta>
+		Mao:Fornells:4.5:4.0:3.5
+	</ruta>
+	<ruta>
+		Alayor:Mao:2.5:1.5:2.0
+	</ruta>
+	<ruta>
+		Mao:Alayor:2.0:2.0:2.1
+	</ruta>
+	<ruta>
+		Alayor:Arenal d'en Castell:2.0:2.3:2.0
+	</ruta>
+	<ruta>
+		Arenal d'en Castell:Alayor:2.5:2.0:2.1
+	</ruta>
+	<ruta>
+		Alayor:Es Mercadal:1.0:1.0:1.1
+	</ruta>
+	<ruta>
+		Es Mercadal:Alayor:0.9:0.8:0.9
+	</ruta>
+	<ruta>
+		Es Migjorn Gran:Alayor:0.8:1.0:0.8
+	</ruta>
+	<ruta>
+		Alayor:Es Migjorn Gran:0.7:0.8:0.9
+	</ruta>
+	<ruta>
+		Es Mercadal:Fornells:1.5:1.2:1.8
+	</ruta>
+	<ruta>
+		Fornells:Es Mercadal:1.8:1.8:2.0
+	</ruta>
+	<ruta>
+		Es Mercadal:Ferrerias:1.2:1.5:1.2
+	</ruta>
+	<ruta>
+		Ferrerias:Es Mercadal:1.2:1.5:2.0
+	</ruta>
+	<ruta>
+		Es Migjorn Gran:Ferrerias:1.0:1.0:1.0
+	</ruta>
+	<ruta>
+		Ferrerias:Es Migjorn Gran:1.8:1.8:3.0
+	</ruta>
+	<ruta>
+		Es Migjorn Gran:Santo Tomas:0.5:0.2:0.8
+	</ruta>
+	<ruta>
+		Santo Tomas:Es Migjorn Gran:0.2:0.5:0.6
+	</ruta>
+	<ruta>
+		Son Bou:Santo Tomas:0.2:0.5:0.2
+	</ruta>
+	<ruta>
+		Santo Tomas:Son Bou:0.4:0.1:0.5
+	</ruta>
+	<ruta>
+		Fornells:Arenal d'en Castell:1.4:1.4:1.2
+	</ruta>
+	<ruta>
+		Arenal d'en Castell:Fornells:1.7:1.9:1.1
+	</ruta>
+	<ruta>
+		Ferrerias:Cala Galdana:1.0:1.1:1.1
+	</ruta>
+	<ruta>
+		Cala Galdana:Ferrerias:1.2:1.2:1.2
+	</ruta>
+	<ruta>
+		Ferrerias:Ciutadella de Menorca:1.8:1.5:2.0
+	</ruta>
+	<ruta>
+		Ciutadella de Menorca:Ferrerias:1.7:1.0:1.5
+	</ruta>
+	<ruta>
+		Cala Morell:Ciutadella de Menorca:0.7:1.0:1.5
+	</ruta>
+	<ruta>
+		Ciutadella de Menorca:Cala Morell:1.2:0.9:1.2
+	</ruta>
+	<ruta>
+		Cala Blanca:Ciutadella de Menorca:0.7:0.6:0.9
+	</ruta>
+	<ruta>
+		Ciutadella de Menorca:Cala Blanca:0.8:1.0:1.0
+	</ruta>
+	<ruta>
+		Cala Blanca:Cala en Bosc:0.6:0.7:0.8
+	</ruta>
+	<ruta>
+		Cala en Bosc:Cala Blanca:0.8:0.6:0.7
+	</ruta>
+</mapa>

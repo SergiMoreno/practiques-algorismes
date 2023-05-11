@@ -134,6 +134,14 @@ public class Model implements EventListener {
                this.pobSelected[1] != -1 &&
                this.pobSelected[2] != -1;
     }
+    
+    public void resetMap() {
+        this.poblations = new ArrayList<>();
+        this.routes = new ArrayList<>();
+        this.type = "dirigido";
+        
+        initializePobSelected();
+    }
      
     @Override
     public void notify(Event e) {
