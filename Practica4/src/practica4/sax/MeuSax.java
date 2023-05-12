@@ -29,7 +29,7 @@ public class MeuSax {
             MeuHandler handler = new MeuHandler(prog);
             saxParser.parse(xmlInput, handler);
         } catch (Exception e) {
-            //Errores.informaError(e);
+            System.out.println("ERROR : " + e.getMessage());
         }
     }
 }

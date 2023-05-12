@@ -1,0 +1,663 @@
+<mapa>
+	<tipo>dirigido</tipo>
+	<poblacion>
+		Port de Pollenca:475:96
+	</poblacion>
+	<poblacion>
+		Pollenca:447:119
+	</poblacion>
+	<poblacion>
+		Alcudia:504:147
+	</poblacion>
+	<poblacion>
+		Escorca:345:169
+	</poblacion>
+	<poblacion>
+		Sa Pobla:454:213
+	</poblacion>
+	<poblacion>
+		Can Picafort:521:215
+	</poblacion>
+	<poblacion>
+		Inca:381:260
+	</poblacion>
+	<poblacion>
+		Soller:264:219
+	</poblacion>
+	<poblacion>
+		Port de Soller:251:187
+	</poblacion>
+	<poblacion>
+		Deia:220:230
+	</poblacion>
+	<poblacion>
+		Valldemossa:209:265
+	</poblacion>
+	<poblacion>
+		Alaro:335:285
+	</poblacion>
+	<poblacion>
+		Binissalem:310:268
+	</poblacion>
+	<poblacion>
+		Santa Margalida:500:277
+	</poblacion>
+	<poblacion>
+		Banyalbufar:148:283
+	</poblacion>
+	<poblacion>
+		Sineu:439:317
+	</poblacion>
+	<poblacion>
+		Arta:647:278
+	</poblacion>
+	<poblacion>
+		Cala Ratjada:707:261
+	</poblacion>
+	<poblacion>
+		Canyamel:698:310
+	</poblacion>
+	<poblacion>
+		Son Servera:653:331
+	</poblacion>
+	<poblacion>
+		Petra:511:342
+	</poblacion>
+	<poblacion>
+		Cala Millor:672:353
+	</poblacion>
+	<poblacion>
+		Sa Coma:661:376
+	</poblacion>
+	<poblacion>
+		Porto Cristo:638:402
+	</poblacion>
+	<poblacion>
+		Manacor:561:382
+	</poblacion>
+	<poblacion>
+		Villafranca:492:379
+	</poblacion>
+	<poblacion>
+		Montuiri:425:380
+	</poblacion>
+	<poblacion>
+		Algaida:371:387
+	</poblacion>
+	<poblacion>
+		Santa Maria:300:321
+	</poblacion>
+	<poblacion>
+		Andratx:85:375
+	</poblacion>
+	<poblacion>
+		Calvia:134:381
+	</poblacion>
+	<poblacion>
+		Peguera:102:405
+	</poblacion>
+	<poblacion>
+		Palmanova:154:415
+	</poblacion>
+	<poblacion>
+		Santa Ponca:112:440
+	</poblacion>
+	<poblacion>
+		Palma:224:384
+	</poblacion>
+	<poblacion>
+		Can Pastilla:268:410
+	</poblacion>
+	<poblacion>
+		Arenal:292:439
+	</poblacion>
+	<poblacion>
+		Llucmajor:374:456
+	</poblacion>
+	<poblacion>
+		Porreres:454:429
+	</poblacion>
+	<poblacion>
+		Cala Pi:342:550
+	</poblacion>
+	<poblacion>
+		Sa Rapita:400:550
+	</poblacion>
+	<poblacion>
+		Colonia de Sant Jordi:441:590
+	</poblacion>
+	<poblacion>
+		Campos:448:502
+	</poblacion>
+	<poblacion>
+		Felanitx:524:465
+	</poblacion>
+	<poblacion>
+		Santanyi:512:562
+	</poblacion>
+	<poblacion>
+		Cala Figuera:533:583
+	</poblacion>
+	<poblacion>
+		Cala d'Or:571:541
+	</poblacion>
+	<poblacion>
+		Portocolom:595:506
+	</poblacion>
+	<poblacion>
+		Calas de Mallorca:601:468
+	</poblacion>
+	<poblacion>
+		Sa Calobra:319:144
+	</poblacion>
+	<ruta>
+		Escorca:Sa Calobra:0.5:0.6:0.7
+	</ruta>
+	<ruta>
+		Sa Calobra:Escorca:0.6:0.5:0.8
+	</ruta>
+	<ruta>
+		Port de Pollenca:Alcudia:0.8:0.8:0.7
+	</ruta>
+	<ruta>
+		Alcudia:Port de Pollenca:1.0:0.7:0.9
+	</ruta>
+	<ruta>
+		Port de Pollenca:Pollenca:0.6:0.5:0.5
+	</ruta>
+	<ruta>
+		Pollenca:Port de Pollenca:0.5:0.4:0.6
+	</ruta>
+	<ruta>
+		Pollenca:Alcudia:1.2:1.0:0.9
+	</ruta>
+	<ruta>
+		Alcudia:Pollenca:1.0:1.0:1.0
+	</ruta>
+	<ruta>
+		Pollenca:Escorca:3.4:3.2:3.2
+	</ruta>
+	<ruta>
+		Escorca:Pollenca:3.2:3.3:3.5
+	</ruta>
+	<ruta>
+		Alcudia:Sa Pobla:1.6:1.3:1.1
+	</ruta>
+	<ruta>
+		Sa Pobla:Alcudia:1.6:1.5:1.1
+	</ruta>
+	<ruta>
+		Escorca:Inca:2.2:2.1:2.3
+	</ruta>
+	<ruta>
+		Inca:Escorca:2.1:2.0:2.5
+	</ruta>
+	<ruta>
+		Escorca:Sa Calobra:0.4:0.3:0.5
+	</ruta>
+	<ruta>
+		Sa Calobra:Escorca:0.3:0.5:0.3
+	</ruta>
+	<ruta>
+		Escorca:Port de Soller:2.7:2.8:2.5
+	</ruta>
+	<ruta>
+		Port de Soller:Escorca:2.5:2.5:2.6
+	</ruta>
+	<ruta>
+		Sa Pobla:Pollenca:2.6:2.6:2.6
+	</ruta>
+	<ruta>
+		Pollenca:Sa Pobla:2.6:2.0:2.8
+	</ruta>
+	<ruta>
+		Sa Pobla:Santa Margalida:1.7:1.8:1.9
+	</ruta>
+	<ruta>
+		Santa Margalida:Sa Pobla:1.7:1.9:1.8
+	</ruta>
+	<ruta>
+		Sa Pobla:Can Picafort:1.8:1.8:2.2
+	</ruta>
+	<ruta>
+		Can Picafort:Sa Pobla:1.8:1.2:1.8
+	</ruta>
+	<ruta>
+		Can Picafort:Alcudia:1.2:1.5:2.0
+	</ruta>
+	<ruta>
+		Alcudia:Can Picafort:1.2:1.5:2.0
+	</ruta>
+	<ruta>
+		Can Picafort:Santa Margalida:1.9:1.5:1.1
+	</ruta>
+	<ruta>
+		Santa Margalida:Can Picafort:1.9:1.0:1.2
+	</ruta>
+	<ruta>
+		Can Picafort:Arta:2.7:2.9:2.1
+	</ruta>
+	<ruta>
+		Arta:Can Picafort:2.7:2.5:2.1
+	</ruta>
+	<ruta>
+		Inca:Binissalem:1.8:1.8:1.7
+	</ruta>
+	<ruta>
+		Binissalem:Inca:1.8:1.5:1.5
+	</ruta>
+	<ruta>
+		Inca:Alaro:1.7:1.4:1.5
+	</ruta>
+	<ruta>
+		Alaro:Inca:1.7:1.4:1.5
+	</ruta>
+	<ruta>
+		Inca:Santa Margalida:2.0:1.9:2.5
+	</ruta>
+	<ruta>
+		Santa Margalida:Inca:2.3:2.0:2.9
+	</ruta>
+	<ruta>
+		Inca:Sa Pobla:1.5:1.6:1.4
+	</ruta>
+	<ruta>
+		Sa Pobla:Inca:1.6:1.5:1.6
+	</ruta>
+	<ruta>
+		Soller:Port de Soller:0.2:0.5:0.3
+	</ruta>
+	<ruta>
+		Port de Soller:Soller:0.2:0.3:0.5
+	</ruta>
+	<ruta>
+		Soller:Palma:3.4:3.5:3.6
+	</ruta>
+	<ruta>
+		Palma:Soller:3.4:3.6:3.5
+	</ruta>
+	<ruta>
+		Soller:Deia:1.2:1.5:1.0
+	</ruta>
+	<ruta>
+		Deia:Soller:1.2:1.5:1.0
+	</ruta>
+	<ruta>
+		Deia:Valldemossa:1.4:1.0:1.2
+	</ruta>
+	<ruta>
+		Valldemossa:Deia:1.4:1.4:1.3
+	</ruta>
+	<ruta>
+		Valldemossa:Banyalbufar:1.7:1.9:1.9
+	</ruta>
+	<ruta>
+		Banyalbufar:Valldemossa:1.7:1.4:1.5
+	</ruta>
+	<ruta>
+		Valldemossa:Palma:2.8:2.5:2.5
+	</ruta>
+	<ruta>
+		Palma:Valldemossa:2.8:2.5:2.5
+	</ruta>
+	<ruta>
+		Alaro:Santa Maria:1.5:1.2:1.0
+	</ruta>	
+	<ruta>
+		Santa Maria:Alaro:1.5:1.2:1.5
+	</ruta>
+	<ruta>
+		Alaro:Binissalem:0.3:0.4:0.5
+	</ruta>
+	<ruta>
+		Binissalem:Alaro:0.9:0.2:0.6
+	</ruta>
+	<ruta>
+		Binissalem:Santa Maria:1.2:1.1:1.4
+	</ruta>
+	<ruta>
+		Santa Maria:Binissalem:1.2:1.0:1.1
+	</ruta>
+	<ruta>
+		Santa Margalida:Petra:1.4:2.0:1.0
+	</ruta>
+	<ruta>
+		Petra:Santa Margalida:1.6:1.8:1.1
+	</ruta>
+	<ruta>
+		Banyalbufar:Palma:1.5:1.1:1.1
+	</ruta>
+	<ruta>
+		Palma:Banyalbufar:1.5:1.5:1.5
+	</ruta>
+	<ruta>
+		Banyalbufar:Andratx:1.7:2.5:1.6
+	</ruta>
+	<ruta>
+		Andratx:Banyalbufar:1.8:2.6:2.0
+	</ruta>
+	<ruta>
+		Sineu:Palma:4.6:4.7:4.8
+	</ruta>
+	<ruta>
+		Palma:Sineu:4.6:3.9:4.5
+	</ruta>
+	<ruta>
+		Sineu:Inca:1.9:1.9:1.9
+	</ruta>
+	<ruta>
+		Inca:Sineu:1.8:1.8:1.8
+	</ruta>
+	<ruta>
+		Sineu:Petra:1.3:1.5:0.9
+	</ruta>
+	<ruta>
+		Petra:Sineu:1.6:1.2:1.5
+	</ruta>
+	<ruta>
+		Sineu:Montuiri:1.2:1.6:1.0
+	</ruta>
+	<ruta>
+		Montuiri:Sineu:1.8:2.1:2.0
+	</ruta>
+	<ruta>
+		Arta:Cala Ratjada:0.7:0.7:0.7
+	</ruta>
+	<ruta>
+		Cala Ratjada:Arta:0.7:0.9:1.2
+	</ruta>
+	<ruta>
+		Arta:Son Servera:0.9:1.1:1.5
+	</ruta>
+	<ruta>
+		Son Servera:Arta:1.0:0.9:1.2
+	</ruta>
+	<ruta>
+		Arta:Manacor:2.9:3.1:2.5
+	</ruta>
+	<ruta>
+		Manacor:Arta:3.0:2.9:2.2
+	</ruta>
+	<ruta>
+		Canyamel:Son Servera:0.9:1.2:1.5
+	</ruta>
+	<ruta>
+		Son Servera:Canyamel:1.4:0.9:1.6
+	</ruta>
+	<ruta>
+		Son Servera:Cala Millor:0.2:0.4:0.5
+	</ruta>
+	<ruta>
+		Cala Millor:Son Servera:0.1:0.1:0.2
+	</ruta>
+	<ruta>
+		Petra:Manacor:1.4:1.2:1.4
+	</ruta>
+	<ruta>
+		Manacor:Petra:1.2:0.9:1.1
+	</ruta>
+	<ruta>
+		Petra:Villafranca:0.9:1.1:1.5
+	</ruta>
+	<ruta>
+		Villafranca:Petra:1.0:0.9:1.2
+	</ruta>
+	<ruta>
+		Cala Millor:Sa Coma:0.5:1.0:0.5
+	</ruta>
+	<ruta>
+		Sa Coma:Cala Millor:0.7:0.4:0.2
+	</ruta>
+	<ruta>
+		Sa Coma:Porto Cristo:0.5:1.0:0.5
+	</ruta>
+	<ruta>
+		Porto Cristo:Sa Coma:0.8:0.6:0.7
+	</ruta>
+	<ruta>
+		Porto Cristo:Manacor:1.4:1.5:1.5
+	</ruta>
+	<ruta>
+		Manacor:Porto Cristo:1.6:1.9:1.2
+	</ruta>
+	<ruta>
+		Porto Cristo:Calas de Mallorca:1.9:2.1:2.5
+	</ruta>
+	<ruta>
+		Calas de Mallorca:Porto Cristo:2.0:1.9:2.2
+	</ruta>
+	<ruta>
+		Villafranca:Manacor:1.4:1.3:1.2
+	</ruta>
+	<ruta>
+		Manacor:Villafranca:1.8:1.6:1.5
+	</ruta>
+	<ruta>
+		Felanitx:Manacor:2.1:2.1:2.5
+	</ruta>
+	<ruta>
+		Manacor:Felanitx:2.4:1.9:2.2
+	</ruta>
+	<ruta>
+		Villafranca:Montuiri:0.9:1.1:1.5
+	</ruta>
+	<ruta>
+		Montuiri:Villafranca:1.0:0.9:1.2
+	</ruta>
+	<ruta>
+		Villafranca:Porreres:1.1:1.5:1.2
+	</ruta>
+	<ruta>
+		Porreres:Villafranca:1.6:0.9:1.6
+	</ruta>
+	<ruta>
+		Montuiri:Algaida:0.9:1.1:1.5
+	</ruta>
+	<ruta>
+		Algaida:Montuiri:1.0:0.9:1.2
+	</ruta>
+	<ruta>
+		Montuiri:Porreres:0.9:1.1:1.5
+	</ruta>
+	<ruta>
+		Porreres:Montuiri:1.0:0.9:1.2
+	</ruta>
+	<ruta>
+		Algaida:Palma:2.0:1.6:2.2
+	</ruta>
+	<ruta>
+		Palma:Algaida:2.1:1.9:2.4
+	</ruta>
+	<ruta>
+		Algaida:Llucmajor:1.5:1.5:1.3
+	</ruta>
+	<ruta>
+		Llucmajor:Algaida:1.8:1.3:1.5
+	</ruta>
+	<ruta>
+		Algaida:Santa Maria:1.3:1.3:1.3
+	</ruta>
+	<ruta>
+		Santa Maria:Algaida:1.6:1.9:1.2
+	</ruta>
+	<ruta>
+		Santa Maria:Palma:1.9:2.1:2.6
+	</ruta>
+	<ruta>
+		Palma:Santa Maria:2.0:1.9:2.2
+	</ruta>
+	<ruta>
+		Andratx:Calvia:0.4:0.6:0.5
+	</ruta>
+	<ruta>
+		Calvia:Andratx:0.5:0.9:0.7
+	</ruta>
+	<ruta>
+		Andratx:Peguera:0.4:0.4:0.5
+	</ruta>
+	<ruta>
+		Peguera:Andratx:0.6:0.2:0.2
+	</ruta>
+	<ruta>
+		Calvia:Palma:1.5:1.7:1.2
+	</ruta>
+	<ruta>
+		Palma:Calvia:1.8:1.9:1.7
+	</ruta>
+	<ruta>
+		Calvia:Palmanova:0.9:0.5:0.8
+	</ruta>
+	<ruta>
+		Palmanova:Calvia:1.0:0.9:1.2
+	</ruta>
+	<ruta>
+		Peguera:Palmanova:0.4:0.4:0.5
+	</ruta>
+	<ruta>
+		Palmanova:Peguera:0.4:0.6:0.5
+	</ruta>
+	<ruta>
+		Palmanova:Palma:0.9:1.1:1.5
+	</ruta>
+	<ruta>
+		Palma:Palmanova:1.0:0.9:1.2
+	</ruta>
+	<ruta>
+		Palmanova:Santa Ponca:0.2:0.1:0.5
+	</ruta>
+	<ruta>
+		Santa Ponca:Palmanova:0.4:0.5:0.2
+	</ruta>
+	<ruta>
+		Palma:Can Pastilla:0.4:0.3:0.8
+	</ruta>
+	<ruta>
+		Can Pastilla:Palma:0.4:0.4:0.7
+	</ruta>
+	<ruta>
+		Can Pastilla:Arenal:0.4:0.3:0.8
+	</ruta>
+	<ruta>
+		Arenal:Can Pastilla:0.4:0.4:0.7
+	</ruta>
+	<ruta>
+		Arenal:Llucmajor:0.9:1.1:1.5
+	</ruta>
+	<ruta>
+		Llucmajor:Arenal:1.0:0.9:1.2
+	</ruta>
+	<ruta>
+		Llucmajor:Porreres:1.9:2.1:1.6
+	</ruta>
+	<ruta>
+		Porreres:Llucmajor:2.2:1.9:1.9
+	</ruta>
+	<ruta>
+		Llucmajor:Campos:2.3:2.1:1.4
+	</ruta>
+	<ruta>
+		Campos:Llucmajor:1.8:1.9:2.2
+	</ruta>
+	<ruta>
+		Porreres:Campos:1.0:0.9:1.2
+	</ruta>
+	<ruta>
+		Campos:Porreres:0.9:1.2:1.5
+	</ruta>
+	<ruta>
+		Porreres:Felanitx:1.1:0.9:1.3
+	</ruta>
+	<ruta>
+		Felanitx:Porreres:0.9:1.1:1.5
+	</ruta>
+	<ruta>
+		Cala Pi:Sa Rapita:0.5:0.7:0.5
+	</ruta>
+	<ruta>
+		Sa Rapita:Cala Pi:0.5:0.3:0.6
+	</ruta>
+	<ruta>
+		Sa Rapita:Campos:1.4:1.5:1.3
+	</ruta>
+	<ruta>
+		Campos:Sa Rapita:1.6:1.4:1.6
+	</ruta>
+	<ruta>
+		Colonia de Sant Jordi:Campos:1.9:2.2:2.5
+	</ruta>
+	<ruta>
+		Campos:Colonia de Sant Jordi:2.4:1.9:2.2
+	</ruta>
+	<ruta>
+		Colonia de Sant Jordi:Santanyi:2.0:2.1:1.9
+	</ruta>
+	<ruta>
+		Santanyi:Colonia de Sant Jordi:2.2:1.9:1.8
+	</ruta>
+	<ruta>
+		Colonia de Sant Jordi:Sa Rapita:1.5:1.6:1.7
+	</ruta>
+	<ruta>
+		Sa Rapita:Colonia de Sant Jordi:1.6:1.3:1.7
+	</ruta>
+	<ruta>
+		Campos:Felanitx:0.9:1.5:1.2
+	</ruta>
+	<ruta>
+		Felanitx:Campos:1.1:0.9:1.6
+	</ruta>
+	<ruta>
+		Campos:Santanyi:1.4:1.1:1.2
+	</ruta>
+	<ruta>
+		Santanyi:Campos:1.3:1.4:1.2
+	</ruta>
+	<ruta>
+		Felanitx:Calas de Mallorca:0.8:1.2:1.4
+	</ruta>
+	<ruta>
+		Calas de Mallorca:Felanitx:1.5:0.9:1.3
+	</ruta>
+	<ruta>
+		Felanitx:Portocolom:1.5:0.9:1.3
+	</ruta>
+	<ruta>
+		Portocolom:Felanitx:0.8:1.2:1.4
+	</ruta>
+	<ruta>
+		Felanitx:Santanyi:1.4:1.1:1.2
+	</ruta>
+	<ruta>
+		Santanyi:Felanitx:1.3:1.4:1.2
+	</ruta>
+	<ruta>
+		Felanitx:Cala d'Or:1.1:1.1:1.2
+	</ruta>
+	<ruta>
+		Cala d'Or:Felanitx:1.0:1.1:1.4
+	</ruta>
+	<ruta>
+		Santanyi:Cala Figuera:0.2:0.1:0.3
+	</ruta>
+	<ruta>
+		Cala Figuera:Santanyi:0.3:0.3:0.2
+	</ruta>
+	<ruta>
+		Santanyi:Cala d'Or:0.8:1.0:1.1
+	</ruta>
+	<ruta>
+		Cala d'Or:Santanyi:1.1:0.9:1.1
+	</ruta>
+	<ruta>
+		Cala d'Or:Portocolom:0.8:1.2:1.2
+	</ruta>
+	<ruta>
+		Portocolom:Cala d'Or:1.0:0.6:1.1
+	</ruta>
+	<ruta>
+		Portocolom:Calas de Mallorca:0.7:1.0:1.0
+	</ruta>
+	<ruta>
+		Calas de Mallorca:Portocolom:1.0:0.7:0.9
+	</ruta>
+</mapa>
