@@ -135,13 +135,7 @@ public class Controller extends Thread implements EventListener {
                 double v = roundDouble(model.getExitRouteValue(i, j) + acc, 2);
                 
                 // If poblation is already visited, check if the current distance is less than the stored value
-                if (minimumDistance[dest] < Double.MAX_VALUE) {
-                    double hashV = minimumDistance[dest];
-                    if (hashV > v) {
-                        minimumDistance[dest] = v;
-                        visit.add(dest);
-                    }
-                } else {
+                if (minimumDistance[dest] > v) {
                     minimumDistance[dest] = v;
                     visit.add(dest);
                 }
@@ -168,13 +162,7 @@ public class Controller extends Thread implements EventListener {
                 double v = roundDouble(model.getExitRouteValue(i.node, j) + acc, 2);
   
                 // If poblation is already visited, check if the current distance is less than the stored value
-                if (minimumDistance[dest] < Double.MAX_VALUE) {
-                    double hashV = minimumDistance[dest];
-                    if (hashV > v) {
-                        minimumDistance[dest] = v;
-                        minHeap.add(new QueueElement(dest, v));
-                    }
-                } else {
+                if (minimumDistance[dest] > v) {
                     minimumDistance[dest] = v;
                     minHeap.add(new QueueElement(dest, v));
                 }
@@ -201,13 +189,7 @@ public class Controller extends Thread implements EventListener {
                 double v = roundDouble(model.getExitRouteValue(i.node, j) + acc, 2);
   
                 // If poblation is already visited, check if the current distance is less than the stored value
-                if (minimumDistance[dest] < Double.MAX_VALUE) {
-                    double hashV = minimumDistance[dest];
-                    if (hashV > v) {
-                        minimumDistance[dest] = v;
-                        minHeap.add(new QueueElement(dest, v));
-                    }
-                } else {
+                if (minimumDistance[dest] > v) {
                     minimumDistance[dest] = v;
                     minHeap.add(new QueueElement(dest, v));
                 }
