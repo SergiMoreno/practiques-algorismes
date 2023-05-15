@@ -41,70 +41,45 @@ public class Controller extends Thread implements EventListener {
         
         this.solution = new ArrayList<Integer>();
         
-        long time;
         switch (this.selectedTechnique) {
             case QUEUE -> {
                 /* from destination to middle */
                 // Tag the graph by the mid node
-                time = System.nanoTime();
                 tagGraph(model.getMiddle());
-                time = System.nanoTime() - time;
-                System.out.println("Queue 1 : " + time);
-                long oldTime = time;
                 // Calculate the minimum route from dest node to mid node
                 calculate(model.getDest(), model.getMiddle());
 
                 /* from middle to origin */
                 // Tag the graph by the origin node
-                time = System.nanoTime();
                 tagGraph(model.getOrigin());
-                time = System.nanoTime() - time;
-                System.out.println("Queue 2 : " + time);
                 // Calculate the minimum route from mid node to origin node
                 calculate(model.getMiddle(), model.getOrigin());
-                System.out.println("Queue TOTAL : " + (time + oldTime));
             }
             case BINARY_HEAP -> {
                 /* from destination to middle */
                 // Tag the graph by the mid node
-                time = System.nanoTime();
                 binaryTagging(model.getMiddle());
-                time = System.nanoTime() - time;
-                System.out.println("Binary 1 : " + time);
-                long oldTime = time;
                 // Calculate the minimum route from dest node to mid node
                 calculate(model.getDest(), model.getMiddle());
 
                 /* from middle to origin */
                 // Tag the graph by the origin node
-                time = System.nanoTime();
                 binaryTagging(model.getOrigin());
-                time = System.nanoTime() - time;
-                System.out.println("Binary 2 : " + time);
                 // Calculate the minimum route from mid node to origin node
                 calculate(model.getMiddle(), model.getOrigin());
-                System.out.println("Binary TOTAL : " + (time + oldTime));
             }
             case FIBONACCI_HEAP -> {
                 /* from destination to middle */
                 // Tag the graph by the mid node
-                time = System.nanoTime();
                 fibonacciTagging(model.getMiddle());
-                time = System.nanoTime() - time;
-                System.out.println("Fibonacci 1 : " + time);
-                long oldTime = time;
                 // Calculate the minimum route from dest node to mid node
                 calculate(model.getDest(), model.getMiddle());
 
                 /* from middle to origin */
                 // Tag the graph by the origin node
-                time = System.nanoTime();
                 fibonacciTagging(model.getOrigin());
-                time = System.nanoTime() - time;
-                System.out.println("Fibonacci 2 : " + time);
                 // Calculate the minimum route from mid node to origin node
                 calculate(model.getMiddle(), model.getOrigin());
-                System.out.println("Fibonacci TOTAL : " + (time + oldTime));
             }
         }
         
