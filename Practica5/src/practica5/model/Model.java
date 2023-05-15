@@ -15,10 +15,11 @@ public class Model implements EventListener {
     
     public Model(Main main) {
         this.main = main;
-        
+            
         /* Iterate though the number of languages, initializing one by one */
-        Language s = new Language("spanish.dic");
-        Language it = new Language("italian.dic");
+        Language s = new Language("esp.dic");
+        Language it = new Language("it.dic");
+
         /* Distance matrix */
         this.distanceMatrix = new double[10][10];
         for (int i = 0; i < this.distanceMatrix.length;i++) {
