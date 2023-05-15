@@ -14,41 +14,52 @@ public enum Languages {
     DEUTCH,
     FRENCH,
     BASQUE,
-    GALEGO;
+    GALICIAN;
     
     public String getDicFile() {
         switch (this) {
             case ITALIAN -> {
-                return "italian.dic";
+                return "it.dic";
             }
             case SPANISH -> {
-                return "spanish.dic";
+                return "esp.dic";
             }
             case CATALAN -> {
-                return "catalan.dic";
+                return "cat.dic";
             }
             case ENGLISH -> {
-                return "english.dic";
+                return "eng.dic";
             }
             case PORTUGUESE -> {
-                return "portuguese.dic";
+                return "por.dic";
             }
             case GERMAN -> {
-                return "german.dic";
+                return "ger.dic";
             }
             case DEUTCH -> {
-                return "deutch.dic";
+                return "deu.dic";
             }
             case FRENCH -> {
-                return "french.dic";
+                return "fr.dic";
             }
             case BASQUE -> {
-                return "basque.dic";
+                return "bas.dic";
             }
-            case GALEGO -> {
-                return "galego.dic";
+            case GALICIAN -> {
+                return "gal.dic";
             }
         }
         return null;
+    }
+    
+    static public String[] getAllFiles() {
+        String [] languages = new String[Languages.values().length];
+        
+        int i = 0;
+        for (Languages l : Languages.values()) {
+            languages[i] = l.toString();
+            i++;
+        }
+        return languages;
     }
 }
