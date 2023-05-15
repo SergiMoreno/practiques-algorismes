@@ -66,7 +66,7 @@ public class View extends javax.swing.JFrame implements EventListener {
         timeBox = new javax.swing.JCheckBox();
         moneyBox = new javax.swing.JCheckBox();
         jLabel8 = new javax.swing.JLabel();
-        comboBoxAlgorithms = new javax.swing.JComboBox<>();
+        structureComboBox = new javax.swing.JComboBox<>();
         progressBar = new javax.swing.JProgressBar();
         map = new MapDisplay(this.main.getModel(), Map.getImage(Map.PITIUSES), this.pobDimension);
         jPanel1 = new javax.swing.JPanel();
@@ -182,7 +182,7 @@ public class View extends javax.swing.JFrame implements EventListener {
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Select Technique");
 
-        comboBoxAlgorithms.setModel(new javax.swing.DefaultComboBoxModel<>(this.showAlgTechniques()));
+        structureComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(this.showAlgTechniques()));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -217,7 +217,7 @@ public class View extends javax.swing.JFrame implements EventListener {
                             .addComponent(moneyBox)
                             .addComponent(jLabel8))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(comboBoxAlgorithms, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(structureComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -257,7 +257,7 @@ public class View extends javax.swing.JFrame implements EventListener {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(comboBoxAlgorithms, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(structureComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -467,7 +467,7 @@ public class View extends javax.swing.JFrame implements EventListener {
             }
             if (!anyTrue) this.criterias[0] = true;
             this.main.notify(new ModelEvent(this.criterias));
-            this.main.notify(new ControllerEvent(this.comboBoxAlgorithms.getSelectedIndex()));
+            this.main.notify(new ControllerEvent(this.structureComboBox.getSelectedIndex()));
         }
     }//GEN-LAST:event_buttonStartActionPerformed
 
@@ -573,7 +573,6 @@ public class View extends javax.swing.JFrame implements EventListener {
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JButton buttonReset;
     private javax.swing.JButton buttonStart;
-    private javax.swing.JComboBox<String> comboBoxAlgorithms;
     private javax.swing.JRadioButton destRadio;
     private javax.swing.JCheckBox distanceBox;
     private javax.swing.JLabel jLabel1;
@@ -604,6 +603,7 @@ public class View extends javax.swing.JFrame implements EventListener {
     private javax.swing.JRadioButton passingRadio;
     private javax.swing.JProgressBar progressBar;
     private javax.swing.JList<String> solutionList;
+    private javax.swing.JComboBox<String> structureComboBox;
     private javax.swing.JCheckBox timeBox;
     // End of variables declaration//GEN-END:variables
 }

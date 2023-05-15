@@ -11,7 +11,7 @@ import practica4.view.View;
  * @author usuario
  */
 /*
-* Video : 
+* Video : https://www.youtube.com/watch?v=teEllaK_EnQ
 */
 public class Main implements EventListener {
     // components MVC centralitzat
