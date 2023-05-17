@@ -11,8 +11,9 @@ import practica5.Main;
 public class Model implements EventListener {
     private Main main;
     private static Language [] dictionaries;
-    private double [][] distanceMatrix;
-    private int lanCompare, lanCompareWith; // if lanCompareWith == -1, means with all
+    // if lanCompare == -1, means all
+    // if lanCompareWith == -1, means with all
+    private int lanCompare, lanCompareWith;
     
     public Model(Main main) {
         this.main = main;
@@ -21,19 +22,17 @@ public class Model implements EventListener {
         dictionaries = new Language[Languages.values().length];
         int i = 0;
         for (Languages l : Languages.values()) {
-            dictionaries[i] = new Language(l.getDicFile());
+            dictionaries[i] = new Language(l.toString(), l.getDicFile());
             i++;
-        }
-
-        /* Distance matrix */
-        this.distanceMatrix = new double[10][10];
-        for (int j = 0; j < this.distanceMatrix.length;j++) {
-            this.distanceMatrix[j][j] = 0.0;
         }
     }
     
     public String getLanguageCompared() {
         return dictionaries[this.lanCompare].getPath();
+    }
+    
+    public String getLanguageCompared(int i) {
+        return dictionaries[i].getPath();
     }
     
     public String getLanguageToCompare() {
@@ -44,12 +43,24 @@ public class Model implements EventListener {
         return dictionaries[i].getPath();
     }
     
+    public boolean compareAll() {
+        return this.lanCompare == -1;
+    }
+    
     public boolean compareWithAll() {
         return this.lanCompareWith == -1;
     }
     
     public static int getNLanguages() {
         return dictionaries.length;
+    }
+    
+    public static String getLanguageName(int i) {
+        return dictionaries[i].getName();
+    }
+    
+    public boolean isSameLanguage(int i) {
+        return this.lanCompare == i;
     }
 
     @Override

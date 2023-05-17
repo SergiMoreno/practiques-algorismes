@@ -5,20 +5,15 @@ package practica5.model;
  * @author usuario
  */
 public class Language {
-    private String dicFile;
-    private String currentWord;
+    private String name, dicFile;
     
-    public Language(String fileName) {
+    public Language(String name, String fileName) {
+        this.name = name;
         this.dicFile = "src/resources/" + fileName;
-        this.currentWord = null;
     }
     
-    public void setWord(String w) {
-        this.currentWord = w;
-    }
-    
-    public String getCurrentWord() {
-        return this.currentWord;
+    public String getName() {
+        return this.name;
     }
     
     public String getPath() {
