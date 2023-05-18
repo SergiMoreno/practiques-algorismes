@@ -266,6 +266,8 @@ public class View extends javax.swing.JFrame implements EventListener {
         this.list1.clearSelection();
         this.list2.clearSelection();
         this.buttonList2.setSelected(false);
+        
+        this.dDisplay.reset();
     }//GEN-LAST:event_buttonResetActionPerformed
 
     private void buttonList2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonList2ActionPerformed
