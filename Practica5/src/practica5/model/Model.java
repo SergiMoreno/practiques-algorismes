@@ -35,12 +35,20 @@ public class Model implements EventListener {
         return dictionaries[i].getPath();
     }
     
+    public String getLanguageComparedName() {
+        return dictionaries[this.lanCompare].getName();
+    }
+    
     public String getLanguageToCompare() {
         return dictionaries[this.lanCompareWith].getPath();
     }
     
     public String getLanguageToCompare(int i) {
         return dictionaries[i].getPath();
+    }
+    
+    public String getLanguageToCompareName() {
+        return dictionaries[this.lanCompareWith].getName();
     }
     
     public boolean compareAll() {

@@ -43,7 +43,7 @@ public class Controller extends Thread implements EventListener {
             this.main.notify(new ViewEvent(results));
         } else if (model.compareWithAll()) {
             int nFiles = Model.getNLanguages();
-            double [] results = new double[nFiles-1];
+            double [] results = new double[nFiles];
             for (int i = 0; i < nFiles; i++) {
                 if (model.isSameLanguage(i)) continue;
                 double result1 = calculateDistance(model.getLanguageCompared(), model.getLanguageToCompare(i));
@@ -52,7 +52,7 @@ public class Controller extends Thread implements EventListener {
                 //System.out.println("RESULT 2 : " + result2);
                 
                 results[i] = Math.sqrt(result1 * result1 + result2 * result2);
-                System.out.println(model.getLanguageCompared() + " : " + Model.getLanguageName(i) + " = " + results[i]);
+                System.out.println(model.getLanguageComparedName() + " : " + Model.getLanguageName(i) + " = " + results[i]);
                 this.main.notify(new ViewEvent(results));
             }
         } else {
@@ -62,7 +62,7 @@ public class Controller extends Thread implements EventListener {
             double result2 = calculateDistance(model.getLanguageToCompare(), model.getLanguageCompared());
             //System.out.println("RESULT 2 : " + result2);
             results[0] = Math.sqrt(result1 * result1 + result2 * result2);
-            System.out.println(model.getLanguageCompared() + " : " + model.getLanguageToCompare() + " = " + results[0]);
+            System.out.println(model.getLanguageComparedName() + " : " + model.getLanguageToCompareName() + " = " + results[0]);
             this.main.notify(new ViewEvent(results));
         }
     }
