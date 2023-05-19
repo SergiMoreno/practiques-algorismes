@@ -1,5 +1,8 @@
 package practica5.view;
 
+import java.awt.Color;
+import javax.swing.BorderFactory;
+import javax.swing.JOptionPane;
 import practica5.Event;
 import practica5.EventListener;
 import practica5.Main;
@@ -51,7 +54,6 @@ public class View extends javax.swing.JFrame implements EventListener {
         progressBar = new javax.swing.JProgressBar();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jSeparator2 = new javax.swing.JSeparator();
         dDisplay = new DistanceDisplay(this.main.getModel());
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -174,22 +176,20 @@ public class View extends javax.swing.JFrame implements EventListener {
 
         progressBar.setForeground(new java.awt.Color(0, 102, 102));
 
+        jPanel3.setBackground(new java.awt.Color(202, 202, 202));
+        jPanel3.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
+
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("LANGUAGES");
-
-        jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
-        jSeparator2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(377, Short.MAX_VALUE)
+                .addComponent(jLabel3)
                 .addGap(367, 367, 367))
         );
         jPanel3Layout.setVerticalGroup(
@@ -197,8 +197,7 @@ public class View extends javax.swing.JFrame implements EventListener {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap(10, Short.MAX_VALUE)
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(15, 15, 15))
         );
 
         javax.swing.GroupLayout dDisplayLayout = new javax.swing.GroupLayout(dDisplay);
@@ -221,10 +220,7 @@ public class View extends javax.swing.JFrame implements EventListener {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(progressBar, javax.swing.GroupLayout.DEFAULT_SIZE, 1031, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, 0)
-                        .addComponent(dDisplay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(0, 0, 0))))
+                    .addComponent(dDisplay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -241,9 +237,7 @@ public class View extends javax.swing.JFrame implements EventListener {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonStartActionPerformed
-        //if (this.model.selectionCompleted()) {
         if (!this.list1.isSelectionEmpty() && !this.list2.isSelectionEmpty()) {
-            this.buttonStart.setEnabled(false);
             int i1 = list1.getSelectedIndex();
             int i2;
             if (buttonList2.isSelected()) {
@@ -251,6 +245,15 @@ public class View extends javax.swing.JFrame implements EventListener {
             } else {
                 i2 = list2.getSelectedIndex();
             }
+            if (i1 == i2) {
+                this.list2.clearSelection();
+                JOptionPane.showMessageDialog(this, 
+                "Please, select a different language to compare with", 
+                "Something went wrong!",
+                JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            this.buttonStart.setEnabled(false);
             this.progressBar.setIndeterminate(true);
             this.main.notify(new ModelEvent(i1, i2));
             this.main.notify(new ControllerEvent(true));
@@ -330,7 +333,6 @@ public class View extends javax.swing.JFrame implements EventListener {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JList<String> list1;
     private javax.swing.JList<String> list2;
     private javax.swing.JProgressBar progressBar;
