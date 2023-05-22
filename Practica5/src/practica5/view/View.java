@@ -23,6 +23,7 @@ public class View extends javax.swing.JFrame implements EventListener {
     public View(Main main) {
         this.main = main;
         initComponents();
+        this.dDisplay.setList(this.graphList);
         this.setVisible(true);
         this.setLocationRelativeTo(null);
         this.setTitle("Languages");
@@ -55,6 +56,8 @@ public class View extends javax.swing.JFrame implements EventListener {
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         dDisplay = new DistanceDisplay(this.main.getModel());
+        jScrollPane3 = new javax.swing.JScrollPane();
+        graphList = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -200,15 +203,24 @@ public class View extends javax.swing.JFrame implements EventListener {
                 .addGap(15, 15, 15))
         );
 
+        graphList.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        jScrollPane3.setViewportView(graphList);
+
         javax.swing.GroupLayout dDisplayLayout = new javax.swing.GroupLayout(dDisplay);
         dDisplay.setLayout(dDisplayLayout);
         dDisplayLayout.setHorizontalGroup(
             dDisplayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dDisplayLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(108, 108, 108))
         );
         dDisplayLayout.setVerticalGroup(
             dDisplayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(dDisplayLayout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 499, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -310,7 +322,7 @@ public class View extends javax.swing.JFrame implements EventListener {
                 this.dDisplay.printGraphic(event.graphic);
             }
             case SHOW_GRAPH -> {
-                this.dDisplay.printGraph(event.graph);
+                this.dDisplay.printGraph(event.graph, event.nValues);
             }
         }
     }
@@ -324,6 +336,7 @@ public class View extends javax.swing.JFrame implements EventListener {
     /*
     private javax.swing.JPanel dDisplay;
     */DistanceDisplay dDisplay;
+    private javax.swing.JList<String> graphList;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -332,6 +345,7 @@ public class View extends javax.swing.JFrame implements EventListener {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JList<String> list1;
     private javax.swing.JList<String> list2;

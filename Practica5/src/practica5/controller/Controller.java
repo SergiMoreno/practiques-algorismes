@@ -25,7 +25,7 @@ public class Controller extends Thread implements EventListener {
         Model model = this.main.getModel();
         
         if (model.compareAll() && model.compareWithAll()) {
-            int nFiles = Model.getNLanguages();
+            int nFiles = Model.getNLanguages(), nValues = 0;
             double [][] results = new double[nFiles][nFiles];
             for (int i = 0; i < nFiles-1; i++) {
                 for (int j = i+1; j < nFiles; j++) {
@@ -35,9 +35,10 @@ public class Controller extends Thread implements EventListener {
                     results[i][j] = val;
                     results[j][i] = val;
                     System.out.println(Model.getLanguageName(i) + " : " + Model.getLanguageName(j) + " = " + results[i][j]);
+                    nValues++;
                 }
             }
-            this.main.notify(new ViewEvent(results));
+            this.main.notify(new ViewEvent(results, nValues));
         } else if (model.compareWithAll()) {
             int nFiles = Model.getNLanguages();
             // Keep -1 values
@@ -81,6 +82,7 @@ public class Controller extends Thread implements EventListener {
                 int d = levenshteinDistance(word1, word2);
                 if (d < minDistance) {
                     minDistance = d;
+                    if (minDistance == 0) break;
                 }
             }
             dic2.close();

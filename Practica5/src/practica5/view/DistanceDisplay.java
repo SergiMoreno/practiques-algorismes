@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import practica5.model.Model;
 
@@ -19,6 +20,8 @@ public class DistanceDisplay extends JPanel {
     private BufferedImage bima;
     // Circle nodes to draw the distance graph
     private Node [] circles;
+    private JList<String> list;
+    private int nValues;
     
     public DistanceDisplay(Model model) {
         this.model = model;
@@ -106,7 +109,7 @@ public class DistanceDisplay extends JPanel {
         } else if (showGraph) {
             // Show circles and language names
             int nFiles = Model.getNLanguages(), circleWidth = 75;
-            int xCenter = 450, yCenter = 240;
+            int xCenter = 350, yCenter = 240;
             double degree = Math.PI + Math.PI / 2;
             double gradoCirculo = (Math.PI * 2)/nFiles;
             int radi = 230;
@@ -132,6 +135,8 @@ public class DistanceDisplay extends JPanel {
 
             // Show lines distance between nodes
             int xFrom, yFrom, xTo, yTo;
+            int num = 0;
+            String [] listArray = new String[this.nValues];
             for (int i = 0; i < nFiles-1; i++) {
                 xFrom = this.circles[i].x + circleWidth/2;
                 yFrom = this.circles[i].y + circleWidth/2;
@@ -146,10 +151,25 @@ public class DistanceDisplay extends JPanel {
                     int y = (yFrom + yHalf) / 2;
                     gr.drawLine(xFrom, yFrom, xTo, yTo);
                     gr.setColor(Color.blue);
-                    gr.drawString("" + roundDouble(this.graph[i][j], 2), x-5, y+5);
+                    gr.drawString("" + num, x-5, y+5);
+                    listArray[num] = num
+                            + ") "
+                            + Model.getLanguageName(i).substring(0, 3) 
+                            + " - " 
+                            + Model.getLanguageName(j).substring(0, 3)
+                            + " : "
+                            + roundDouble(this.graph[i][j], 2);
+                    num++;
                 }
             }
+            this.list.setListData(listArray);
+            this.list.setVisible(true);
         }
+    }
+    
+    public void setList(JList<String> list) {
+        this.list = list;
+        this.list.setVisible(false);
     }
     
     public void printGraphic(double [] graphic) {
@@ -158,8 +178,9 @@ public class DistanceDisplay extends JPanel {
         this.repaint();
     }
     
-    public void printGraph(double [][] graph) {
+    public void printGraph(double [][] graph, int nValues) {
         this.showGraph = true;
+        this.nValues = nValues;
         this.graph = graph.clone();
         this.repaint();
     }
@@ -167,6 +188,7 @@ public class DistanceDisplay extends JPanel {
     public void reset() {
         this.showGraph = false;
         this.showGraphic = false;
+        //this.list.removeAll();
         this.repaint();
     }
     
