@@ -10,6 +10,7 @@ public class ViewEvent extends Event {
     public ViewEventType type;
     public double [] graphic;
     public double [][] graph;
+    public int nValues;
 
     public ViewEvent(double [] values) {
         super(EventType.View);
@@ -18,10 +19,11 @@ public class ViewEvent extends Event {
         this.type = ViewEventType.SHOW_GRAPHIC;
     }
     
-    public ViewEvent(double [][] values) {
+    public ViewEvent(double [][] values, int num) {
         super(EventType.View);
         
         this.graph = values.clone();
+        this.nValues = num;
         this.type = ViewEventType.SHOW_GRAPH;
     }
     
