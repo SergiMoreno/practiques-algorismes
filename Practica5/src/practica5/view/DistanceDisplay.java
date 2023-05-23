@@ -51,65 +51,95 @@ public class DistanceDisplay extends JPanel {
         gr.drawImage(bima, 0, 0, this);
         
         if (showGraphic) {
-            // Show graphic lines and percentage
-            gr.setColor(Color.gray);
-            int cell = (h - 60) / 11;
-            double percentage = 0.0;
-            int xLeftVertical = 100, xRightVertical = w - 100, nameWidth = 65;
-            for (int i = 1; i < 12; i++) {
-                gr.drawString(Double.toString(percentage), nameWidth, h - (cell * i) + 5);
-                gr.drawLine(xLeftVertical, h - (cell * i), xRightVertical, h - (cell * i));
-                percentage = roundDouble(percentage + 0.1, 1);
-            }
+            // Show graphics
+            double percentage = 0.0, top;
+            int xLeftVertical = 100, xRightVertical = w - 100, nameWidth = 65, cell, scale;
             
-            // Show distance columns
-            String name = model.getLanguageComparedName();
-            gr.drawString(name, w/2, h - (cell * 11) - (cell/2));
             int numToCompare = this.graphic.length;
             if (numToCompare == 1) {
                 // Show 1 column
+                
+                // Set top value to scale the graphic
+                top = setTopValue(this.graphic[0]);
+                scale = (int) ((top * 10) + 1);
+                cell = (h - 60) / scale;
+                
+                // Show 1 column
                 String nameToCompare = model.getLanguageToCompareName();
-                int xColumn = w/2, columnWidth = 50;
-                gr.drawString(nameToCompare, xColumn, h - cell + 20);
                 double v = this.graphic[0] * 10 + 1;
-                int columnHeight = h - (int)(cell * v);
+                int xColumn = w/2, columnWidth = 50, columnHeight = h - (int)(cell * v);
+                gr.setColor(Color.gray);
+                gr.drawString(nameToCompare, xColumn, h - cell + 20);
                 gr.setColor(Color.BLUE);
                 gr.fillRect(xColumn, columnHeight, columnWidth, (h - cell) - columnHeight);
             } else {
-                // Show columns
+                // Show multiple columns
+                
+                // Set top value to scale the graphic
+                double max = Double.MIN_VALUE, min = Double.MAX_VALUE;
+                for (int i = 0; i < numToCompare; i++) {
+                    if (this.graphic[i] > 0.0) {
+                        max = Double.max(max, this.graphic[i]);
+                        min = Double.min(min, graphic[i]);
+                    }
+                }
+                top = setTopValue(max);
+                scale = (int) ((top * 10) + 1);
+                cell = (h - 60) / scale;
+                
+                // Show columns with the names under them
                 int xColumn = 120, columnWidth = 30;
                 int range = (w - 200)/ numToCompare;
                 boolean repeated = false;
                 for (int i = 0; i < numToCompare+1; i++) {
-                    String nameToCompare = Model.getLanguageName(i);
+                    String nameToCompare = model.getLanguageName(i);
                     // Do not show the same language
+                    int xPos;
+                    double v;
                     if (nameToCompare.equals(model.getLanguageComparedName())) {
                         repeated = true;
                         continue;
                     }
-                    
-                    int xPos;
-                    double value;
                     if (repeated) {
                         xPos = xColumn + range * (i-1);
-                        value = this.graphic[i-1] * 10 + 1;
+                        v = this.graphic[i-1];
                     } else {
                         xPos = xColumn + range * i;
-                        value = this.graphic[i] * 10 + 1;
+                        v = this.graphic[i];
+                        
                     }
-    
-                    gr.setColor(Color.gray);
                     
+                    double value = v * 10 + 1;
+                    // Show name
+                    gr.setColor(Color.gray);
                     gr.drawString(nameToCompare.substring(0, 3), xPos + 4, h - cell + 20);
                     int columnHeight = h - (int)(cell * value);
-                    gr.setColor(Color.BLUE);
+                    
+                    if (v == max) {
+                        gr.setColor(Color.RED);
+                    } else if (v == min) {
+                        gr.setColor(Color.GREEN);
+                    } else {
+                        gr.setColor(Color.BLUE);
+                    }
                     gr.fillRect(xPos, columnHeight, columnWidth, (h - cell) - columnHeight);
                 }
-            }            
+            }
+            
+            gr.setColor(Color.gray);
+            // Show main language that has been compared
+            String name = model.getLanguageComparedName();
+            gr.drawString(name, w/2, h - (cell * scale) - (cell/2));
+            // Show the percentage lines
+            for (int i = 1; percentage <= top; i++) {
+                gr.drawString(Double.toString(percentage), nameWidth, h - (cell * i) + 5);
+                gr.drawLine(xLeftVertical, h - (cell * i), xRightVertical, h - (cell * i));
+                percentage = roundDouble(percentage + 0.1, 1);
+            }
         } else if (showGraph) {
             // Show circles and language names
-            int nFiles = Model.getNLanguages(), circleWidth = 75;
-            int xCenter = 350, yCenter = 240;
+            int nFiles = model.getNLanguages(), circleWidth = 75;
+            int xCenter = 425, yCenter = 240;
             double degree = Math.PI + Math.PI / 2;
             double gradoCirculo = (Math.PI * 2)/nFiles;
             int radi = 230;
@@ -128,7 +158,7 @@ public class DistanceDisplay extends JPanel {
                 int xString = this.circles[i].x, yString = this.circles[i].y;
                 if (this.circles[i].x > xCenter) xString += circleWidth - 10;
                 if (this.circles[i].y > yCenter) yString += circleWidth + 10;
-                gr.drawString(Model.getLanguageName(i).substring(0, 3), 
+                gr.drawString(model.getLanguageName(i).substring(0, 3), 
                         xString, 
                         yString);
             }
@@ -154,9 +184,9 @@ public class DistanceDisplay extends JPanel {
                     gr.drawString("" + num, x-5, y+5);
                     listArray[num] = num
                             + ") "
-                            + Model.getLanguageName(i).substring(0, 3) 
+                            + model.getLanguageName(i).substring(0, 3) 
                             + " - " 
-                            + Model.getLanguageName(j).substring(0, 3)
+                            + model.getLanguageName(j).substring(0, 3)
                             + " : "
                             + roundDouble(this.graph[i][j], 2);
                     num++;
@@ -169,6 +199,7 @@ public class DistanceDisplay extends JPanel {
     
     public void setList(JList<String> list) {
         this.list = list;
+        this.list.setEnabled(false);
         this.list.setVisible(false);
     }
     
@@ -188,7 +219,6 @@ public class DistanceDisplay extends JPanel {
     public void reset() {
         this.showGraph = false;
         this.showGraphic = false;
-        //this.list.removeAll();
         this.repaint();
     }
     
@@ -198,6 +228,17 @@ public class DistanceDisplay extends JPanel {
         vb = vb * factor;
         long tmp = Math.round(vb);
         return (double) tmp / factor;
+    }
+    
+    private double setTopValue(double v) {
+        double top = 1.0;
+        if (v > 1.0) {
+            top = roundDouble(v, 1);
+            if (top < v) {
+                top = roundDouble(top + 0.1, 1);
+            }
+        }
+        return top;
     }
 }
 

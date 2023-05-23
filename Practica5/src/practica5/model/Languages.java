@@ -11,10 +11,12 @@ public enum Languages {
     ENGLISH,
     PORTUGUESE,
     GERMAN,
-    DEUTCH,
+    DUTCH,
     FRENCH,
     BASQUE,
-    GALICIAN;
+    GALICIAN,
+    RUSSIAN,
+    UKRAINIAN;
     
     public String getDicFile() {
         switch (this) {
@@ -36,8 +38,8 @@ public enum Languages {
             case GERMAN -> {
                 return "ger.dic";
             }
-            case DEUTCH -> {
-                return "deu.dic";
+            case DUTCH -> {
+                return "dut.dic";
             }
             case FRENCH -> {
                 return "fr.dic";
@@ -47,6 +49,12 @@ public enum Languages {
             }
             case GALICIAN -> {
                 return "gal.dic";
+            }
+            case RUSSIAN -> {
+                return "rus.dic";
+            }
+            case UKRAINIAN -> {
+                return "ukr.dic";
             }
         }
         return null;

@@ -12,7 +12,7 @@ import practica5.view.ViewEvent;
  */
 public class Controller extends Thread implements EventListener {
     private Main main;
-    
+    private Model model;
     private Thread executionThread;
     
     public Controller(Main main) {
@@ -22,25 +22,57 @@ public class Controller extends Thread implements EventListener {
     @Override
     public void run() {
         /* Levenshtein distance */
-        Model model = this.main.getModel();
+        this.model = this.main.getModel();
         
+        if (model.isLanguageDetection()) {
+            detectLanguage();
+        } else {
+            compareDictionaries();
+        }
+        
+    }
+    
+    private void detectLanguage() {
+        int nFiles = model.getNLanguages();
+        // Keep -1 values
+        // DONT USE
+        double[] results = new double[nFiles];
+        //
+        int index = -1;
+        double min = Double.MAX_VALUE;
+        for (int i = 0; i < nFiles; i++) {
+            double result1 = calculateDistance(-1, i);
+            double result2 = calculateDistance(i, -1);
+            results[i] = Math.sqrt(result1 * result1 + result2 * result2);
+            if (min > results[i]) {
+                min = results[i];
+                index = i;
+            }
+        }
+        System.out.println("Dic " + model.getLanguageName(index) + ", Val : " + results[index]);
+        this.main.notify(new ViewEvent(model.getLanguageName(index)));
+    }
+    
+    private void compareDictionaries() {
         if (model.compareAll() && model.compareWithAll()) {
-            int nFiles = Model.getNLanguages(), nValues = 0;
+            int nFiles = model.getNLanguages(), nValues = 0;
             double [][] results = new double[nFiles][nFiles];
+            long time = System.nanoTime();
             for (int i = 0; i < nFiles-1; i++) {
                 for (int j = i+1; j < nFiles; j++) {
-                    double result1 = calculateDistance(model.getLanguageCompared(i), model.getLanguageToCompare(j));
-                    double result2 = calculateDistance(model.getLanguageToCompare(j), model.getLanguageCompared(i));
+                    double result1 = calculateDistance(i, j);
+                    double result2 = calculateDistance(j, i);
                     double val = Math.sqrt(result1 * result1 + result2 * result2);
                     results[i][j] = val;
                     results[j][i] = val;
-                    System.out.println(Model.getLanguageName(i) + " : " + Model.getLanguageName(j) + " = " + results[i][j]);
                     nValues++;
                 }
             }
+            time = System.nanoTime() - time;
+            System.out.println("Time : " + time);
             this.main.notify(new ViewEvent(results, nValues));
         } else if (model.compareWithAll()) {
-            int nFiles = Model.getNLanguages();
+            int nFiles = model.getNLanguages();
             // Keep -1 values
             double [] results = new double[nFiles-1];
             boolean repeated = false;
@@ -49,14 +81,12 @@ public class Controller extends Thread implements EventListener {
                     repeated = true;
                     continue;
                 }
-                double result1 = calculateDistance(model.getLanguageCompared(), model.getLanguageToCompare(i));
-                double result2 = calculateDistance(model.getLanguageToCompare(i), model.getLanguageCompared());
+                double result1 = calculateDistance(model.getLanguageCompared(), i);
+                double result2 = calculateDistance(i, model.getLanguageCompared());
                 if (repeated) {
                     results[i-1] = Math.sqrt(result1 * result1 + result2 * result2);
-                    System.out.println(model.getLanguageComparedName() + " : " + Model.getLanguageName(i) + " = " + results[i-1]);
                 } else {
                     results[i] = Math.sqrt(result1 * result1 + result2 * result2);
-                    System.out.println(model.getLanguageComparedName() + " : " + Model.getLanguageName(i) + " = " + results[i]);
                 }
             }
             this.main.notify(new ViewEvent(results));
@@ -65,32 +95,29 @@ public class Controller extends Thread implements EventListener {
             double result1 = calculateDistance(model.getLanguageCompared(), model.getLanguageToCompare());
             double result2 = calculateDistance(model.getLanguageToCompare(), model.getLanguageCompared());
             results[0] = Math.sqrt(result1 * result1 + result2 * result2);
-            System.out.println(model.getLanguageComparedName() + " : " + model.getLanguageToCompareName() + " = " + results[0]);
             this.main.notify(new ViewEvent(results));
         }
     }
     
-    private double calculateDistance(String f1, String f2) {
+    private double calculateDistance(int d1, int d2) {
         double acc1 = 0;
-        FileReader dic1 = new FileReader(f1);
-        while (dic1.hasNextLine()) {
-            String word1 = dic1.nextLine();
+        int lengthD1 = this.model.getLanguageLength(d1);
+        int lengthD2 = this.model.getLanguageLength(d2);
+        for (int i = 0; i < lengthD1; i++) {
+            String word1 = this.model.getLanguageWord(d1, i);
             int minDistance = Integer.MAX_VALUE;
-            FileReader dic2 = new FileReader(f2);
-            while (dic2.hasNextLine()) {
-                String word2 = dic2.nextLine();
+            for (int j = 0; j < lengthD2; j++) {
+                String word2 = this.model.getLanguageWord(d2, j);
                 int d = levenshteinDistance(word1, word2);
                 if (d < minDistance) {
                     minDistance = d;
                     if (minDistance == 0) break;
                 }
             }
-            dic2.close();
             double div = (double) minDistance / word1.length();
             acc1 += div;
         }
-        dic1.close();
-        return (double) acc1 / dic1.getNWords();
+        return (double) acc1 / lengthD1;
     }
     
     private int levenshteinDistance(String w1, String w2) {
@@ -104,7 +131,7 @@ public class Controller extends Thread implements EventListener {
             solMatrix[i][0] = i;
         }
         
-        /*  */
+        /* Calculate the Levenshtein distance, it uses the operation with less cost */
         for (int i = 1; i < solMatrix.length; i++) {
             for (int j = 1; j < solMatrix[i].length; j++) {
                 char lastChar1 = w1.charAt(i-1);
