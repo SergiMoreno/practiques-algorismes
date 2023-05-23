@@ -11,6 +11,7 @@ public class ViewEvent extends Event {
     public double [] graphic;
     public double [][] graph;
     public int nValues;
+    public String languageName;
 
     public ViewEvent(double [] values) {
         super(EventType.View);
@@ -27,8 +28,16 @@ public class ViewEvent extends Event {
         this.type = ViewEventType.SHOW_GRAPH;
     }
     
+    public ViewEvent(String name) {
+        super(EventType.View);
+        
+        this.languageName = name;
+        this.type = ViewEventType.SHOW_PANEL;
+    }
+    
     enum ViewEventType {
         SHOW_GRAPHIC,
-        SHOW_GRAPH
+        SHOW_GRAPH,
+        SHOW_PANEL
     }
 }

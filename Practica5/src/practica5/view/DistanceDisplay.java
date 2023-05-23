@@ -139,7 +139,7 @@ public class DistanceDisplay extends JPanel {
         } else if (showGraph) {
             // Show circles and language names
             int nFiles = model.getNLanguages(), circleWidth = 75;
-            int xCenter = 425, yCenter = 245;
+            int xCenter = 425, yCenter = 240;
             double degree = Math.PI + Math.PI / 2;
             double gradoCirculo = (Math.PI * 2)/nFiles;
             int radi = 230;
@@ -199,6 +199,7 @@ public class DistanceDisplay extends JPanel {
     
     public void setList(JList<String> list) {
         this.list = list;
+        this.list.setEnabled(false);
         this.list.setVisible(false);
     }
     
@@ -218,7 +219,6 @@ public class DistanceDisplay extends JPanel {
     public void reset() {
         this.showGraph = false;
         this.showGraphic = false;
-        //this.list.removeAll();
         this.repaint();
     }
     

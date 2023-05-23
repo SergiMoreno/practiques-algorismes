@@ -24,6 +24,36 @@ public class Controller extends Thread implements EventListener {
         /* Levenshtein distance */
         this.model = this.main.getModel();
         
+        if (model.isLanguageDetection()) {
+            detectLanguage();
+        } else {
+            compareDictionaries();
+        }
+        
+    }
+    
+    private void detectLanguage() {
+        int nFiles = model.getNLanguages();
+        // Keep -1 values
+        // DONT USE
+        double[] results = new double[nFiles];
+        //
+        int index = -1;
+        double min = Double.MAX_VALUE;
+        for (int i = 0; i < nFiles; i++) {
+            double result1 = calculateDistance(-1, i);
+            double result2 = calculateDistance(i, -1);
+            results[i] = Math.sqrt(result1 * result1 + result2 * result2);
+            if (min > results[i]) {
+                min = results[i];
+                index = i;
+            }
+        }
+        System.out.println("Dic " + model.getLanguageName(index) + ", Val : " + results[index]);
+        this.main.notify(new ViewEvent(model.getLanguageName(index)));
+    }
+    
+    private void compareDictionaries() {
         if (model.compareAll() && model.compareWithAll()) {
             int nFiles = model.getNLanguages(), nValues = 0;
             double [][] results = new double[nFiles][nFiles];

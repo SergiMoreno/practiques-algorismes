@@ -15,6 +15,8 @@ public class Model implements EventListener {
     // if lanCompareWith == -1, means with all
     private int lanCompare, lanCompareWith;
     
+    private String [] textWords;
+    
     public Model(Main main) {
         this.main = main;
             
@@ -36,11 +38,13 @@ public class Model implements EventListener {
     }
     
     public int getLanguageLength(int i) {
-        return dictionaries[i].getLength();
+        if (i == -1) return this.textWords.length;
+        return this.dictionaries[i].getLength();
     }
     
     public String getLanguageWord(int i, int w) {
-        return dictionaries[i].getWord(w);
+        if (i == -1) return this.textWords[w];
+        return this.dictionaries[i].getWord(w);
     }
     
     
@@ -83,15 +87,23 @@ public class Model implements EventListener {
     public boolean isSameLanguage(int i) {
         return this.lanCompare == i;
     }
+    
+    public boolean isLanguageDetection() {
+        return this.textWords != null;
+    }
 
     @Override
     public void notify(Event e) {
         ModelEvent event = (ModelEvent) e;
         
         switch (event.type) {
-            case START -> {
+            case START_DICTIONARIES -> {
+                this.textWords = null;
                 this.lanCompare = event.lanCompare;
                 this.lanCompareWith = event.lanCompareWith;
+            }
+            case START_TEXT -> {
+                this.textWords = event.textWords.clone();
             }
         }
     }
