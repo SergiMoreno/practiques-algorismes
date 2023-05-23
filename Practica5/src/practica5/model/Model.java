@@ -14,7 +14,7 @@ public class Model implements EventListener {
     // if lanCompare == -1, means all
     // if lanCompareWith == -1, means with all
     private int lanCompare, lanCompareWith;
-    
+    // Keep the word to detect the language
     private String [] textWords;
     
     public Model(Main main) {
@@ -37,31 +37,40 @@ public class Model implements EventListener {
         return this.lanCompareWith;
     }
     
+    // If the language indexed is -1, it refers to the text array
     public int getLanguageLength(int i) {
         if (i == -1) return this.textWords.length;
         return this.dictionaries[i].getLength();
     }
     
+    // If the language indexed is -1, it refers to the text array
     public String getLanguageWord(int i, int w) {
         if (i == -1) return this.textWords[w];
         return this.dictionaries[i].getWord(w);
     }
     
-    
-    public String getLanguageComparedPath() {
-        return dictionaries[this.lanCompare].getPath();
+    public int getNLanguages() {
+        return dictionaries.length;
     }
     
     public String getLanguageComparedName() {
         return dictionaries[this.lanCompare].getName();
     }
     
-    public String getLanguageToComparePath() {
-        return dictionaries[this.lanCompareWith].getPath();
-    }
-    
     public String getLanguageToCompareName() {
         return dictionaries[this.lanCompareWith].getName();
+    }
+
+    public String getLanguageName(int i) {
+        return dictionaries[i].getName();
+    }
+    
+    public boolean isLanguageDetection() {
+        return this.textWords != null;
+    }
+    
+    public boolean isSameLanguage(int i) {
+        return this.lanCompare == i;
     }
     
     public boolean compareAll() {
@@ -70,26 +79,6 @@ public class Model implements EventListener {
     
     public boolean compareWithAll() {
         return this.lanCompareWith == -1;
-    }
-    
-    public int getNLanguages() {
-        return dictionaries.length;
-    }
-    
-    public String getLanguagePath(int i) {
-        return dictionaries[i].getPath();
-    }
-    
-    public String getLanguageName(int i) {
-        return dictionaries[i].getName();
-    }
-    
-    public boolean isSameLanguage(int i) {
-        return this.lanCompare == i;
-    }
-    
-    public boolean isLanguageDetection() {
-        return this.textWords != null;
     }
 
     @Override
