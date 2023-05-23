@@ -10,7 +10,7 @@ import practica5.Main;
  */
 public class Model implements EventListener {
     private Main main;
-    private static Language [] dictionaries;
+    private Language [] dictionaries;
     // if lanCompare == -1, means all
     // if lanCompareWith == -1, means with all
     private int lanCompare, lanCompareWith;
@@ -27,24 +27,33 @@ public class Model implements EventListener {
         }
     }
     
-    public String getLanguageCompared() {
-        return dictionaries[this.lanCompare].getPath();
+    public int getLanguageCompared() {
+        return this.lanCompare;
     }
     
-    public String getLanguageCompared(int i) {
-        return dictionaries[i].getPath();
+    public int getLanguageToCompare() {
+        return this.lanCompareWith;
+    }
+    
+    public int getLanguageLength(int i) {
+        return dictionaries[i].getLength();
+    }
+    
+    public String getLanguageWord(int i, int w) {
+        return dictionaries[i].getWord(w);
+    }
+    
+    
+    public String getLanguageComparedPath() {
+        return dictionaries[this.lanCompare].getPath();
     }
     
     public String getLanguageComparedName() {
         return dictionaries[this.lanCompare].getName();
     }
     
-    public String getLanguageToCompare() {
+    public String getLanguageToComparePath() {
         return dictionaries[this.lanCompareWith].getPath();
-    }
-    
-    public String getLanguageToCompare(int i) {
-        return dictionaries[i].getPath();
     }
     
     public String getLanguageToCompareName() {
@@ -59,11 +68,15 @@ public class Model implements EventListener {
         return this.lanCompareWith == -1;
     }
     
-    public static int getNLanguages() {
+    public int getNLanguages() {
         return dictionaries.length;
     }
     
-    public static String getLanguageName(int i) {
+    public String getLanguagePath(int i) {
+        return dictionaries[i].getPath();
+    }
+    
+    public String getLanguageName(int i) {
         return dictionaries[i].getName();
     }
     
