@@ -34,10 +34,7 @@ public class Controller extends Thread implements EventListener {
     
     private void detectLanguage() {
         int nFiles = model.getNLanguages();
-        // Keep -1 values
-        // DONT USE
         double[] results = new double[nFiles];
-        //
         int index = -1;
         double min = Double.MAX_VALUE;
         for (int i = 0; i < nFiles; i++) {
@@ -49,7 +46,6 @@ public class Controller extends Thread implements EventListener {
                 index = i;
             }
         }
-        System.out.println("Dic " + model.getLanguageName(index) + ", Val : " + results[index]);
         this.main.notify(new ViewEvent(model.getLanguageName(index)));
     }
     
