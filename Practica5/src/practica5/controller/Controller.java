@@ -50,12 +50,11 @@ public class Controller extends Thread implements EventListener {
     }
     
     private void compareDictionaries() {
-        if (model.compareAll() && model.compareWithAll()) {
+        if (model.compareAll()) {
             int nFiles = model.getNLanguages(), nValues = 0;
             double [][] results = new double[nFiles][nFiles];
-            long time = System.nanoTime();
-            for (int i = 0; i < nFiles-1; i++) {
-                for (int j = i+1; j < nFiles; j++) {
+            for (int i = 0; i < nFiles - 1; i++) {
+                for (int j = i + 1; j < nFiles; j++) {
                     double result1 = calculateDistance(i, j);
                     double result2 = calculateDistance(j, i);
                     double val = Math.sqrt(result1 * result1 + result2 * result2);
@@ -64,8 +63,6 @@ public class Controller extends Thread implements EventListener {
                     nValues++;
                 }
             }
-            time = System.nanoTime() - time;
-            System.out.println("Time : " + time);
             this.main.notify(new ViewEvent(results, nValues));
         } else if (model.compareWithAll()) {
             int nFiles = model.getNLanguages();
@@ -80,7 +77,7 @@ public class Controller extends Thread implements EventListener {
                 double result1 = calculateDistance(model.getLanguageCompared(), i);
                 double result2 = calculateDistance(i, model.getLanguageCompared());
                 if (repeated) {
-                    results[i-1] = Math.sqrt(result1 * result1 + result2 * result2);
+                    results[i - 1] = Math.sqrt(result1 * result1 + result2 * result2);
                 } else {
                     results[i] = Math.sqrt(result1 * result1 + result2 * result2);
                 }

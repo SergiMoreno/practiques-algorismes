@@ -1,16 +1,16 @@
-package practica5;
+package practica6;
 
 import mesurament.Mesurament;
-import practica5.controller.Controller;
-import practica5.model.Model;
-import practica5.view.View;
+import practica6.controller.Controller;
+import practica6.model.Model;
+import practica6.view.View;
 
 /**
  *
  * @author usuario
  */
 /*
-* Video : https://youtu.be/ypgIWxhhoUQ
+* Video :
 */
 public class Main implements EventListener {
     // components MVC centralitzat

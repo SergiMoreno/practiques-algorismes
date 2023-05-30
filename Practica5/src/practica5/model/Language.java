@@ -3,7 +3,6 @@ package practica5.model;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,7 +30,6 @@ public class Language {
             
             this.words = new String[initWords.size()];
             this.words = initWords.toArray(this.words);
-            //Arrays.sort(words);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Language.class.getName()).log(Level.SEVERE, null, ex);
         }

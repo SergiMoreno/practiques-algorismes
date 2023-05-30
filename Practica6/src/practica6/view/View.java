@@ -1,14 +1,13 @@
-package practica5.view;
+package practica6.view;
 
 import java.awt.Color;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
-import practica5.Event;
-import practica5.EventListener;
-import practica5.Main;
-import practica5.controller.ControllerEvent;
-import practica5.model.Languages;
-import practica5.model.ModelEvent;
+import practica6.Event;
+import practica6.EventListener;
+import practica6.Main;
+import practica6.controller.ControllerEvent;
+import practica6.model.ModelEvent;
 
 /**
  *
@@ -23,7 +22,6 @@ public class View extends javax.swing.JFrame implements EventListener {
     public View(Main main) {
         this.main = main;
         initComponents();
-        this.dDisplay.setList(this.graphList);
         this.setVisible(true);
         this.setLocationRelativeTo(null);
         this.setTitle("Languages");
@@ -43,24 +41,14 @@ public class View extends javax.swing.JFrame implements EventListener {
         buttonStart = new javax.swing.JButton();
         buttonReset = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        list1 = new javax.swing.JList<>();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        list2 = new javax.swing.JList<>();
-        buttonList2 = new javax.swing.JToggleButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        buttonGraph = new javax.swing.JButton();
         progressBar = new javax.swing.JProgressBar();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         dDisplay = new DistanceDisplay(this.main.getModel());
-        jScrollPane3 = new javax.swing.JScrollPane();
-        graphList = new javax.swing.JList<>();
         jPanel1 = new javax.swing.JPanel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        textArea = new javax.swing.JTextArea();
         jLabel4 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         textButton = new javax.swing.JButton();
@@ -97,27 +85,6 @@ public class View extends javax.swing.JFrame implements EventListener {
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Select language");
 
-        list1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = Languages.getAllFiles();
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(list1);
-
-        list2.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = Languages.getAllFiles();
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane2.setViewportView(list2);
-
-        buttonList2.setText("Select All");
-        buttonList2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonList2ActionPerformed(evt);
-            }
-        });
-
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Compare with");
@@ -128,13 +95,6 @@ public class View extends javax.swing.JFrame implements EventListener {
 
         jSeparator1.setForeground(new java.awt.Color(255, 255, 255));
         jSeparator1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-
-        buttonGraph.setText("Distance Graph");
-        buttonGraph.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonGraphActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -147,14 +107,10 @@ public class View extends javax.swing.JFrame implements EventListener {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparator1)
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(buttonList2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(buttonGraph, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE))
                         .addGap(0, 4, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -163,21 +119,13 @@ public class View extends javax.swing.JFrame implements EventListener {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(buttonGraph)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(40, 40, 40)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(208, 208, 208)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(buttonList2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(buttonStart)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(buttonReset))
@@ -209,33 +157,19 @@ public class View extends javax.swing.JFrame implements EventListener {
                 .addContainerGap(12, Short.MAX_VALUE))
         );
 
-        graphList.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jScrollPane3.setViewportView(graphList);
-
         javax.swing.GroupLayout dDisplayLayout = new javax.swing.GroupLayout(dDisplay);
         dDisplay.setLayout(dDisplayLayout);
         dDisplayLayout.setHorizontalGroup(
             dDisplayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dDisplayLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addGap(0, 971, Short.MAX_VALUE)
         );
         dDisplayLayout.setVerticalGroup(
             dDisplayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(dDisplayLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane3)
-                .addContainerGap())
+            .addGap(0, 537, Short.MAX_VALUE)
         );
 
         jPanel1.setBackground(new java.awt.Color(0, 51, 51));
         jPanel1.setForeground(new java.awt.Color(0, 102, 102));
-
-        textArea.setColumns(20);
-        textArea.setLineWrap(true);
-        textArea.setRows(5);
-        jScrollPane4.setViewportView(textArea);
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
@@ -262,8 +196,7 @@ public class View extends javax.swing.JFrame implements EventListener {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jSeparator2)
                     .addComponent(textButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -273,9 +206,7 @@ public class View extends javax.swing.JFrame implements EventListener {
                 .addComponent(jLabel4)
                 .addGap(26, 26, 26)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane4)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(textButton, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -310,87 +241,30 @@ public class View extends javax.swing.JFrame implements EventListener {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonStartActionPerformed
-        if (!this.list1.isSelectionEmpty() && !this.list2.isSelectionEmpty()) {
-            int i1 = list1.getSelectedIndex();
-            int i2;
-            if (buttonList2.isSelected()) {
-                i2 = -1;
-            } else {
-                i2 = list2.getSelectedIndex();
-            }
-            if (i1 == i2) {
-                this.list2.clearSelection();
-                JOptionPane.showMessageDialog(this, 
-                "Please, select a different language to compare with", 
-                "Something went wrong!",
-                JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-            this.buttonGraph.setEnabled(false);
+        //if (!this.list1.isSelectionEmpty() && !this.list2.isSelectionEmpty()) {
+
             this.buttonStart.setEnabled(false);
             this.textButton.setEnabled(false);
             this.progressBar.setIndeterminate(true);
-            this.main.notify(new ModelEvent(i1, i2));
+            //this.main.notify(new ModelEvent(i1, i2));
             this.main.notify(new ControllerEvent(true));
-        }
+        //}
     }//GEN-LAST:event_buttonStartActionPerformed
 
     private void buttonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonResetActionPerformed
         this.buttonStart.setEnabled(true);
-        this.buttonGraph.setEnabled(true);
         this.textButton.setEnabled(true);
-        this.list1.setEnabled(true);
-        this.list2.setEnabled(true);
-        this.buttonList2.setEnabled(true);
         this.progressBar.setIndeterminate(false);
-        this.list1.clearSelection();
-        this.list2.clearSelection();
-        this.buttonList2.setSelected(false);
         
         this.dDisplay.reset();
     }//GEN-LAST:event_buttonResetActionPerformed
 
-    private void buttonList2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonList2ActionPerformed
-        if (this.buttonList2.isSelected()) {
-            int begn = 0;
-            int end = this.list2.getModel().getSize() - 1;
-            if (end >= 0) {
-               this.list2.setSelectionInterval(begn, end);
-            }
-            this.list2.setEnabled(false);
-        } else {
-            this.list2.setEnabled(true);
-            this.list2.clearSelection();
-        }
-    }//GEN-LAST:event_buttonList2ActionPerformed
-
-    private void buttonGraphActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGraphActionPerformed
-        this.buttonStart.setEnabled(false);
-        this.buttonGraph.setEnabled(false);
-        this.textButton.setEnabled(false);
-        this.list1.clearSelection();
-        this.list2.clearSelection();
-        this.list1.setEnabled(false);
-        this.list2.setEnabled(false);
-        this.buttonList2.setEnabled(false);
-        this.progressBar.setIndeterminate(true);
-        
-        this.main.notify(new ModelEvent(-1, -1));
-        this.main.notify(new ControllerEvent(true));
-    }//GEN-LAST:event_buttonGraphActionPerformed
-
     private void textButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textButtonActionPerformed
         this.buttonStart.setEnabled(false);
-        this.buttonGraph.setEnabled(false);
         this.textButton.setEnabled(false);
-        this.list1.clearSelection();
-        this.list2.clearSelection();
-        this.list1.setEnabled(false);
-        this.list2.setEnabled(false);
-        this.buttonList2.setEnabled(false);
         this.progressBar.setIndeterminate(true);
         
-        this.main.notify(new ModelEvent(this.textArea.getText().split(" ")));
+        //this.main.notify(new ModelEvent(this.textArea.getText().split(" ")));
         this.main.notify(new ControllerEvent(true));
     }//GEN-LAST:event_textButtonActionPerformed
     
@@ -400,32 +274,17 @@ public class View extends javax.swing.JFrame implements EventListener {
         
         this.progressBar.setIndeterminate(false);
         switch (event.type) {
-            case SHOW_GRAPHIC -> {
-                this.dDisplay.printGraphic(event.graphic);
-            }
-            case SHOW_GRAPH -> {
-                this.dDisplay.printGraph(event.graph, event.nValues);
-            }
-            case SHOW_PANEL -> {
-                String message = "The text inserted is supposed to be : " + event.languageName;
-                JOptionPane.showMessageDialog(this, 
-                                                message, 
-                                                "SUCCESS!! Text language detected!",
-                                                JOptionPane.INFORMATION_MESSAGE);
-            }
+
         }
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton buttonGraph;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JToggleButton buttonList2;
     private javax.swing.JButton buttonReset;
     private javax.swing.JButton buttonStart;
     /*
     private javax.swing.JPanel dDisplay;
     */DistanceDisplay dDisplay;
-    private javax.swing.JList<String> graphList;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -434,16 +293,9 @@ public class View extends javax.swing.JFrame implements EventListener {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JList<String> list1;
-    private javax.swing.JList<String> list2;
     private javax.swing.JProgressBar progressBar;
-    private javax.swing.JTextArea textArea;
     private javax.swing.JButton textButton;
     // End of variables declaration//GEN-END:variables
 }
