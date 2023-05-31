@@ -47,11 +47,7 @@ public class View extends javax.swing.JFrame implements EventListener {
         progressBar = new javax.swing.JProgressBar();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        dDisplay = new DistanceDisplay(this.main.getModel());
-        jPanel1 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        jSeparator2 = new javax.swing.JSeparator();
-        textButton = new javax.swing.JButton();
+        dDisplay = new PuzzleDisplay(this.main.getModel());
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -138,14 +134,14 @@ public class View extends javax.swing.JFrame implements EventListener {
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel3.setText("LANGUAGES");
+        jLabel3.setText("PUZZLE");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(318, Short.MAX_VALUE)
+                .addContainerGap(432, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addGap(366, 366, 366))
         );
@@ -168,49 +164,6 @@ public class View extends javax.swing.JFrame implements EventListener {
             .addGap(0, 537, Short.MAX_VALUE)
         );
 
-        jPanel1.setBackground(new java.awt.Color(0, 51, 51));
-        jPanel1.setForeground(new java.awt.Color(0, 102, 102));
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Language Detection");
-
-        jSeparator2.setForeground(new java.awt.Color(255, 255, 255));
-
-        textButton.setBackground(new java.awt.Color(0, 102, 102));
-        textButton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        textButton.setForeground(new java.awt.Color(255, 255, 255));
-        textButton.setText("START DETECTION");
-        textButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textButtonActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jSeparator2)
-                    .addComponent(textButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(jLabel4)
-                .addGap(26, 26, 26)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(textButton, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -221,9 +174,7 @@ public class View extends javax.swing.JFrame implements EventListener {
                     .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(dDisplay, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(progressBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -234,7 +185,6 @@ public class View extends javax.swing.JFrame implements EventListener {
                 .addComponent(dDisplay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
                 .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -244,7 +194,6 @@ public class View extends javax.swing.JFrame implements EventListener {
         //if (!this.list1.isSelectionEmpty() && !this.list2.isSelectionEmpty()) {
 
             this.buttonStart.setEnabled(false);
-            this.textButton.setEnabled(false);
             this.progressBar.setIndeterminate(true);
             //this.main.notify(new ModelEvent(i1, i2));
             this.main.notify(new ControllerEvent(true));
@@ -253,20 +202,10 @@ public class View extends javax.swing.JFrame implements EventListener {
 
     private void buttonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonResetActionPerformed
         this.buttonStart.setEnabled(true);
-        this.textButton.setEnabled(true);
         this.progressBar.setIndeterminate(false);
         
         this.dDisplay.reset();
     }//GEN-LAST:event_buttonResetActionPerformed
-
-    private void textButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textButtonActionPerformed
-        this.buttonStart.setEnabled(false);
-        this.textButton.setEnabled(false);
-        this.progressBar.setIndeterminate(true);
-        
-        //this.main.notify(new ModelEvent(this.textArea.getText().split(" ")));
-        this.main.notify(new ControllerEvent(true));
-    }//GEN-LAST:event_textButtonActionPerformed
     
     @Override
     public void notify(Event e) {
@@ -284,18 +223,14 @@ public class View extends javax.swing.JFrame implements EventListener {
     private javax.swing.JButton buttonStart;
     /*
     private javax.swing.JPanel dDisplay;
-    */DistanceDisplay dDisplay;
+    */PuzzleDisplay dDisplay;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JProgressBar progressBar;
-    private javax.swing.JButton textButton;
     // End of variables declaration//GEN-END:variables
 }
