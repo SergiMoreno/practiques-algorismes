@@ -17,6 +17,8 @@ public class Main implements EventListener {
     private Model model;
     private View view;
     private Controller controller;
+    
+    private final int PUZZLE_SIZE = 4;
 
     /**
      * @param args the command line arguments
@@ -27,9 +29,9 @@ public class Main implements EventListener {
     }
     
     private void init() {
-        this.model = new Model(this);
+        this.model = new Model(this, PUZZLE_SIZE);
         this.controller = new Controller(this);
-        this.view = new View(this);
+        this.view = new View(this, PUZZLE_SIZE);
     }
 
     @Override
