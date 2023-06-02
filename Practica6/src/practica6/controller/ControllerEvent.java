@@ -8,18 +8,21 @@ import practica6.Event;
  */
 public class ControllerEvent extends Event {
     public ControllerEventType type;
-    public boolean isStart;
+    public Heuristics heuristic;
  
-    // Event to start or stop execution thread based on parameter
-    public ControllerEvent(boolean isStart) {
+    // Event to start execution thread assigning the heuristic
+    public ControllerEvent(Heuristics h) {
         super(EventType.Controller);
         
-        this.isStart = isStart;
-        if (isStart) {
-            this.type = ControllerEventType.START;
-        } else {
-            this.type = ControllerEventType.STOP;
-        }
+        this.heuristic = h;
+        this.type = ControllerEventType.START;
+    }
+    
+    // Event to stop execution thread
+    public ControllerEvent() {
+        super(EventType.Controller);
+        
+        this.type = ControllerEventType.STOP;
     }
     
     enum ControllerEventType {

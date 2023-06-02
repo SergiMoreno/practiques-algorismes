@@ -2,30 +2,24 @@ package practica6.view;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import practica6.model.Model;
-
 /**
  *
  * @author usuario
  */
 public class PuzzleDisplay extends JPanel {
     private Model model;
-    private BufferedImage bima;
+    private BufferedImage img;
     private BufferedImage [] cropes;
+    private int dim;
     
-    public PuzzleDisplay(Model model) {
+    public PuzzleDisplay(Model model, BufferedImage image) {
         this.model = model;
+        this.dim = model.getPuzzleSize();
+        this.img = image;
+        this.setImage();
     }
     
     @Override
@@ -37,48 +31,51 @@ public class PuzzleDisplay extends JPanel {
 
     @Override
     public void paint(Graphics gr) {
-        try {
-            BufferedImage bima = new BufferedImage(this.getWidth(),
-                    this.getHeight(), BufferedImage.TYPE_INT_ARGB);
-            Graphics g = bima.getGraphics();
-            g.setColor(new Color(255, 237, 197));
-            g.fillRect(0, 0, this.getWidth(), this.getHeight());
-            
-            //int dim = model.getBoardSize();
-            int dim = 4;
-            // calculate cell weight and height
-            int ancho = this.getWidth() / dim;
-            int alto = this.getHeight() / dim;
-            // Get puzzle image
-            URL imageURL = getClass().getResource("../../resources/images.jpg");
-            BufferedImage image = ImageIO.read(imageURL);
-            cropes = new BufferedImage[dim*dim-1];
-            int subh = image.getHeight() / dim;
-            int subw = image.getWidth() / dim;
-            int num = 0;
-            for (int i = 0; i < dim; i++) {
-                for (int j = 0; j < dim; j++) {
-                    if (i == dim-1 && j == dim-1) continue;
-                    cropes[num++] = image.getSubimage(j * subw, i * subh, subw, subh);
+        BufferedImage bima = new BufferedImage(this.getWidth(),
+                this.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        Graphics g = bima.getGraphics();
+        g.setColor(new Color(255, 237, 197));
+        g.fillRect(0, 0, this.getWidth(), this.getHeight());
+
+        // calculate cell weight and height
+        int ancho = this.getWidth() / dim;
+        int alto = this.getHeight() / dim;
+
+        g.setColor(new Color(0, 0, 0));
+        for (int i = 0; i < dim; i++) {
+            for (int j = 0; j < dim; j++) {
+                int index = model.getCellIndex(i, j);
+                if (index == -1) {
+                    continue;
                 }
+                g.drawImage(cropes[index], j * ancho, i * alto, ancho, alto, this);
+                g.drawRect(j * ancho, i * alto, ancho, alto);
             }
-            //num = 0;
-            g.setColor(new Color(0, 0, 0));
-            for (int i = 0; i < dim; i++) {
-                for (int j = 0; j < dim; j++) {
-                    if (i == dim-1 && j == dim-1) continue;
-                    //BufferedImage crop = image.getSubimage(j * subw, i * subh, subw, subh);
-                    g.drawImage(cropes[--num], j * ancho, i * alto, ancho, alto, this);
-                    g.drawRect(j * ancho, i * alto, ancho, alto);
-                }
-            }
-            gr.drawImage(bima,0,0,this);
-        } catch (IOException ex) {
-            Logger.getLogger(PuzzleDisplay.class.getName()).log(Level.SEVERE, null, ex);
         }
+        gr.drawImage(bima,0,0,this);
     }
     
-    public void reset() {
+    public void resize() {
+        this.dim = model.getPuzzleSize();
+        this.setImage();
         this.repaint();
+    }
+    
+    public void updateImage(BufferedImage image) {
+        this.img = image;
+        this.setImage();
+        this.repaint();
+    }
+    
+    public void setImage() {
+        cropes = new BufferedImage[dim * dim];
+        int subh = img.getHeight() / dim;
+        int subw = img.getWidth() / dim;
+        int num = 0;
+        for (int i = 0; i < dim; i++) {
+            for (int j = 0; j < dim; j++) {
+                cropes[num++] = img.getSubimage(j * subw, i * subh, subw, subh);
+            }
+        }
     }
 }
