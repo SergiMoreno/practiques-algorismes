@@ -289,7 +289,7 @@ public class View extends javax.swing.JFrame implements EventListener {
         
         this.main.notify(new ControllerEvent());
         this.main.notify(new ModelEvent());
-        this.puzzle.repaint();
+        this.puzzle.reset();
         this.imagePanel.repaint();
     }//GEN-LAST:event_buttonResetActionPerformed
 
@@ -328,12 +328,19 @@ public class View extends javax.swing.JFrame implements EventListener {
         this.progressBar.setIndeterminate(false);
         switch (event.type) {
             case SHOW_RESULT -> {
-                this.puzzle.repaint();
+                this.puzzle.showSolution();
                 String message = "Solution reached with cost : " + event.cost;
                 JOptionPane.showMessageDialog(this, 
                                                 message, 
                                                 "SUCCESS!! Solution reached!",
                                                 JOptionPane.INFORMATION_MESSAGE);
+            }
+            case NO_SOLUTION -> {
+                String message = "The initial puzzle can't reach the final result";
+                JOptionPane.showMessageDialog(this, 
+                                                        message, 
+                                                        "FAILURE!! No solution was reached", 
+                                                        JOptionPane.ERROR_MESSAGE);
             }
         }
     }

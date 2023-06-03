@@ -1,6 +1,7 @@
 package practica6.controller;
 
 import java.time.Duration;
+import java.util.HashMap;
 import java.util.PriorityQueue;
 import practica6.Event;
 import practica6.EventListener;
@@ -26,60 +27,73 @@ public class Controller extends Thread implements EventListener {
     public void run() {
         model = this.main.getModel();
         
-        PriorityQueue<PuzzleState> minHeap = new PriorityQueue<PuzzleState>();
+        HashMap<String, Integer> hash = new HashMap<String, Integer>();
+        PriorityQueue<PuzzleState> minHeap = new PriorityQueue<>();
         PuzzleState first = new PuzzleState(model.getCurrentState(), 
                                                   model.getEmptyPositionX(), model.getEmptyPositionY(), 
                                                 model.getEmptyPositionX(), model.getEmptyPositionY(), 
                                                0);
-        first.setCost(0);
+        first.setCost(Integer.MAX_VALUE);
+        
         minHeap.add(first);
 
         /* Branch and Bound */
-        int acc = 1, totalCost = 0;
-        int prevx = first.x;
-        int prevy = first.y;
+        boolean result = false;
+        int totalCost = 0;
         try {
             while (!minHeap.isEmpty()) {
                 PuzzleState p = minHeap.poll();
-                model.updateCurrentState(p.currentState);
-                totalCost += p.getCost();
-                minHeap.removeIf(filter -> (filter.cost + filter.level) > (p.cost+ p.level));
-                //System.out.println(matToString(p.currentState));
-                //this.main.notify(new ViewEvent());
+                /*if (hash.containsKey(p.key)) {
+                    int cost = hash.get(p.key);
+                    if (cost > p.cost) {
+                        hash.replace(p.key, p.cost);
+                    } else {
+                        continue;
+                    }
+                } else {
+                    hash.put(p.key, p.cost);
+                }*/
+                //model.updateCurrentState(p.currentState);
                 Thread.sleep(Duration.ZERO);
-                /*System.out.println("Actual cost: " + (p.cost+p.level) 
-                                    + "(Lvl -> " + p.level +  ", Wrong -> " + p.cost + ")");*/
-                if (this.goalAchived(p.currentState)) break;
+                /*if (this.goalAchived(p.currentState)) {
+                    result = true;
+                    break;
+                }*/
+                if (p.cost == 0) {
+                    result = true;
+                    break;
+                }
                 for (int i = 0; i < 4; i++) {
                     int movx = model.getMovementX(i);
                     int movy = model.getMovementY(i);
                     if ((model.isOutOfBounds(p.x + movx, p.y + movy))
-                        || (prevx == p.x + movx && prevy == p.y + movy)) continue;
+                        || (p.prevx == p.x + movx && p.prevy == p.y + movy)) continue;
 
                     PuzzleState ps = new PuzzleState(p.currentState,
                             p.x, p.y,
                             p.x + movx, p.y + movy,
-                            acc);
+                            p.level+1);
                     int g = calculateHeuristic(ps);
                     ps.setCost(g);
-                    //System.out.println(matToString(ps.currentState));
-                    if (this.isReachable(ps)) minHeap.add(ps);
+                    
+                    //if (this.isReachable(ps)) 
+                    minHeap.add(ps);
                 }
-                prevx = p.x;
-                prevy = p.y;
-                acc++;
+                
             }
-            this.main.notify(new ViewEvent(totalCost));
+            
+            if (result) this.main.notify(new ViewEvent(totalCost));
+            else this.main.notify(new ViewEvent());
         } catch (InterruptedException ex) {
             System.out.println("Execution Stopped. Cost calculated until stop : " + totalCost);
         }
     }
 
     private int calculateHeuristic(PuzzleState ps) {
+        int dim = model.getPuzzleSize();
         switch (this.heuristic) {
             case N_WRONG_CELLS -> {
                 int numWrongCells = 0;
-                int dim = model.getPuzzleSize();
                 for (int i = 0; i < dim; i++) {
                     for (int j = 0; j < dim; j++) {
                         if (ps.currentState[i][j] != -1 && ps.currentState[i][j] != model.getGoalIndex(i, j)) numWrongCells++;
@@ -88,13 +102,23 @@ public class Controller extends Thread implements EventListener {
                 return numWrongCells;
             }
             case MANHATTAN -> {
-                
+                int distance = 0;
+                for (int i = 0; i < dim; i++) {
+                    for (int j = 0; j < dim; j++) {
+                        if (ps.currentState[i][j] != -1 && ps.currentState[i][j] != model.getGoalIndex(i, j)) {
+                            int row = model.getRow(ps.currentState[i][j]);
+                            int column = model.getColumn(ps.currentState[i][j]);
+                            distance += Math.abs(i - row) + Math.abs(j - column);
+                        }
+                    }
+                }
+                return distance;
             }
         }
         return 0;
     }
     
-    private String matToString(int [][] mat) {
+    /*private String matToString(int [][] mat) {
         String result = "";
         for (int i = 0; i < mat.length; i++) {
             for (int j = 0; j < mat.length; j++) {
@@ -103,7 +127,7 @@ public class Controller extends Thread implements EventListener {
             result += "\n";
         }
         return result;
-    }
+    }*/
     
     private boolean goalAchived(int [][] mat) {
         for (int i = 0; i < mat.length; i++) {
@@ -140,15 +164,6 @@ public class Controller extends Thread implements EventListener {
         
         if ((ps.x + ps.y) % 2 != 0) inv_count++;
         //System.out.println("INV " + inv_count);
-        
-        /*if (inv_count % 2 == 0) {
-            //System.out.println("SOL");
-            return true;
-        }
-        else {
-           // System.out.println("ERROR");
-            return false;
-        }*/
         return inv_count % 2 == 0;
     }
     
