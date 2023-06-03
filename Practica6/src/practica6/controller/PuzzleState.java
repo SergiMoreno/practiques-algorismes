@@ -7,6 +7,8 @@ package practica6.controller;
 public class PuzzleState implements Comparable<PuzzleState> {
     public int [][] currentState;
     public int cost, x, y, level;
+    public int prevx, prevy;
+    public String key;
     
     public PuzzleState(int [][] cs, int x, int y, int newX, int newY, int level) {
         this.currentState = new int[cs.length][cs.length];
@@ -24,8 +26,17 @@ public class PuzzleState implements Comparable<PuzzleState> {
         this.level = level;// set number of moves so far
          
         // update new blank tile coordinates
+        this.prevx = this.x;
+        this.prevy = this.y;
         this.x = newX;
         this.y = newY;
+        
+        this.key = "";
+        for (int i = 0; i < currentState.length; i++) {
+            for (int j = 0; j < currentState.length; j++) {
+                this.key += currentState[i][j];
+            }
+        }
     }
     
     public void setCost(int c) {

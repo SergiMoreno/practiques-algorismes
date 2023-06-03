@@ -44,42 +44,46 @@ public class Model implements EventListener {
         ind.add(-1);
         goalState[puzzleSize-1][puzzleSize-1] = -1;
         
-        num = 0;
-        int linearPuzzle[] = new int[puzzleSize*puzzleSize];
-        // Initial State
-        this.currentState = new int[puzzleSize][puzzleSize];
-        Random rand = new Random();
-        for (int i = 0; i < puzzleSize; i++) {
-            for (int j = 0; j < puzzleSize; j++) {
-                int index = rand.nextInt(ind.size());
-                int val = ind.remove(index);
-                linearPuzzle[num++] = val;
-                this.currentState[i][j] = val;
-                if (val == -1) {
-                    this.emptyPosition[0] = i;
-                    this.emptyPosition[1] = j;
+        // Iterate until a valid initial state is generated
+        boolean validInitial = false;
+        while (!validInitial) {
+            ArrayList<Integer> indCopy = new ArrayList<>(ind);
+            num = 0;
+            int linearPuzzle[] = new int[puzzleSize*puzzleSize];
+            // Initial State
+            this.currentState = new int[puzzleSize][puzzleSize];
+            Random rand = new Random();
+            for (int i = 0; i < puzzleSize; i++) {
+                for (int j = 0; j < puzzleSize; j++) {
+                    int index = rand.nextInt(indCopy.size());
+                    int val = indCopy.remove(index);
+                    linearPuzzle[num++] = val;
+                    this.currentState[i][j] = val;
+                    if (val == -1) {
+                        this.emptyPosition[0] = i;
+                        this.emptyPosition[1] = j;
+                    }
                 }
             }
-        }
-        
-        int inv_count = 0;
-        for (int i = 0; i < linearPuzzle.length; i++) {
-            for (int j = i + 1; j < linearPuzzle.length; j++) {
-                // Value 0 is used for empty space
-                //if (linearPuzzle[i] > -1 && linearPuzzle[j] > -1 && linearPuzzle[i] > linearPuzzle[j]) {
-                if (linearPuzzle[j] > -1 && linearPuzzle[i] > linearPuzzle[j]) {
-                    inv_count++;
-                }
-                if (linearPuzzle[i] == -1) {
-                    inv_count++;
+            
+            int inv_count = 0;
+            for (int i = 0; i < linearPuzzle.length; i++) {
+                for (int j = i + 1; j < linearPuzzle.length; j++) {
+                    // Value 0 is used for empty space
+                    //if (linearPuzzle[i] > -1 && linearPuzzle[j] > -1 && linearPuzzle[i] > linearPuzzle[j]) {
+                    if (linearPuzzle[j] > -1 && linearPuzzle[i] > linearPuzzle[j]) {
+                        inv_count++;
+                    }
+                    if (linearPuzzle[i] == -1) {
+                        inv_count++;
+                    }
                 }
             }
+            if ((this.getEmptyPositionY() + this.getEmptyPositionX()) % 2 != 0) inv_count++;
+            if (inv_count % 2 == 0) System.out.println("INITIAL SOL");
+            else System.out.println("INITIAL ERROR");
+            if (inv_count % 2 == 0) validInitial = true;
         }
-        if ((this.getEmptyPositionY() + this.getEmptyPositionX()) % 2 != 0) inv_count++;
-        System.out.println("INV INITIAL " + inv_count);
-        
-        if (inv_count % 2 == 0) System.out.println("INITIAL SOL");
-        else System.out.println("INITIAL ERROR");
     }
     
     public int getPuzzleSize() {
@@ -128,6 +132,14 @@ public class Model implements EventListener {
     
     public int [][] getCurrentState() {
         return this.currentState;
+    }
+    
+    public int getColumn(int val) {
+        return val % puzzleSize;
+    }
+    
+    public int getRow(int val) {
+        return val / puzzleSize;
     }
 
     @Override

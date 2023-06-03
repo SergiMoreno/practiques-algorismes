@@ -14,11 +14,13 @@ public class PuzzleDisplay extends JPanel {
     private BufferedImage img;
     private BufferedImage [] cropes;
     private int dim;
+    private boolean showSoluion;
     
     public PuzzleDisplay(Model model, BufferedImage image) {
         this.model = model;
         this.dim = model.getPuzzleSize();
         this.img = image;
+        this.showSoluion = false;
         this.setImage();
     }
     
@@ -42,16 +44,30 @@ public class PuzzleDisplay extends JPanel {
         int alto = this.getHeight() / dim;
 
         g.setColor(new Color(0, 0, 0));
-        for (int i = 0; i < dim; i++) {
-            for (int j = 0; j < dim; j++) {
-                int index = model.getCellIndex(i, j);
-                if (index == -1) {
-                    continue;
+        if (this.showSoluion) {
+            for (int i = 0; i < dim; i++) {
+                for (int j = 0; j < dim; j++) {
+                    int index = model.getGoalIndex(i, j);
+                    if (index == -1) {
+                        continue;
+                    }
+                    g.drawImage(cropes[index], j * ancho, i * alto, ancho, alto, this);
+                    g.drawRect(j * ancho, i * alto, ancho, alto);
                 }
-                g.drawImage(cropes[index], j * ancho, i * alto, ancho, alto, this);
-                g.drawRect(j * ancho, i * alto, ancho, alto);
+            }
+        } else {
+            for (int i = 0; i < dim; i++) {
+                for (int j = 0; j < dim; j++) {
+                    int index = model.getCellIndex(i, j);
+                    if (index == -1) {
+                        continue;
+                    }
+                    g.drawImage(cropes[index], j * ancho, i * alto, ancho, alto, this);
+                    g.drawRect(j * ancho, i * alto, ancho, alto);
+                }
             }
         }
+        
         gr.drawImage(bima,0,0,this);
     }
     
@@ -77,5 +93,15 @@ public class PuzzleDisplay extends JPanel {
                 cropes[num++] = img.getSubimage(j * subw, i * subh, subw, subh);
             }
         }
+    }
+    
+    public void showSolution() {
+        this.showSoluion = true;
+        this.repaint();
+    }
+    
+    public void reset() {
+        this.showSoluion = false;
+        this.repaint();
     }
 }
