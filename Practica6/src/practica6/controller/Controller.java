@@ -33,53 +33,48 @@ public class Controller extends Thread implements EventListener {
                                                   model.getEmptyPositionX(), model.getEmptyPositionY(), 
                                                 model.getEmptyPositionX(), model.getEmptyPositionY(), 
                                                0);
-        first.setCost(Integer.MAX_VALUE);
+        first.setCost(calculateHeuristic(first));
         
         minHeap.add(first);
 
         /* Branch and Bound */
         boolean result = false;
         int totalCost = 0;
+        int pathCost = 0;
+        int [] mov = new int[2];
         try {
             while (!minHeap.isEmpty()) {
                 PuzzleState p = minHeap.poll();
-                /*if (hash.containsKey(p.key)) {
-                    int cost = hash.get(p.key);
-                    if (cost > p.cost) {
-                        hash.replace(p.key, p.cost);
-                    } else {
-                        continue;
-                    }
-                } else {
-                    hash.put(p.key, p.cost);
-                }*/
-                //model.updateCurrentState(p.currentState);
+                pathCost = p.level + 1;
+
                 Thread.sleep(Duration.ZERO);
-                /*if (this.goalAchived(p.currentState)) {
-                    result = true;
-                    break;
-                }*/
+                
                 if (p.cost == 0) {
                     result = true;
                     break;
                 }
+                
                 for (int i = 0; i < 4; i++) {
-                    int movx = model.getMovementX(i);
-                    int movy = model.getMovementY(i);
-                    if ((model.isOutOfBounds(p.x + movx, p.y + movy))
-                        || (p.prevx == p.x + movx && p.prevy == p.y + movy)) continue;
+                    mov[0] = model.getMovementX(i);
+                    mov[1] = model.getMovementY(i);
+                    if (model.isOutOfBounds(p.x + mov[0], p.y + mov[1])) continue;
 
                     PuzzleState ps = new PuzzleState(p.currentState,
                             p.x, p.y,
-                            p.x + movx, p.y + movy,
-                            p.level+1);
-                    int g = calculateHeuristic(ps);
-                    ps.setCost(g);
+                            p.x + mov[0], p.y + mov[1],
+                            pathCost);
+                    ps.setCost(calculateHeuristic(ps));
                     
-                    //if (this.isReachable(ps)) 
-                    minHeap.add(ps);
+                    if (hash.containsKey(ps.key)) {
+                        if (pathCost < hash.get(ps.key)) {
+                            hash.replace(ps.key, pathCost);
+                            minHeap.add(ps);
+                        }
+                    } else {
+                        hash.put(ps.key, pathCost);
+                        minHeap.add(ps);
+                    }
                 }
-                
             }
             
             if (result) this.main.notify(new ViewEvent(totalCost));
