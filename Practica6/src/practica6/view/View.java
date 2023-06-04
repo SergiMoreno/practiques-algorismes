@@ -1,11 +1,9 @@
 package practica6.view;
 
-import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import practica6.Event;
 import practica6.EventListener;
@@ -118,7 +116,7 @@ public class View extends javax.swing.JFrame implements EventListener {
         slider.setBackground(new java.awt.Color(0, 51, 51));
         slider.setMaximum(6);
         slider.setMinimum(2);
-        slider.setValue(4);
+        slider.setValue(this.currentSize);
         slider.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 sliderStateChanged(evt);
