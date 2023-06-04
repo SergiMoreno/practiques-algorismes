@@ -66,7 +66,7 @@ public class Model implements EventListener {
                 }
             }
             
-            int inv_count = 0;
+            /*int inv_count = 0;
             for (int i = 0; i < linearPuzzle.length; i++) {
                 for (int j = i + 1; j < linearPuzzle.length; j++) {
                     // Value 0 is used for empty space
@@ -82,7 +82,32 @@ public class Model implements EventListener {
             if ((this.getEmptyPositionY() + this.getEmptyPositionX()) % 2 != 0) inv_count++;
             if (inv_count % 2 == 0) System.out.println("INITIAL SOL");
             else System.out.println("INITIAL ERROR");
-            if (inv_count % 2 == 0) validInitial = true;
+            if (inv_count % 2 == 0) validInitial = true;*/
+            int inv_count = 0;
+            for (int i = 0; i < linearPuzzle.length; i++) {
+                for (int j = i + 1; j < linearPuzzle.length; j++) {
+                    // Value 0 is used for empty space
+                    if (linearPuzzle[i] > -1 && linearPuzzle[j] > -1 && linearPuzzle[i] > linearPuzzle[j]) {
+                    //if (linearPuzzle[j] > -1 && linearPuzzle[i] > linearPuzzle[j]) {
+                        inv_count++;
+                    }
+                    /*if (linearPuzzle[i] == -1) {
+                        inv_count++;
+                    }*/
+                }
+            }
+            /*if ((this.getEmptyPositionY() + this.getEmptyPositionX()) % 2 != 0) inv_count++;
+            if (inv_count % 2 == 0) System.out.println("INITIAL SOL");
+            else System.out.println("INITIAL ERROR");
+            if (inv_count % 2 == 0) validInitial = true;*/
+            if (puzzleSize % 2 != 0) {
+                if (inv_count % 2 == 0) validInitial = true;
+            } else {
+                if ((puzzleSize - this.getEmptyPositionY()) % 2 == 0 && inv_count % 2 != 0)
+                    validInitial = true;
+                if ((puzzleSize - this.getEmptyPositionY()) % 2 != 0 && inv_count % 2 == 0)
+                    validInitial = true;
+            }
         }
     }
     

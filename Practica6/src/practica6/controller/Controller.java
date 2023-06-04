@@ -30,28 +30,29 @@ public class Controller extends Thread implements EventListener {
         HashMap<String, Integer> hash = new HashMap<String, Integer>();
         PriorityQueue<PuzzleState> minHeap = new PriorityQueue<>();
         PuzzleState first = new PuzzleState(model.getCurrentState(), 
-                                                  model.getEmptyPositionX(), model.getEmptyPositionY(), 
-                                                model.getEmptyPositionX(), model.getEmptyPositionY(), 
-                                               0);
+                                             model.getEmptyPositionX(), model.getEmptyPositionY(), 
+                                           model.getEmptyPositionX(), model.getEmptyPositionY(), 
+                                          0,
+                                           0);
         first.setCost(calculateHeuristic(first));
-        
         minHeap.add(first);
 
         /* Branch and Bound */
         boolean result = false;
-        int totalCost = 0;
-        int pathCost = 0;
+        int totalCost = 0, pathLevel;
         int [] mov = new int[2];
         try {
             while (!minHeap.isEmpty()) {
                 PuzzleState p = minHeap.poll();
-                pathCost = p.level + 1;
+                totalCost = p.accCost;
+                pathLevel = p.level + 1;
 
                 Thread.sleep(Duration.ZERO);
-                
                 if (p.cost == 0) {
                     result = true;
                     break;
+                } else if (p.level == 0) {
+                    p.accCost = 0;
                 }
                 
                 for (int i = 0; i < 4; i++) {
@@ -60,18 +61,19 @@ public class Controller extends Thread implements EventListener {
                     if (model.isOutOfBounds(p.x + mov[0], p.y + mov[1])) continue;
 
                     PuzzleState ps = new PuzzleState(p.currentState,
-                            p.x, p.y,
-                            p.x + mov[0], p.y + mov[1],
-                            pathCost);
+                                                      p.x, p.y,
+                                                        p.x + mov[0], p.y + mov[1],
+                                                   pathLevel,
+                                                   p.accCost);
                     ps.setCost(calculateHeuristic(ps));
                     
                     if (hash.containsKey(ps.key)) {
-                        if (pathCost < hash.get(ps.key)) {
-                            hash.replace(ps.key, pathCost);
+                        if (pathLevel < hash.get(ps.key)) {
+                            hash.replace(ps.key, pathLevel);
                             minHeap.add(ps);
                         }
                     } else {
-                        hash.put(ps.key, pathCost);
+                        hash.put(ps.key, pathLevel);
                         minHeap.add(ps);
                     }
                 }
@@ -111,55 +113,6 @@ public class Controller extends Thread implements EventListener {
             }
         }
         return 0;
-    }
-    
-    /*private String matToString(int [][] mat) {
-        String result = "";
-        for (int i = 0; i < mat.length; i++) {
-            for (int j = 0; j < mat.length; j++) {
-                result += mat[i][j] + "\t";
-            }
-            result += "\n";
-        }
-        return result;
-    }*/
-    
-    private boolean goalAchived(int [][] mat) {
-        for (int i = 0; i < mat.length; i++) {
-            for (int j = 0; j < mat.length; j++) {
-                if (mat[i][j] != model.getGoalIndex(i, j)) return false;
-            }
-        }
-        return true;
-    }
-    
-    private boolean isReachable(PuzzleState ps) {
-        int linearPuzzle[] = new int[ps.currentState.length*ps.currentState.length];
-        int num = 0;
-        for (int i = 0; i < ps.currentState.length; i++) {
-            for (int j = 0; j < ps.currentState.length; j++) {
-                linearPuzzle[num++] = ps.currentState[i][j];
-            }
-        }
-        
-        int inv_count = 0;
-        for (int i = 0; i < linearPuzzle.length; i++) {
-            for (int j = i + 1; j < linearPuzzle.length; j++) {
-                // Value 0 is used for empty space
-                //if (linearPuzzle[i] > -1 && linearPuzzle[j] > -1 && linearPuzzle[i] > linearPuzzle[j]) {
-                if (linearPuzzle[j] > -1 && linearPuzzle[i] > linearPuzzle[j]) {
-                    inv_count++;
-                }
-                if (linearPuzzle[i] == -1) {
-                    inv_count++;
-                }
-            }
-        }
-        
-        
-        if ((ps.x + ps.y) % 2 != 0) inv_count++;
-        //System.out.println("INV " + inv_count);
-        return inv_count % 2 == 0;
     }
     
     @Override
