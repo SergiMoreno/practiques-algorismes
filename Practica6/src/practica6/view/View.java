@@ -55,13 +55,13 @@ public class View extends javax.swing.JFrame implements EventListener {
         comboBoxHeuristic = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         sizeLabel = new javax.swing.JLabel();
-        imagePanel = new ImageDisplay(this.readImage(Puzzles.getImage(Puzzles.SUPER_MARIO)), this.currentSize);
+        imagePanel = new ImageDisplay(this.readImage(Puzzles.getImage(Puzzles.FRANCE)), this.currentSize);
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
         progressBar = new javax.swing.JProgressBar();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        puzzle = new practica6.view.PuzzleDisplay(this.main.getModel(), this.readImage(Puzzles.getImage(Puzzles.SUPER_MARIO)));
+        puzzle = new practica6.view.PuzzleDisplay(this.main.getModel(), this.readImage(Puzzles.getImage(Puzzles.FRANCE)));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -117,6 +117,7 @@ public class View extends javax.swing.JFrame implements EventListener {
         slider.setMaximum(6);
         slider.setMinimum(2);
         slider.setValue(this.currentSize);
+        slider.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         slider.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 sliderStateChanged(evt);
@@ -141,7 +142,7 @@ public class View extends javax.swing.JFrame implements EventListener {
         );
         imagePanelLayout.setVerticalGroup(
             imagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 163, Short.MAX_VALUE)
+            .addGap(0, 235, Short.MAX_VALUE)
         );
 
         jSeparator2.setForeground(new java.awt.Color(255, 255, 255));
@@ -164,17 +165,19 @@ public class View extends javax.swing.JFrame implements EventListener {
                     .addComponent(imagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jSeparator2)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(sizeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(comboBoxHeuristic, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel4)
-                            .addComponent(slider, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(jSeparator3))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE))
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addComponent(jLabel1)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(sizeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(comboBoxHeuristic, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel4)
+                                .addComponent(slider, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                .addComponent(jSeparator3)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -244,7 +247,7 @@ public class View extends javax.swing.JFrame implements EventListener {
         );
         puzzleLayout.setVerticalGroup(
             puzzleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 537, Short.MAX_VALUE)
+            .addGap(0, 594, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -287,7 +290,7 @@ public class View extends javax.swing.JFrame implements EventListener {
         
         this.main.notify(new ControllerEvent());
         this.main.notify(new ModelEvent());
-        this.puzzle.reset();
+        this.puzzle.repaint();
         this.imagePanel.repaint();
     }//GEN-LAST:event_buttonResetActionPerformed
 
@@ -326,7 +329,7 @@ public class View extends javax.swing.JFrame implements EventListener {
         this.progressBar.setIndeterminate(false);
         switch (event.type) {
             case SHOW_RESULT -> {
-                this.puzzle.showSolution();
+                this.puzzle.repaint();
                 String message = "Solution reached with cost : " + event.cost;
                 JOptionPane.showMessageDialog(this, 
                                                 message, 

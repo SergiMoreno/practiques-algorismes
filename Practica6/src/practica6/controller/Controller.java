@@ -48,7 +48,9 @@ public class Controller extends Thread implements EventListener {
                 pathLevel = p.level + 1;
 
                 Thread.sleep(Duration.ZERO);
-                if (p.cost == 0) {
+                //if (p.cost == 0) {
+                if (goalAchived(p.currentState)) {
+                    model.updateCurrentState(p.currentState);
                     result = true;
                     break;
                 } else if (p.level == 0) {
@@ -86,7 +88,7 @@ public class Controller extends Thread implements EventListener {
         }
     }
 
-    private int calculateHeuristic(PuzzleState ps) {
+    private double calculateHeuristic(PuzzleState ps) {
         int dim = model.getPuzzleSize();
         switch (this.heuristic) {
             case N_WRONG_CELLS -> {
@@ -111,8 +113,181 @@ public class Controller extends Thread implements EventListener {
                 }
                 return distance;
             }
+            case EUCLIDEAN -> {
+                double distance = 0;
+                for (int i = 0; i < dim; i++) {
+                    for (int j = 0; j < dim; j++) {
+                        if (ps.currentState[i][j] != -1 && ps.currentState[i][j] != model.getGoalIndex(i, j)) {
+                            int row = model.getRow(ps.currentState[i][j]);
+                            int column = model.getColumn(ps.currentState[i][j]);
+                            distance += Math.sqrt(Math.abs(i - row) * Math.abs(i - row) + Math.abs(j - column) * Math.abs(j - column));
+                        }
+                    }
+                }
+                return distance;
+            }
+            case LINEAR_CONFLICT -> {
+                /*int distance = 0;
+                for (int i = 0; i < dim; i++) {
+                    for (int j = 0; j < dim; j++) {
+                        if (ps.currentState[i][j] != -1 && ps.currentState[i][j] != model.getGoalIndex(i, j)) {
+                            int row = model.getRow(ps.currentState[i][j]);
+                            int column = model.getColumn(ps.currentState[i][j]);
+                            distance += Math.abs(i - row) + Math.abs(j - column);
+                        }
+                    }
+                }*/
+                
+                int conflicts = 0;
+                for (int i = 0; i < dim; i++) {
+                    for (int j = 0; j < dim-1; j++) {
+                        int row = model.getRow(ps.currentState[i][j]);
+                        if (row != i) continue;
+                        for (int k = j+1; k < dim; k++) {
+                            int rowk = model.getRow(ps.currentState[i][k]);
+                            if (row == rowk && (ps.currentState[i][j] > ps.currentState[i][k] || ps.currentState[i][j] == -1)) {
+                                conflicts++;
+                            }
+                        }
+                    }
+                }
+                
+                for (int j = 0; j < dim; j++) {
+                    for (int i = 0; i < dim-1; i++) {
+                        int column = model.getColumn(ps.currentState[i][j]);
+                        if (column != j) continue;
+                        for (int k = i+1; k < dim; k++) {
+                            int columnk = model.getColumn(ps.currentState[k][j]);
+                            if (column == columnk && (ps.currentState[i][j] > ps.currentState[k][j] || ps.currentState[i][j] == -1)) {
+                                conflicts++;
+                            }
+                        }
+                    }
+                }
+                conflicts *= 2;
+                return conflicts;
+                /*distance += conflicts;
+                return distance;*/
+            }
+            case MAX_HEURISTIC -> {
+                int distance = 0;
+                for (int i = 0; i < dim; i++) {
+                    for (int j = 0; j < dim; j++) {
+                        if (ps.currentState[i][j] != -1 && ps.currentState[i][j] != model.getGoalIndex(i, j)) {
+                            int row = model.getRow(ps.currentState[i][j]);
+                            int column = model.getColumn(ps.currentState[i][j]);
+                            distance = Math.max(Math.abs(i - row) + Math.abs(j - column), distance);
+                        }
+                    }
+                }
+                return distance;
+            }
+            case ID -> {
+                int linearPuzzle[] = new int[dim*dim];
+                int num = 0;
+                // Initial State
+                for (int i = 0; i < dim; i++) {
+                    for (int j = 0; j < dim; j++) {
+                        linearPuzzle[num++] = ps.currentState[i][j];
+                    }
+                }
+            
+                int inv_count = 0;
+                for (int i = 0; i < linearPuzzle.length; i++) {
+                    for (int j = i + 1; j < linearPuzzle.length; j++) {
+                        // Value 0 is used for empty space
+                        if (linearPuzzle[i] > -1 && linearPuzzle[j] > -1 && linearPuzzle[i] > linearPuzzle[j]) {
+                            inv_count++;
+                        }
+                    }
+                }
+                return inv_count;
+            }
+            case MD_LC -> {
+                int distance = 0;
+                for (int i = 0; i < dim; i++) {
+                    for (int j = 0; j < dim; j++) {
+                        if (ps.currentState[i][j] != -1 && ps.currentState[i][j] != model.getGoalIndex(i, j)) {
+                            int row = model.getRow(ps.currentState[i][j]);
+                            int column = model.getColumn(ps.currentState[i][j]);
+                            distance += Math.abs(i - row) + Math.abs(j - column);
+                        }
+                    }
+                }
+                
+                int conflicts = 0;
+                for (int i = 0; i < dim; i++) {
+                    for (int j = 0; j < dim-1; j++) {
+                        int row = model.getRow(ps.currentState[i][j]);
+                        if (row != i) continue;
+                        for (int k = j+1; k < dim; k++) {
+                            int rowk = model.getRow(ps.currentState[i][k]);
+                            if (row == rowk && (ps.currentState[i][j] > ps.currentState[i][k] || ps.currentState[i][j] == -1)) {
+                                conflicts++;
+                            }
+                        }
+                    }
+                }
+                
+                for (int j = 0; j < dim; j++) {
+                    for (int i = 0; i < dim-1; i++) {
+                        int column = model.getColumn(ps.currentState[i][j]);
+                        if (column != j) continue;
+                        for (int k = i+1; k < dim; k++) {
+                            int columnk = model.getColumn(ps.currentState[k][j]);
+                            if (column == columnk && (ps.currentState[i][j] > ps.currentState[k][j] || ps.currentState[i][j] == -1)) {
+                                conflicts++;
+                            }
+                        }
+                    }
+                }
+                conflicts *= 2;
+                distance += conflicts;
+                return distance;
+            }
+            case MD_ID -> {
+                int distance = 0;
+                for (int i = 0; i < dim; i++) {
+                    for (int j = 0; j < dim; j++) {
+                        if (ps.currentState[i][j] != -1 && ps.currentState[i][j] != model.getGoalIndex(i, j)) {
+                            int row = model.getRow(ps.currentState[i][j]);
+                            int column = model.getColumn(ps.currentState[i][j]);
+                            distance += Math.abs(i - row) + Math.abs(j - column);
+                        }
+                    }
+                }
+                
+                int linearPuzzle[] = new int[dim*dim];
+                int num = 0;
+                // Initial State
+                for (int i = 0; i < dim; i++) {
+                    for (int j = 0; j < dim; j++) {
+                        linearPuzzle[num++] = ps.currentState[i][j];
+                    }
+                }
+            
+                int inv_count = 0;
+                for (int i = 0; i < linearPuzzle.length; i++) {
+                    for (int j = i + 1; j < linearPuzzle.length; j++) {
+                        // Value 0 is used for empty space
+                        if (linearPuzzle[i] > -1 && linearPuzzle[j] > -1 && linearPuzzle[i] > linearPuzzle[j]) {
+                            inv_count++;
+                        }
+                    }
+                }
+                return distance + inv_count;
+            }
         }
         return 0;
+    }
+    
+    private boolean goalAchived(int [][] mat) {
+        for (int i = 0; i < mat.length; i++) {
+            for (int j = 0; j < mat.length; j++) {
+                if (mat[i][j] != model.getGoalIndex(i, j)) return false;
+            }
+        }
+        return true;
     }
     
     @Override
