@@ -5,16 +5,20 @@ package practica6;
  * @author usuario
  */
 public enum Puzzles {
+    FRANCE,
     SUPER_MARIO,
-    FRANCE;
+    UIB;
     
     static public String getImage(Puzzles p) {
         switch (p)  {
+            case FRANCE -> {
+                return "france.jpg";
+            }
             case SUPER_MARIO -> {
                 return "super_mario.jpg";
             }
-            case FRANCE -> {
-                return "france.jpg";
+            case UIB -> {
+                return "uib.jpg";
             }
         }
         

@@ -6,9 +6,10 @@ package practica6.controller;
  */
 public class PuzzleState implements Comparable<PuzzleState> {
     public int [][] currentState;
-    public int cost, x, y, level;
+    public int x, y, level;
     public String key;
     public int accCost;
+    public double cost;
     
     public PuzzleState(int [][] cs, int x, int y, int newX, int newY, int level, int accC) {
         this.currentState = new int[cs.length][cs.length];
@@ -22,7 +23,7 @@ public class PuzzleState implements Comparable<PuzzleState> {
         this.currentState[y][x] = this.currentState[newY][newX];
         this.currentState[newY][newX] = temp;
          
-        this.cost = Integer.MAX_VALUE;// set number of misplaced tiles
+        this.cost = Double.MAX_VALUE;
         this.level = level;// set number of moves so far
          
         // update new blank tile coordinates
@@ -39,7 +40,7 @@ public class PuzzleState implements Comparable<PuzzleState> {
         }
     }
     
-    public void setCost(int c) {
+    public void setCost(double c) {
         this.cost = c;
         this.accCost += this.cost + this.level;
     }
