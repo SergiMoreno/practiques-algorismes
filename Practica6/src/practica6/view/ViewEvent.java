@@ -15,18 +15,20 @@ public class ViewEvent extends Event {
         super(EventType.View);
         
         this.cost = c;
-        this.type = ViewEventType.SHOW_RESULT;
+        this.type = ViewEventType.SHOW_COST;
     }
     
     // Event to notify that none solution was reached
-    public ViewEvent() {
+    public ViewEvent(boolean isStep) {
         super(EventType.View);
         
-        this.type = ViewEventType.NO_SOLUTION;
+        if (isStep) this.type = ViewEventType.REPAINT;
+        else this.type = ViewEventType.NO_SOLUTION;
     }
 
     enum ViewEventType {
-        SHOW_RESULT,
+        REPAINT,
+        SHOW_COST,
         NO_SOLUTION
     }
 }

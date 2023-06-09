@@ -21,15 +21,15 @@ public class Model implements EventListener {
     private final int [] movementX = {0, 1, 0, -1};
     private final int [] movementY = {-1, 0, 1, 0};
     
-    public Model(Main main, int puzzleSize) {
+    public Model(Main main) {
         this.main = main;
         
-        this.puzzleSize = puzzleSize;
+        this.puzzleSize = Main.PUZZLE_SIZE;
         this.emptyPosition = new int[2];
         setStates();
     }
     
-    private void setStates() {
+    public void setStates() {
         // Goal State
         ArrayList<Integer> ind = new ArrayList<Integer>();
         int num = 0;
@@ -69,7 +69,6 @@ public class Model implements EventListener {
             int inv_count = 0;
             for (int i = 0; i < linearPuzzle.length; i++) {
                 for (int j = i + 1; j < linearPuzzle.length; j++) {
-                    // Value 0 is used for empty space
                     if (linearPuzzle[i] > -1 && linearPuzzle[j] > -1 && linearPuzzle[i] > linearPuzzle[j]) {
                         inv_count++;
                     }
@@ -147,6 +146,9 @@ public class Model implements EventListener {
         ModelEvent event = (ModelEvent) e;
         
         switch (event.type) {
+            case UPDATE_STATE:
+                updateCurrentState(event.newState);
+                break;
             case UPDATE_PUZZLE_SIZE:
                 this.puzzleSize = event.puzzleSize;
             case RESET:

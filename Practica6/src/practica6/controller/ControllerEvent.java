@@ -9,6 +9,15 @@ import practica6.Event;
 public class ControllerEvent extends Event {
     public ControllerEventType type;
     public Heuristics heuristic;
+    public int speed;
+    
+    // Event to stop execution thread
+    public ControllerEvent(int s) {
+        super(EventType.Controller);
+        
+        this.speed = s;
+        this.type = ControllerEventType.UPDATE_SPEED;
+    }
  
     // Event to start execution thread assigning the heuristic
     public ControllerEvent(Heuristics h) {
@@ -26,6 +35,7 @@ public class ControllerEvent extends Event {
     }
     
     enum ControllerEventType {
+        UPDATE_SPEED,
         START,
         STOP
     }
