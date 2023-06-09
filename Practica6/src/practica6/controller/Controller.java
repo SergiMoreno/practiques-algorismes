@@ -1,12 +1,14 @@
 package practica6.controller;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.PriorityQueue;
 import practica6.Event;
 import practica6.EventListener;
 import practica6.Main;
 import practica6.model.Model;
+import practica6.model.ModelEvent;
 import practica6.view.ViewEvent;
 
 /**
@@ -18,26 +20,32 @@ public class Controller extends Thread implements EventListener {
     private Model model;
     private Thread executionThread;
     private Heuristics heuristic;
+    private int speed;
     
     public Controller(Main main) {
         this.main = main;
+        
+        this.speed = Main.DEFAULT_SPEED;
     }
     
+    @SuppressWarnings("unchecked")
     @Override
     public void run() {
-        model = this.main.getModel();
         
+        /* Branch and Bound */
+        
+        model = this.main.getModel();
         HashMap<String, Integer> hash = new HashMap<String, Integer>();
         PriorityQueue<PuzzleState> minHeap = new PriorityQueue<>();
         PuzzleState first = new PuzzleState(model.getCurrentState(), 
                                              model.getEmptyPositionX(), model.getEmptyPositionY(), 
                                            model.getEmptyPositionX(), model.getEmptyPositionY(), 
                                           0,
-                                           0);
+                                           0,
+                                            null);
         first.setCost(calculateHeuristic(first));
         minHeap.add(first);
-
-        /* Branch and Bound */
+        
         boolean result = false;
         int totalCost = 0, pathLevel;
         int [] mov = new int[2];
@@ -48,9 +56,22 @@ public class Controller extends Thread implements EventListener {
                 pathLevel = p.level + 1;
 
                 Thread.sleep(Duration.ZERO);
-                //if (p.cost == 0) {
                 if (goalAchived(p.currentState)) {
-                    model.updateCurrentState(p.currentState);
+                    ArrayList<PuzzleState> solList = new ArrayList();                  
+                    
+                    // Get the solution path ordered from first to last
+                    while (p.parent != null) {
+                        solList.add(0, p);
+                        p = p.parent;
+                    }
+                    
+                    // Show every step
+                    for (int i = 0; i < solList.size(); i++) {
+                        this.main.notify(new ModelEvent(solList.get(i).currentState));
+                        this.main.notify(new ViewEvent(true));
+                        Thread.sleep(1000/speed);
+                    }
+                    
                     result = true;
                     break;
                 } else if (p.level == 0) {
@@ -66,7 +87,8 @@ public class Controller extends Thread implements EventListener {
                                                       p.x, p.y,
                                                         p.x + mov[0], p.y + mov[1],
                                                    pathLevel,
-                                                   p.accCost);
+                                                   p.accCost,
+                                                        p);
                     ps.setCost(calculateHeuristic(ps));
                     
                     if (hash.containsKey(ps.key)) {
@@ -80,9 +102,9 @@ public class Controller extends Thread implements EventListener {
                     }
                 }
             }
-            
+
             if (result) this.main.notify(new ViewEvent(totalCost));
-            else this.main.notify(new ViewEvent());
+            else this.main.notify(new ViewEvent(false));
         } catch (InterruptedException ex) {
             System.out.println("Execution Stopped. Cost calculated until stop : " + totalCost);
         }
@@ -127,18 +149,8 @@ public class Controller extends Thread implements EventListener {
                 return distance;
             }
             case LINEAR_CONFLICT -> {
-                /*int distance = 0;
-                for (int i = 0; i < dim; i++) {
-                    for (int j = 0; j < dim; j++) {
-                        if (ps.currentState[i][j] != -1 && ps.currentState[i][j] != model.getGoalIndex(i, j)) {
-                            int row = model.getRow(ps.currentState[i][j]);
-                            int column = model.getColumn(ps.currentState[i][j]);
-                            distance += Math.abs(i - row) + Math.abs(j - column);
-                        }
-                    }
-                }*/
-                
                 int conflicts = 0;
+                // Row conflicts
                 for (int i = 0; i < dim; i++) {
                     for (int j = 0; j < dim-1; j++) {
                         int row = model.getRow(ps.currentState[i][j]);
@@ -152,6 +164,7 @@ public class Controller extends Thread implements EventListener {
                     }
                 }
                 
+                // Column conflicts
                 for (int j = 0; j < dim; j++) {
                     for (int i = 0; i < dim-1; i++) {
                         int column = model.getColumn(ps.currentState[i][j]);
@@ -166,10 +179,9 @@ public class Controller extends Thread implements EventListener {
                 }
                 conflicts *= 2;
                 return conflicts;
-                /*distance += conflicts;
-                return distance;*/
             }
             case MAX_HEURISTIC -> {
+                // max distance calculated
                 int distance = 0;
                 for (int i = 0; i < dim; i++) {
                     for (int j = 0; j < dim; j++) {
@@ -185,25 +197,49 @@ public class Controller extends Thread implements EventListener {
             case ID -> {
                 int linearPuzzle[] = new int[dim*dim];
                 int num = 0;
-                // Initial State
+                // Get the cells in a single array
                 for (int i = 0; i < dim; i++) {
                     for (int j = 0; j < dim; j++) {
                         linearPuzzle[num++] = ps.currentState[i][j];
                     }
                 }
-            
-                int inv_count = 0;
+
+                // Vertical inversions
+                int inv_count_v = 0;
+                for (int i = 0; i < linearPuzzle.length; i++) {
+                    for (int j = i + 1; j < linearPuzzle.length; j++) {
+                        if (linearPuzzle[i] > -1 && linearPuzzle[j] > -1 && linearPuzzle[i] > linearPuzzle[j]) {
+                            inv_count_v++;
+                        }
+                    }
+                }
+                
+                // Get the cells in a single array
+                num = 0;
+                for (int j = 0; j < dim; j++) {
+                    for (int i = 0; i < dim; i++) {
+                        linearPuzzle[num++] = ps.currentState[i][j];
+                    }
+                }
+                
+                // Horizontal inversions
+                int inv_count_h = 0;
                 for (int i = 0; i < linearPuzzle.length; i++) {
                     for (int j = i + 1; j < linearPuzzle.length; j++) {
                         // Value 0 is used for empty space
                         if (linearPuzzle[i] > -1 && linearPuzzle[j] > -1 && linearPuzzle[i] > linearPuzzle[j]) {
-                            inv_count++;
+                            inv_count_h++;
                         }
                     }
                 }
-                return inv_count;
+                
+                inv_count_v = inv_count_v / 3 + inv_count_v % 3;
+                inv_count_h = inv_count_h / 3 + inv_count_h % 3;
+                
+                return inv_count_v + inv_count_h;
             }
             case MD_LC -> {
+                /* Manhattan Distance */
                 int distance = 0;
                 for (int i = 0; i < dim; i++) {
                     for (int j = 0; j < dim; j++) {
@@ -215,6 +251,9 @@ public class Controller extends Thread implements EventListener {
                     }
                 }
                 
+                /* Linear Conflict */
+                
+                // Row conflicts
                 int conflicts = 0;
                 for (int i = 0; i < dim; i++) {
                     for (int j = 0; j < dim-1; j++) {
@@ -229,6 +268,7 @@ public class Controller extends Thread implements EventListener {
                     }
                 }
                 
+                // Column conflicts
                 for (int j = 0; j < dim; j++) {
                     for (int i = 0; i < dim-1; i++) {
                         int column = model.getColumn(ps.currentState[i][j]);
@@ -246,6 +286,7 @@ public class Controller extends Thread implements EventListener {
                 return distance;
             }
             case MD_ID -> {
+                /* Manhattan Distance */
                 int distance = 0;
                 for (int i = 0; i < dim; i++) {
                     for (int j = 0; j < dim; j++) {
@@ -256,26 +297,51 @@ public class Controller extends Thread implements EventListener {
                         }
                     }
                 }
+
+                /* Inversion Distance */
                 
                 int linearPuzzle[] = new int[dim*dim];
                 int num = 0;
-                // Initial State
+                // Get cells in one array
                 for (int i = 0; i < dim; i++) {
                     for (int j = 0; j < dim; j++) {
                         linearPuzzle[num++] = ps.currentState[i][j];
                     }
                 }
             
-                int inv_count = 0;
+                // Vertical inverions
+                int inv_count_v = 0;
                 for (int i = 0; i < linearPuzzle.length; i++) {
                     for (int j = i + 1; j < linearPuzzle.length; j++) {
                         // Value 0 is used for empty space
                         if (linearPuzzle[i] > -1 && linearPuzzle[j] > -1 && linearPuzzle[i] > linearPuzzle[j]) {
-                            inv_count++;
+                            inv_count_v++;
                         }
                     }
                 }
-                return distance + inv_count;
+                
+                // Get cells in one array
+                num = 0;
+                for (int j = 0; j < dim; j++) {
+                    for (int i = 0; i < dim; i++) {
+                        linearPuzzle[num++] = ps.currentState[i][j];
+                    }
+                }
+                
+                // Horizontal inversions
+                int inv_count_h = 0;
+                for (int i = 0; i < linearPuzzle.length; i++) {
+                    for (int j = i + 1; j < linearPuzzle.length; j++) {
+                        // Value 0 is used for empty space
+                        if (linearPuzzle[i] > -1 && linearPuzzle[j] > -1 && linearPuzzle[i] > linearPuzzle[j]) {
+                            inv_count_h++;
+                        }
+                    }
+                }
+                
+                inv_count_v = inv_count_v / 3 + inv_count_v % 3;
+                inv_count_h = inv_count_h / 3 + inv_count_h % 3;
+                return distance + inv_count_v + inv_count_h;
             }
         }
         return 0;
@@ -295,6 +361,9 @@ public class Controller extends Thread implements EventListener {
         ControllerEvent event = (ControllerEvent) e;
         
         switch (event.type) {
+            case UPDATE_SPEED -> {
+                this.speed = event.speed;
+            }
             case START -> {
                 this.heuristic = event.heuristic;
                 // When start event notified, new Thread is initialized

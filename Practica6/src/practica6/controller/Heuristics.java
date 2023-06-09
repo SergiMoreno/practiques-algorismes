@@ -33,7 +33,7 @@ public enum Heuristics {
                 return "LINEAR CONFLICT (LC)";
             }
             case MAX_HEURISTIC -> {
-                return "EUCLIDEAN";
+                return "MAX VALUE";
             }
             case ID -> {
                 return "INVERSION DISTANCE (ID)";

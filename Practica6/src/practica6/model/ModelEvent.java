@@ -9,6 +9,15 @@ import practica6.Event;
 public class ModelEvent extends Event {
     public ModelEventType type;
     public int puzzleSize;
+    public int [][] newState;
+    
+    // Event to update the puzzle size
+    public ModelEvent(int [][] state) {
+        super(EventType.Model);
+        
+        this.newState = state.clone();
+        this.type = ModelEventType.UPDATE_STATE;
+    }
     
     // Event to update the puzzle size
     public ModelEvent(int pSize) {
@@ -26,6 +35,7 @@ public class ModelEvent extends Event {
     }
     
     enum ModelEventType {
+        UPDATE_STATE,
         UPDATE_PUZZLE_SIZE,
         RESET
     }

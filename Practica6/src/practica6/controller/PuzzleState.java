@@ -10,8 +10,10 @@ public class PuzzleState implements Comparable<PuzzleState> {
     public String key;
     public int accCost;
     public double cost;
+    // To keep track of the solution path
+    public PuzzleState parent;
     
-    public PuzzleState(int [][] cs, int x, int y, int newX, int newY, int level, int accC) {
+    public PuzzleState(int [][] cs, int x, int y, int newX, int newY, int level, int accC, PuzzleState p) {
         this.currentState = new int[cs.length][cs.length];
         for (int i = 0; i < cs.length; i++) {
             for (int j = 0; j < cs.length; j++) {
@@ -24,7 +26,7 @@ public class PuzzleState implements Comparable<PuzzleState> {
         this.currentState[newY][newX] = temp;
          
         this.cost = Double.MAX_VALUE;
-        this.level = level;// set number of moves so far
+        this.level = level;
          
         // update new blank tile coordinates
         this.x = newX;
@@ -38,6 +40,8 @@ public class PuzzleState implements Comparable<PuzzleState> {
                 this.key += currentState[i][j];
             }
         }
+        
+        this.parent = p;
     }
     
     public void setCost(double c) {
