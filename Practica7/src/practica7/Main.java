@@ -1,5 +1,7 @@
 package practica7;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import mesurament.Mesurament;
 import practica7.controller.Controller;
 import practica7.model.Model;
@@ -18,20 +20,32 @@ public class Main implements EventListener {
     private View view;
     private Controller controller;
     
-    private final int PUZZLE_SIZE = 4;
+    public static String mesuramentRatio;
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream ps = new PrintStream(baos);
+        PrintStream originalOut = System.out;
+        System.setOut(ps);
+        
         Mesurament.mesura();
+        
+        String consoleOutput = baos.toString();
+        //mesuramentRatio = consoleOutput.replaceAll("[A-Z:* \r\n]", "");
+        mesuramentRatio = consoleOutput.replaceAll("[^0-9+.0-9+]", "");           
+
+        System.setOut(originalOut);
+
         (new Main()).init();
     }
     
     private void init() {
-        this.model = new Model(this, PUZZLE_SIZE);
+        this.model = new Model(this);
         this.controller = new Controller(this);
-        this.view = new View(this, PUZZLE_SIZE);
+        this.view = new View(this);
     }
 
     @Override
