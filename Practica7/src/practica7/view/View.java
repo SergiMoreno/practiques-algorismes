@@ -1,9 +1,5 @@
 package practica7.view;
 
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.net.URL;
-import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import practica7.Event;
 import practica7.EventListener;
@@ -19,7 +15,7 @@ public class View extends javax.swing.JFrame implements EventListener {
     /**
      * Creates new form Vista
      */
-    public View(Main main, int size) {
+    public View(Main main) {
             this.main = main;
             initComponents();
             this.setVisible(true);
@@ -47,6 +43,12 @@ public class View extends javax.swing.JFrame implements EventListener {
         jLabel4 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
+        mesuramentButton = new javax.swing.JButton();
+        jSpinner1 = new javax.swing.JSpinner();
+        jTextField1 = new javax.swing.JTextField();
+        primeButton = new javax.swing.JButton();
+        factorButton = new javax.swing.JButton();
+        graphicButton = new javax.swing.JButton();
         progressBar = new javax.swing.JProgressBar();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -82,28 +84,44 @@ public class View extends javax.swing.JFrame implements EventListener {
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Puzzle Preview");
+        jLabel5.setText("Factor Number");
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Num Pieces :");
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("OPTIONS");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Select Puzzle");
+        jLabel2.setText("Check Primality");
 
         jSeparator1.setForeground(new java.awt.Color(255, 255, 255));
         jSeparator1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Select Heuristic");
+        jLabel4.setText("Show Mesurament");
 
         jSeparator2.setForeground(new java.awt.Color(255, 255, 255));
         jSeparator2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
         jSeparator3.setForeground(new java.awt.Color(255, 255, 255));
         jSeparator3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+
+        mesuramentButton.setText("Show Mesurament");
+        mesuramentButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mesuramentButtonActionPerformed(evt);
+            }
+        });
+
+        jTextField1.setToolTipText("Insert a Number");
+
+        primeButton.setText("Check");
+
+        factorButton.setText("Calculate");
+
+        graphicButton.setText("Show Graphic");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -114,36 +132,54 @@ public class View extends javax.swing.JFrame implements EventListener {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator1)
                     .addComponent(jSeparator2)
+                    .addComponent(jSeparator1)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jSeparator3)
+                            .addComponent(mesuramentButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jSpinner1)
+                            .addComponent(factorButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(graphicButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel4)
-                            .addComponent(jSeparator3))
+                            .addComponent(jLabel2)
+                            .addComponent(jTextField1)
+                            .addComponent(primeButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(13, 13, 13)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
-                .addGap(40, 40, 40)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(primeButton)
+                .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 3, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel5)
-                .addGap(187, 187, 187)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(factorButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(graphicButton)
+                .addGap(18, 18, 18)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel1)
-                .addGap(38, 38, 38)
-                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 181, Short.MAX_VALUE)
                 .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(mesuramentButton)
+                .addGap(58, 58, 58)
                 .addComponent(buttonStart)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(buttonReset))
@@ -155,16 +191,14 @@ public class View extends javax.swing.JFrame implements EventListener {
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("PRIMALITY");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel3)
-                .addGap(379, 379, 379))
+            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -182,7 +216,7 @@ public class View extends javax.swing.JFrame implements EventListener {
         );
         costDisplayLayout.setVerticalGroup(
             costDisplayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 537, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -223,18 +257,15 @@ public class View extends javax.swing.JFrame implements EventListener {
         this.progressBar.setIndeterminate(false);
 
     }//GEN-LAST:event_buttonResetActionPerformed
-    
-    private BufferedImage readImage(String img) {
-        BufferedImage image = null;
-        try {
-            URL imageURL = getClass().getResource("../../resources/" + img);
-            image = ImageIO.read(imageURL);
-        } catch (IOException ex) {
-            System.out.println("Image \"" + img + "\" not found");
-        }
-        return image;
-    }
-    
+
+    private void mesuramentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mesuramentButtonActionPerformed
+        String message = "Ratio : " + Main.mesuramentRatio;
+        JOptionPane.showMessageDialog(this, 
+                                        message, 
+                                        "MESURAMENT",
+                                        JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_mesuramentButtonActionPerformed
+  
     @Override
     public void notify(Event e) {
         ViewEvent event = (ViewEvent) e;
@@ -265,6 +296,8 @@ public class View extends javax.swing.JFrame implements EventListener {
     /*
     private javax.swing.JPanel costDisplay;
     */CostDisplay costDisplay;
+    private javax.swing.JButton factorButton;
+    private javax.swing.JButton graphicButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -275,6 +308,10 @@ public class View extends javax.swing.JFrame implements EventListener {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSpinner jSpinner1;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JButton mesuramentButton;
+    private javax.swing.JButton primeButton;
     private javax.swing.JProgressBar progressBar;
     // End of variables declaration//GEN-END:variables
 }

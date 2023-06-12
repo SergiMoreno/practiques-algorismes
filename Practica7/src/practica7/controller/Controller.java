@@ -23,7 +23,7 @@ public class Controller extends Thread implements EventListener {
     public void run() {
         model = this.main.getModel();
 
-        /* Branch and Bound */
+        /*  */
         try {
             Thread.sleep(Duration.ZERO);
 
