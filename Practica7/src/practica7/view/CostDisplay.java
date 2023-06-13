@@ -25,12 +25,20 @@ public class CostDisplay extends JPanel {
 
     @Override
     public void paint(Graphics gr) {
+        int height = this.getHeight();
+        int width = this.getWidth();
+        
         BufferedImage bima = new BufferedImage(this.getWidth(),
                 this.getHeight(), BufferedImage.TYPE_INT_ARGB);
         Graphics g = bima.getGraphics();
         g.setColor(new Color(255, 237, 197));
-        g.fillRect(0, 0, this.getWidth(), this.getHeight());
-        
+        g.fillRect(0, 0, width, height);
         gr.drawImage(bima,0,0,this);
+        
+        g.setColor(Color.BLACK);
+        // horizontal line
+        gr.drawLine(60, height - 40, width - 20, height - 40);
+        // vertical line
+        gr.drawLine(60, 20, 60, height - 40);
     }
 }

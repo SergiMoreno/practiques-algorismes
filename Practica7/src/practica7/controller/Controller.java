@@ -53,7 +53,7 @@ public class Controller extends Thread implements EventListener {
     }
     
     private void calculateFactor(BigInteger n) {
-        Factor f = new Factor();
+        Factor f = new Factor(this.main);
         f.factorizar(n);
     }
     

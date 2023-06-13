@@ -16,16 +16,15 @@ public class ViewEvent extends Event {
         this.type = ViewEventType.SHOW_RESULT;
     }
     
-    // Event to notify that none solution was reached
+    // Event to notify
     public ViewEvent() {
         super(EventType.View);
         
-        this.type = ViewEventType.NO_SOLUTION;
+        this.type = ViewEventType.UPDATE_GRAPHIC;
     }
 
     enum ViewEventType {
         SHOW_RESULT,
-        NO_SOLUTION,
         UPDATE_GRAPHIC
     }
 }
