@@ -1,6 +1,9 @@
 package practica7.controller;
 
+import java.math.BigInteger;
+import practica7.Operation;
 import java.time.Duration;
+import java.util.Random;
 import practica7.Event;
 import practica7.EventListener;
 import practica7.Main;
@@ -15,6 +18,8 @@ public class Controller extends Thread implements EventListener {
     private Model model;
     private Thread executionThread;
     
+    private Operation operation;
+    
     public Controller(Main main) {
         this.main = main;
     }
@@ -23,6 +28,15 @@ public class Controller extends Thread implements EventListener {
     public void run() {
         model = this.main.getModel();
 
+        switch (this.operation) {
+            case CHECK_PRIMALITY -> {
+                this.checkPrimality(model.getNumber());
+            }
+            case CALCULATE_FACTOR -> {
+                this.calculateFactor(model.getNumber());
+            }
+        }
+        
         /*  */
         try {
             Thread.sleep(Duration.ZERO);
@@ -32,12 +46,24 @@ public class Controller extends Thread implements EventListener {
         }
     }
     
+    private void checkPrimality(BigInteger n) {
+        Primality primprob = new Primality(100);
+        System.out.println("El número " + n + " es primo es una aseveración "
+                + primprob.esPrimo(n));
+    }
+    
+    private void calculateFactor(BigInteger n) {
+        Factor f = new Factor();
+        f.factorizar(n);
+    }
+    
     @Override
     public void notify(Event e) {
         ControllerEvent event = (ControllerEvent) e;
         
         switch (event.type) {
             case START -> {
+                this.operation = event.operation;
                 // When start event notified, new Thread is initialized
                 this.executionThread = new Thread(this);
                 this.executionThread.start();
