@@ -25,6 +25,7 @@ public class ViewEvent extends Event {
 
     enum ViewEventType {
         SHOW_RESULT,
-        NO_SOLUTION
+        NO_SOLUTION,
+        UPDATE_GRAPHIC
     }
 }

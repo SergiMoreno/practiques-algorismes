@@ -8,15 +8,18 @@ import practica7.Event;
  */
 public class ModelEvent extends Event {
     public ModelEventType type;
+    public String number;
     
     // Event to update the puzzle size
-    public ModelEvent(int pSize) {
+    public ModelEvent(String n) {
         super(EventType.Model);
         
-        //this.type = ModelEventType.UPDATE_PUZZLE_SIZE;
+        this.number = n;
+        this.type = ModelEventType.UPDATE_NUMBER;
     }
     
     enum ModelEventType {
-        
+        UPDATE_NUMBER,
+        ADD_TIME
     }
 }
