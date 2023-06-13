@@ -49,7 +49,6 @@ public class View extends javax.swing.JFrame implements EventListener {
         mesuramentButton = new javax.swing.JButton();
         primeButton = new javax.swing.JButton();
         factorButton = new javax.swing.JButton();
-        graphicButton = new javax.swing.JButton();
         factorField = new javax.swing.JTextField();
         primeField = new javax.swing.JTextField();
         progressBar = new javax.swing.JProgressBar();
@@ -132,8 +131,6 @@ public class View extends javax.swing.JFrame implements EventListener {
             }
         });
 
-        graphicButton.setText("Show Graphic");
-
         factorField.setToolTipText("Insert Number");
 
         primeField.setToolTipText("Insert Number");
@@ -156,7 +153,6 @@ public class View extends javax.swing.JFrame implements EventListener {
                             .addComponent(jSeparator3)
                             .addComponent(mesuramentButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(factorButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(graphicButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel4)
                             .addComponent(jLabel2)
                             .addComponent(primeButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -186,11 +182,9 @@ public class View extends javax.swing.JFrame implements EventListener {
                 .addComponent(factorField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(factorButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(graphicButton)
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 181, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 209, Short.MAX_VALUE)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(mesuramentButton)
@@ -285,6 +279,14 @@ public class View extends javax.swing.JFrame implements EventListener {
         String number = this.primeField.getText();
         number = number.replaceAll("[\\D]", "");
         this.primeField.setText(number);
+        if (number.isEmpty()) {
+            String message = "Please, Insert a Number";
+            JOptionPane.showMessageDialog(this, 
+                                                    message, 
+                                                    "ERROR!!", 
+                                                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         this.main.notify(new ModelEvent(number));
         this.main.notify(new ControllerEvent(Operation.CHECK_PRIMALITY));
     }//GEN-LAST:event_primeButtonActionPerformed
@@ -293,6 +295,14 @@ public class View extends javax.swing.JFrame implements EventListener {
         String number = this.factorField.getText();
         number = number.replaceAll("[\\D]", "");
         this.factorField.setText(number);
+        if (number.isEmpty()) {
+            String message = "Please, Insert a Number";
+            JOptionPane.showMessageDialog(this, 
+                                                    message, 
+                                                    "ERROR!!", 
+                                                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         this.main.notify(new ModelEvent(number));
         this.main.notify(new ControllerEvent(Operation.CALCULATE_FACTOR));
     }//GEN-LAST:event_factorButtonActionPerformed
@@ -310,12 +320,8 @@ public class View extends javax.swing.JFrame implements EventListener {
                                                 "SUCCESS!! Solution reached!",
                                                 JOptionPane.INFORMATION_MESSAGE);
             }
-            case NO_SOLUTION -> {
-                String message = "The initial puzzle can't reach the final result";
-                JOptionPane.showMessageDialog(this, 
-                                                        message, 
-                                                        "FAILURE!! No solution was reached", 
-                                                        JOptionPane.ERROR_MESSAGE);
+            case UPDATE_GRAPHIC -> {
+                
             }
         }
     }
@@ -329,7 +335,6 @@ public class View extends javax.swing.JFrame implements EventListener {
     */CostDisplay costDisplay;
     private javax.swing.JButton factorButton;
     private javax.swing.JTextField factorField;
-    private javax.swing.JButton graphicButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

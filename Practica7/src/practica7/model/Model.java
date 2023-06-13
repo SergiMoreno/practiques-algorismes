@@ -18,11 +18,19 @@ public class Model implements EventListener {
     
     public Model(Main main) {
         this.main = main;
-
+        this.timeList = new ArrayList<Long>();
     }
     
     public BigInteger getNumber() {
         return this.number;
+    }
+    
+    public int getTimeListSize() {
+        return this.timeList.size();
+    }
+    
+    public long getTime(int i) {
+        return this.timeList.get(i);
     }
 
     @Override
@@ -32,6 +40,9 @@ public class Model implements EventListener {
         switch (event.type) {
             case UPDATE_NUMBER -> {
                 this.number = new BigInteger(event.number);
+            }
+            case ADD_TIME -> {
+                this.timeList.add(event.time);
             }
         }
     }

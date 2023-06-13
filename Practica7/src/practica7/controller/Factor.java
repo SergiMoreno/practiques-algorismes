@@ -1,14 +1,19 @@
 package practica7.controller;
 
 import java.math.BigInteger;
+import practica7.Main;
+import practica7.model.ModelEvent;
+import practica7.view.ViewEvent;
 
 /**
  *
  * @author usuario
  */
 public class Factor {
-    public Factor() {
-        
+    private Main main;
+    
+    public Factor(Main main) {
+        this.main = main;
     }
     
     public void factorizar(BigInteger num) {
@@ -18,7 +23,7 @@ public class Factor {
         BigInteger zero = new BigInteger("0");
         BigInteger uno = new BigInteger("1");
         BigInteger dos = new BigInteger("2");
-        BigInteger obj = num.subtract(uno);
+        //BigInteger obj = num.subtract(uno);
         BigInteger test = new BigInteger("3");
         System.out.println("Voy a factorizar " + num);
         if (num.remainder(dos).compareTo(zero) == 0) {
@@ -26,25 +31,29 @@ public class Factor {
             while (num.remainder(dos).compareTo(zero) == 0) {
                 num = num.divide(dos);
                 veces = veces.add(uno);
+                this.main.notify(new ModelEvent(System.nanoTime() - temps));
+                this.main.notify(new ViewEvent());
             }
             System.out.println("   factor -------> " + dos + "  (x" + veces + ")");
         }
-        obj = sqrt(obj);
+        
         int control = 0;
-        while (test.compareTo(obj) <= 0) {
+        while (num.compareTo(uno) != 0) {
             if (primprob.esPrimo(num)) {
                 System.out.println("   factor -------> " + num + " (x1)");
-                test = obj.add(uno);
+                break;
             } else if (primprob.esPrimo(test)) {
                 if (num.remainder(test).compareTo(zero) == 0) {
                     veces = zero.add(zero);
                     while (num.remainder(test).compareTo(zero) == 0) {
                         num = num.divide(test);
                         veces = veces.add(uno);
+                        this.main.notify(new ModelEvent(System.nanoTime() - temps));
+                        this.main.notify(new ViewEvent());
                     }
                     System.out.println("   factor -------> " + test + "  (x" + veces + ")");
                     if (num.compareTo(uno) == 0) {
-                        test = obj.add(uno);
+                        break;
                     }
                 }
             }
@@ -52,8 +61,12 @@ public class Factor {
             if (control++ == 10000) {
                 System.out.println(test);
                 control = 0;
+                this.main.notify(new ModelEvent(System.nanoTime() - temps));
+                this.main.notify(new ViewEvent());
             }
         }
+        this.main.notify(new ModelEvent(System.nanoTime() - temps));
+        this.main.notify(new ViewEvent());
         System.out.println("He tardado " + (System.nanoTime() - temps) + "nanosec\n");
     }
 

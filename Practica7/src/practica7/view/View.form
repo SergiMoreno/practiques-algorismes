@@ -81,7 +81,6 @@
                               <Component id="jSeparator3" alignment="0" max="32767" attributes="0"/>
                               <Component id="mesuramentButton" max="32767" attributes="0"/>
                               <Component id="factorButton" max="32767" attributes="0"/>
-                              <Component id="graphicButton" max="32767" attributes="0"/>
                               <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                               <Component id="primeButton" alignment="0" max="32767" attributes="0"/>
@@ -116,11 +115,9 @@
                   <Component id="factorField" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="factorButton" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="graphicButton" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jSeparator2" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="181" max="32767" attributes="0"/>
+                  <EmptySpace pref="209" max="32767" attributes="0"/>
                   <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="mesuramentButton" min="-2" max="-2" attributes="0"/>
@@ -267,11 +264,6 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="factorButtonActionPerformed"/>
           </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="graphicButton">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Show Graphic"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="factorField">
           <Properties>

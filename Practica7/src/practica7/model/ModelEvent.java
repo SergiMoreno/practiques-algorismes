@@ -9,12 +9,20 @@ import practica7.Event;
 public class ModelEvent extends Event {
     public ModelEventType type;
     public String number;
+    public long time;
     
     // Event to update the puzzle size
     public ModelEvent(String n) {
         super(EventType.Model);
         
         this.number = n;
+        this.type = ModelEventType.UPDATE_NUMBER;
+    }
+    
+    public ModelEvent(long t) {
+        super(EventType.Model);
+        
+        this.time = t;
         this.type = ModelEventType.UPDATE_NUMBER;
     }
     
